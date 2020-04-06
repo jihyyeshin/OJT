@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="sql">
+<select id="sel" resultType="com.ojt.domain.MemberVO">     
+	SELECT * FROM member
+</select>
+<!-- 회원가입 -->
+<insert id="signup">
+	insert into member (id, name, password)
+		values (#{id}, #{name}, #{password})
+</insert>
+<!-- 로그인 -->
+<select id="login" resultType="com.ojt.domain.MemberVO">
+	select id, name
+	from member
+	where id=#{id}
+		and password=#{password}
+</select>
+<!-- 위치 -->
+<select id="locationList" resultType="com.ojt.domain.LocVO"><!-- 이렇게 해도 리스트로 넘겨주도록 MyBatis 설계 -->
+	select *
+	from ms_agent
+	where addr_zip like '서울%'
+</select>
+<!-- 가장 가까운 위치 -->
+<select id="location" parameterType="com.ojt.domain.LatLngVO" resultType="com.ojt.domain.LocVO">
+	select cd_agent,nm_agentform, addr_zip, addr_detail, 
+				earth_distance(ll_to_earth(#{lat}, #{lng}), ll_to_earth(lat, lng)
+				) as distance
+	from ms_agent
+	where addr_zip like '${location}%'
+	order by distance ASC
+	limit 1;
+</select>
+</mapper> 
