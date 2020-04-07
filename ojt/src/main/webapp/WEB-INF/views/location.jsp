@@ -81,7 +81,7 @@
 				success: function(data){
 					console.log("agent="+agentId);
 					console.log(data);
-					console.log(data[1]);
+					console.log(data[1].lat);
 				},
 				error:function(request,status, error){
 					console.log("status:\n"+request.status+"\nerror:\n"+request.error);

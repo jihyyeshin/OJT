@@ -36,7 +36,7 @@
 	limit 1;
 </select>
 <!-- 대리점 별 아이템, 가격 조회 -->
-<select id="itemList" parameterType="String" resultType="ItemVO" ><!-- 데이터 넣고  '000000'를 #{agent}로 변경-->
+<select id="itemList" parameterType="String" resultType="com.ojt.domain.ItemVO" ><!-- 데이터 넣고  '000000'를 #{agent}로 변경-->
 	select m.nm_item, p.amt_amount
 	from ms_agentitem m, ms_pathamtpolicy p
 	where m.cd_agent='000000' and m.cd_item=p.cd_item

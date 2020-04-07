@@ -57,7 +57,7 @@ public class LocController {
 	
 	// 대리점 별 아이템 , 가격 조회
 	@RequestMapping(value="/showItem")
-	public @ResponseBody List<ItemVO> postShowItem(@RequestParam String agent) throws Exception {
+	public @ResponseBody List<ItemVO> showItem(@RequestParam String agent) throws Exception {
 		
 		List<ItemVO> list=service.itemList(agent);
 		System.out.println(list);
