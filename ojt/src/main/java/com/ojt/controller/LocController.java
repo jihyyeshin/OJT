@@ -60,8 +60,8 @@ public class LocController {
 	public @ResponseBody List<ItemVO> showItem(@RequestParam String agent) throws Exception {
 		
 		List<ItemVO> list=service.itemList(agent);
-		System.out.println(list);
-		
+//		System.out.println(list);
+
 		return list;
 	}
 }

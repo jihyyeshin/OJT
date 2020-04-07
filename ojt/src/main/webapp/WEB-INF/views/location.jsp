@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8; application/json;"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -20,7 +20,8 @@
 	<p id="resultAgent"></p>
 	<p id="resultLocation"></p>
 	<input type="button" onclick="showItem();" value="아이템 조회"/>
-	
+	<table>
+	</table>
 	<script>
 	var agentId;
 	
@@ -69,6 +70,17 @@
 				});
 			}
 		}
+	
+	// 아이템 정보 출력
+	function print(data){
+		$.each(data, function(index, item){
+			var str = '<tr><td>'+item.name+'</td>';
+			str += '<td>' + item.amount + '</td></tr>';
+			$('table').append(str);
+		});
+		
+	}
+	// 대리점 별 아이템 및 가격 정보 조회
 	function showItem(){
 		if(agentId!=null){
 			$.ajax({
@@ -80,8 +92,8 @@
 				data:"agent="+agentId,
 				success: function(data){
 					console.log("agent="+agentId);
-					console.log(data);
-					console.log(data[1].lat);
+					console.log("data="+data[1].name);
+					print(data)
 				},
 				error:function(request,status, error){
 					console.log("status:\n"+request.status+"\nerror:\n"+request.error);

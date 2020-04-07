@@ -4,16 +4,16 @@ public class ItemVO {
 	private String nm_item;
 	private int amt_amount;
 
-	public void setItemName(String nm_item) {
+	public void setName(String nm_item) {
 		this.nm_item=nm_item;
 	}
-	public String getItemName() {
+	public String getName() {
 		return nm_item;
 	}
-	public void setLat(int amt_amount) {
+	public void setAmount(int amt_amount) {
 		this.amt_amount=amt_amount;
 	}
-	public int getLat() {
+	public int getAmount() {
 		return amt_amount;
 	}
 }
