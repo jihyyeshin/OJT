@@ -70,15 +70,18 @@
 			}
 		}
 	function showItem(){
-		console.log('??');
-		//if(agentId!=null){
+		if(agentId!=null){
 			$.ajax({
 				url:"./showItem",
 				type:"POST",
+				dataType:"json",
 				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 				async:false,
+				data:"agent="+agentId,
 				success: function(data){
+					console.log("agent="+agentId);
 					console.log(data);
+					console.log(data[1]);
 				},
 				error:function(request,status, error){
 					console.log("status:\n"+request.status+"\nerror:\n"+request.error);
@@ -87,7 +90,7 @@
 					console.log("success");
 				}
 			});
-		//}
+		}
 	}
 </script>
 </body>

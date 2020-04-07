@@ -21,7 +21,6 @@ public class LocVO {
 	public void setDetail(String addr_detail) {
 		this.addr_detail=addr_detail;
 	}
-	
 	public String getAgent() {
 		return cd_agent;
 	}
@@ -31,5 +30,4 @@ public class LocVO {
 	public String getDetail() {
 		return addr_detail;
 	}
-	
 }

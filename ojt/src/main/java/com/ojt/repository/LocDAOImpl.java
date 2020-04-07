@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
+import com.ojt.domain.ItemVO;
 import com.ojt.domain.LatLngVO;
 import com.ojt.domain.LocVO;
 
@@ -24,5 +25,9 @@ public class LocDAOImpl implements LocDAO{
 	@Override
 	public LocVO location(LatLngVO vo) throws Exception{
 		return sql.selectOne(namespace+".location", vo);
+	}
+	@Override
+	public List<ItemVO> itemList(String agent) throws Exception{
+		return sql.selectList(namespace+".itemList",agent);
 	}
 }

@@ -1,7 +1,5 @@
 package com.ojt.domain;
 
-import java.util.Map;
-
 public class LatLngVO {
 	private String location;
 	private float lat;

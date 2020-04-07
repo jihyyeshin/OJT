@@ -1,5 +1,10 @@
 package com.ojt.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -11,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ojt.domain.LocVO;
+import com.ojt.domain.ItemVO;
 import com.ojt.domain.LatLngVO;
 import com.ojt.service.LocService;
 
@@ -35,7 +41,6 @@ public class LocController {
 	        , @RequestParam float lng) throws Exception {
 		Logger.info("post location");
 		LatLngVO vo=new LatLngVO(location, lat, lng);
-		System.out.println("this is loc: "+vo.getLocation()+", lat: "+vo.getLat()+", lng: "+vo.getLng());
 		LocVO result=service.location(vo);
 		// 결과가 없는 경우
 		/* 시간 나면 예외처리 더 해주기! */
@@ -50,16 +55,13 @@ public class LocController {
 		return result.getAgent()+"|"+result.getAgentName()+"|"+result.getZip()+" "+result.getDetail();
 	}
 	
-	// 대리점 별 아이템 조회
+	// 대리점 별 아이템 , 가격 조회
 	@RequestMapping(value="/showItem")
-//	@ResponseBody
-//	public @ResponseBody LatLngVO postShowItem(@RequestParam String agentId) {
-//		
-//		return agentId; 
-//	}
-	public @ResponseBody LatLngVO doC() {
-		LatLngVO vo = new LatLngVO("제이슨 데이터", 0, 0);
-
-		return vo;
+	public @ResponseBody List<ItemVO> postShowItem(@RequestParam String agent) throws Exception {
+		
+		List<ItemVO> list=service.itemList(agent);
+		System.out.println(list);
+		
+		return list;
 	}
 }
