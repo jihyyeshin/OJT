@@ -38,9 +38,11 @@ public class LocController {
 	@ResponseBody
 	public String postLocation( @RequestParam String location
 	        , @RequestParam float lat
-	        , @RequestParam float lng) throws Exception {
+	        , @RequestParam float lng
+	        , @RequestParam char gbn) throws Exception {
 		Logger.info("post location");
-		LatLngVO vo=new LatLngVO(location, lat, lng);
+		LatLngVO vo=new LatLngVO(location, lat, lng, gbn);
+		System.out.println(vo.getLat()+" "+ vo.getLng()+" "+ vo.getGbn());
 		LocVO result=service.location(vo);
 		// 결과가 없는 경우
 		/* 시간 나면 예외처리 더 해주기! */
@@ -58,10 +60,8 @@ public class LocController {
 	// 대리점 별 아이템 , 가격 조회
 	@RequestMapping(value="/showItem")
 	public @ResponseBody List<ItemVO> showItem(@RequestParam String agent) throws Exception {
-		
 		List<ItemVO> list=service.itemList(agent);
-//		System.out.println(list);
-
+		
 		return list;
 	}
 }

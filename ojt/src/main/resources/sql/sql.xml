@@ -8,8 +8,8 @@
 </select>
 <!-- 회원가입 -->
 <insert id="signup">
-	insert into member (id, name, password)
-		values (#{id}, #{name}, #{password})
+	insert into member (id, name, password, addr, agentF, agentA)
+		values (#{id}, #{name}, #{password}, #{addr}, #{agentF}, #{agentA})
 </insert>
 <!-- 로그인 -->
 <select id="login" resultType="com.ojt.domain.MemberVO">
@@ -25,21 +25,21 @@
 	from ms_agent
 	where addr_zip like '서울%'
 </select>
-<!-- 가장 가까운 위치 -->
+<!-- 가장 가까운 위치 F-->
 <select id="location" parameterType="com.ojt.domain.LatLngVO" resultType="com.ojt.domain.LocVO">
 	select cd_agent,nm_agentform, addr_zip, addr_detail, 
 				earth_distance(ll_to_earth(#{lat}, #{lng}), ll_to_earth(lat, lng)
 				) as distance
 	from ms_agent
-	where addr_zip like '${location}%'
+	where addr_zip like '${location}%' and gbn_agent=#{gbn}
 	order by distance ASC
 	limit 1;
 </select>
+
 <!-- 대리점 별 아이템, 가격 조회 -->
 <select id="itemList" parameterType="String" resultType="com.ojt.domain.ItemVO" ><!-- 데이터 넣고  '000000'를 #{agent}로 변경-->
-	select m.nm_item, p.amt_amount
-	from ms_agentitem m, ms_pathamtpolicy p
-	where m.cd_agent='000000' and m.cd_item=p.cd_item
+	select distinct m.nm_item, p.amt_amount
+	from ms_agentitem_g m, ms_pathamtpolicy p
+	where m.cd_agent=#{agent} and m.cd_item=p.cd_item
 </select>
-<!-- 아이템 별 가격 조회 -->
 </mapper> 

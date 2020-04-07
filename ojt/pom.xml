@@ -73,7 +73,12 @@
 			<artifactId>aspectjrt</artifactId>
 			<version>${org.aspectj-version}</version>
 		</dependency>	
-		
+		<!-- JSoup -->
+		<dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.8.2</version>
+        </dependency>
         <!-- Jackson(Json) -->
 		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>

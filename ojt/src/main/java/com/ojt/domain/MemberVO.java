@@ -4,6 +4,33 @@ public class MemberVO {
 	private String id;
     private String name;  
     private String password;    //비밀번호
+    private String addr;
+    private String agentF;//상온
+    private String agentA;//신선
+
+    public String getAddr() {
+        return addr;
+    }
+
+    public void setAddr(String addr) {
+        this.addr=addr;
+    }
+
+    public String getAgentF() {
+        return agentF;
+    }
+
+    public void setAgentF(String agentF) {
+        this.agentF = agentF;
+    }
+
+    public String getAgentA() {
+        return agentA;
+    }
+
+    public void setAgentA(String agentA) {
+        this.agentA=agentA;
+    }
 
     public String getName() {
         return name;

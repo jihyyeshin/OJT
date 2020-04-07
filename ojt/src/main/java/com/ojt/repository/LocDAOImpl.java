@@ -28,6 +28,7 @@ public class LocDAOImpl implements LocDAO{
 	}
 	@Override
 	public List<ItemVO> itemList(String agent) throws Exception{
+		
 		return sql.selectList(namespace+".itemList",agent);
 	}
 }

@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>회원가입</title>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1ad9f9f4c70ec392a1d41fe14ab44d29&libraries=services"></script>
 </head>
 <body>
 <h3>회원가입</h3>
@@ -15,14 +15,77 @@
  <p>아이디: <input type="text" id="id" name="id" /></p>
  <p>비밀번호: <input type="password" id="password" name="password" onchange="check_psw();" placeholder="영문, 숫자, 특수문자 조합 8자 이상"/></p>
  <p id = "psw_check_result"></p>
- <p>비밀번호 찾기 질문: <input type="text" id="user_quest" name="user_quest" /></p>
- <p>비밀번호 찾기 답변: <input type="text" id="user_answer" name="user_answer" /></p>
- <p>대리점 번호: <input type="text" id="cd_agent" name="cd_agent" /></p>
+ <label for="addr">거래처 주소: </label>
+ <input type="text" id="addr" name="addr"/>
+ <input type="button" onclick="calcResult();" value="대리점할당"/>
+ <p>대리점 할당 신선</p>
+ <input type="hidden" id="agentA" name="agentA"/>
+ <p>이름:</p><p id="resultAgentA"></p>
+ <p>주소:</p><p id="resultLocationA"></p>
+ <p>대리점 할당 상온</p>
+ <input type="hidden" id="agentF" name="agentF"/>
+ <p>이름:</p><p id="resultAgentF"></p>
+ <p>주소:</p><p id="resultLocationF"></p>
  <p><button type="button" onclick="check_submit();">회원가입</button>
  <button type="reset">취소</button></p>
 </form>
 
 <script type="text/javascript">
+	var agentId;
+	var resultArray;
+	function calcResult(){
+		locCalc('A');
+		locCalc('F');
+	}
+	function locCalc(gbn) {
+			var geocoder = new kakao.maps.services.Geocoder();
+			var loc=$("#addr").val();
+			console.log('loc');
+			
+			if(loc=="" || loc==null || loc==undefined)
+				$("#result").html("위치를 입력하세요.");
+			else {
+				var locArray=loc.split(' ');
+				if(locArray[1]==undefined || locArray[1]=="" || locArray[1]==null)
+					loc=locArray[0];
+				else loc=locArray[0]+" "+locArray[1]; 
+				var lat, lng;
+				// 위경도 계산
+				geocoder.addressSearch(loc, function(result, status) {
+				    // 정상적으로 검색이 완료됐으면 
+				     if (status === kakao.maps.services.Status.OK) {
+				    	lat=result[0].y;
+				    	lng=result[0].x;
+				    	console.log("addr: "+lat+", "+lng)
+				    	// 통신
+				    	$.ajax({
+							url:"./locationTest",
+							type:"POST",
+							dataType:"text",
+							contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+							async:false,
+							data: "location="+loc+"&lat="+lat+"&lng="+lng+"&gbn="+gbn,
+							success: function(data){
+								// 받아온 결과물 저장
+								resultArray=data.split('|');
+								$("#resultAgent"+gbn).html(resultArray[1]);
+								$("#resultLocation"+gbn).html(resultArray[2]);
+								$("#agent"+gbn).val(resultArray[0]);
+								console.log($("#agent"+gbn).val());
+								//agentId=resultArray[0];// 아이템 검색 시 사용
+							},
+							error:function(request,status, error){
+								console.log("status:\n"+request.status+"\nerror:\n"+request.error);
+							},
+							complete:function(data){
+								console.log("complete");
+							}
+						});
+				    } 
+				});
+			}
+		}
+	
 	var psw_validation = 'false';
 	
 	function check_psw(){

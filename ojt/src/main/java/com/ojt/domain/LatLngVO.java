@@ -4,11 +4,19 @@ public class LatLngVO {
 	private String location;
 	private float lat;
 	private float lng;
+	private char gbn;
 	
-	public LatLngVO(String location, float lat, float lng) {
+	public LatLngVO(String location, float lat, float lng, char gbn) {
 		this.location=location;
 		this.lat=lat;
 		this.lng=lng;
+		this.gbn=gbn;
+	}
+	public void setGbn(char gbn) {
+		this.gbn=gbn;
+	}
+	public char getGbn() {
+		return gbn;
 	}
 	public void setLocation(String location) {
 		this.location=location;

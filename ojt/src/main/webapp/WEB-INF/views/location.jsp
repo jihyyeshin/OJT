@@ -30,7 +30,7 @@
 			var loc=$("#myloc").val();
 			
 			if(loc=="" || loc==null || loc==undefined)
-				$("#result").html("위치를 입력하세요!");
+				$("#result").html("위치를 입력하세요.");
 			else {
 				var locArray=loc.split(' ');
 				if(locArray[1]==undefined || locArray[1]=="" || locArray[1]==null)
@@ -51,7 +51,7 @@
 							dataType:"text",
 							contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 							async:false,
-							data: "location="+loc+"&lat="+lat+"&lng="+lng,
+							data: "location="+loc+"&lat="+lat+"&lng="+lng+"&gbn="+gbn,
 							success: function(data){
 								// 받아온 결과물 저장
 								var resultArray=data.split('|');
@@ -78,7 +78,6 @@
 			str += '<td>' + item.amount + '</td></tr>';
 			$('table').append(str);
 		});
-		
 	}
 	// 대리점 별 아이템 및 가격 정보 조회
 	function showItem(){
@@ -91,9 +90,9 @@
 				async:false,
 				data:"agent="+agentId,
 				success: function(data){
-					console.log("agent="+agentId);
-					console.log("data="+data[1].name);
-					print(data)
+					//console.log("agent="+agentId);
+					//console.log("data="+data[1].name);
+					print(data);
 				},
 				error:function(request,status, error){
 					console.log("status:\n"+request.status+"\nerror:\n"+request.error);
