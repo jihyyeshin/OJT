@@ -18,6 +18,12 @@
 	where id=#{id}
 		and password=#{password}
 </select>
+<!-- 로그인 시 현재 날짜로 업데이트 -->
+<update id="loginDate">
+	update member
+	set finalInDtm=CURRENT_DATE
+	where id=#{id} and password=#{password}
+</update>
 
 <!-- 위치 -->
 <select id="locationList" resultType="com.ojt.domain.LocVO"><!-- 이렇게 해도 리스트로 넘겨주도록 MyBatis 설계 -->

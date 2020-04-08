@@ -1,5 +1,7 @@
 package com.ojt.domain;
 
+import java.time.LocalDate;
+
 public class MemberVO {
 	private String id;
     private String name;  
@@ -7,7 +9,21 @@ public class MemberVO {
     private String addr;
     private String agentF;//상온
     private String agentA;//신선
-
+    private String finalInDtm;
+    private int failInCnt;
+    
+    public String getFinalInDtm() {
+    	return finalInDtm;
+    }
+    public void setFinalInDate(String finalInDtm) {
+    	this.finalInDtm=finalInDtm;
+    }
+    public int getFailInCnt() {
+    	return failInCnt;
+    }
+    public void setFailInCnt(int failInCnt) {
+    	this.failInCnt=failInCnt;
+    }
     public String getAddr() {
         return addr;
     }
