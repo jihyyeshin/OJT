@@ -10,7 +10,6 @@
 </head>
 <body>
 <h3>로그인</h3>
-<!-- 조회에 해당 -->
 <form role="form" method="post" autocomplete="off" action="./login">
  <p>
   <label for="id">아이디</label>

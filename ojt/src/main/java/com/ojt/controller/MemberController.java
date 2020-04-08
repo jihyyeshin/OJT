@@ -60,7 +60,7 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 	  session.setAttribute("member", null);
 	  rttr.addFlashAttribute("msg", "아이디, 비밀번호를 다시 입력하세요.");
 	 } else {
-	  session.setAttribute("member", login);
+		 session.setAttribute("member", login);
 	 }
 	 
 	 return "redirect:/";

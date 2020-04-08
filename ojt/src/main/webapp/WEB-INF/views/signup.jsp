@@ -56,7 +56,6 @@
 				     if (status === kakao.maps.services.Status.OK) {
 				    	lat=result[0].y;
 				    	lng=result[0].x;
-				    	console.log("addr: "+lat+", "+lng)
 				    	// 통신
 				    	$.ajax({
 							url:"./locationTest",
@@ -71,8 +70,6 @@
 								$("#resultAgent"+gbn).html(resultArray[1]);
 								$("#resultLocation"+gbn).html(resultArray[2]);
 								$("#agent"+gbn).val(resultArray[0]);
-								console.log($("#agent"+gbn).val());
-								//agentId=resultArray[0];// 아이템 검색 시 사용
 							},
 							error:function(request,status, error){
 								console.log("status:\n"+request.status+"\nerror:\n"+request.error);

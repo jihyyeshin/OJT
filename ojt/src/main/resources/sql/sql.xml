@@ -13,7 +13,7 @@
 </insert>
 <!-- 로그인 -->
 <select id="login" resultType="com.ojt.domain.MemberVO">
-	select id, name
+	select *
 	from member
 	where id=#{id}
 		and password=#{password}
@@ -25,7 +25,7 @@
 	from ms_agent
 	where addr_zip like '서울%'
 </select>
-<!-- 가장 가까운 위치 F-->
+<!-- 가장 가까운 위치 -->
 <select id="location" parameterType="com.ojt.domain.LatLngVO" resultType="com.ojt.domain.LocVO">
 	select cd_agent,nm_agentform, addr_zip, addr_detail, 
 				earth_distance(ll_to_earth(#{lat}, #{lng}), ll_to_earth(lat, lng)
