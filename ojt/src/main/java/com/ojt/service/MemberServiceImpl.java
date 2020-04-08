@@ -29,4 +29,8 @@ public class MemberServiceImpl implements MemberService{
 	public void loginFail(MemberVO vo) throws Exception{
 		dao.loginFail(vo);
 	}
+	@Override
+	public void tempPwd(MemberVO vo) throws Exception{
+		dao.tempPwd(vo);
+	}
 }

@@ -82,7 +82,7 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 				return "redirect:/";
 			}
 			// 5회 이상 비밀번호 틀릴 시 자동 잠금
-			if(login.getFailInCnt()>5) {
+			if(login.getFailInCnt()>=5) {
 				session.setAttribute("member", null);
 				rttr.addFlashAttribute("msg", "5회 이상 비밀번호를 잘못 입력하여 계정이 잠겼습니다.");
 				return "redirect:/";
@@ -106,5 +106,41 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 		return "redirect:/";
 	}
 	
+	// 임시 비밀번호 View
+	@RequestMapping(value="/tmpPwd", method=RequestMethod.GET)
+	public String getTempPwd(MemberVO vo, RedirectAttributes rttr) throws Exception{
+		Logger.info("get temp password");
+		return "tmpPwd";
+	}
+	// 임시 비밀번호 발급(비밀번호 초기화)
+	@RequestMapping(value="/tmpPwd", method=RequestMethod.POST)
+	public String postTempPwd(MemberVO vo, RedirectAttributes rttr) throws Exception{
+		Logger.info("post temp password");
+		vo.setPassword(randomPw());
+		service.tempPwd(vo);
+		rttr.addFlashAttribute("msg", "임시 비밀번호 발급 완료");
+		return "redirect:/";
+	}
+	// 숫자, 영문, 특수문자 한 개 이상 포함한 랜덤 임시 비밀번호
+	 public static String randomPw(){ 
+		  char pwCollectionSpCha[]  = new char[] {'!','@','#','$','%','^','&','*','(',')'}; 
+		  char pwCollectionNum[]   = new char[] {'1','2','3','4','5','6','7','8','9','0',}; 
+		  char pwCollectionAlpha[] = new char[] {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z', 
+	              'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+		  char pwCollectionAll[]  = new char[] {'1','2','3','4','5','6','7','8','9','0', 
+		              'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z', 
+		              'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z', 
+		              '!','@','#','$','%','^','&','*','(',')'}; 
+		  return getRandPw(1, pwCollectionAlpha) + getRandPw(1, pwCollectionNum) + getRandPw(5, pwCollectionAll) + getRandPw(1, pwCollectionSpCha); 
+	 }
+	 
+	 public static String getRandPw(int size, char[] pwCollection){
+	        String ranPw = "";
+	        for (int i = 0; i < size; i++) {
+	            int selectRandomPw = (int) (Math.random() * (pwCollection.length));
+	            ranPw += pwCollection[selectRandomPw];
+	        }
+	        return ranPw;
+	 }
 }
 

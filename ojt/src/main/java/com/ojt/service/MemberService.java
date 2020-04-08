@@ -7,4 +7,5 @@ public interface MemberService {
 	public MemberVO login(MemberVO vo )throws Exception;
 	public void loginDate(MemberVO vo) throws Exception;
 	public void loginFail(MemberVO vo) throws Exception;
+	public void tempPwd(MemberVO vo) throws Exception;
 }

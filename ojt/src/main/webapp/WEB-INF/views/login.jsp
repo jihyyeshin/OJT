@@ -22,6 +22,7 @@
  <p><button type="submit">로그인</button>
  <button type="reset">취소</button></p>
  <p><a href="./signup">회원가입</a></p>
+ <p><a href="./tmpPwd">비밀번호를 잊어버리셨나요?</a></p>
 </form>
 </body>
 </html>

@@ -3,9 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="sql">
-<select id="sel" resultType="com.ojt.domain.MemberVO">     
-	SELECT * FROM member
-</select>
+
 <!-- 회원가입 -->
 <insert id="signup">
 	insert into member (id, name, password, addr, agentF, agentA)
@@ -15,14 +13,13 @@
 <select id="login" resultType="com.ojt.domain.MemberVO">
 	select *
 	from member
-	where id=#{id}
-		and password=#{password}
+	where (id=#{id} and password=#{password}) or (id=#{id} and temporary=#{password})
 </select>
 <!-- 로그인 시 현재 날짜, 실패=0 으로 업데이트 -->
 <update id="loginDate">
 	update member
 	set (finalInDtm, failInCnt)=(CURRENT_DATE, 0)
-	where id=#{id} and password=#{password}
+	where (id=#{id} and password=#{password}) or (id=#{id} and temporary=#{password})
 </update>
 <!-- 로그인 실패 처리 -->
 <update id="loginFail">
@@ -30,6 +27,13 @@
 	set failInCnt=failInCnt+1
 	where id=#{id}
 </update>
+<!-- 임시 비밀번호 발급 -->
+<update id="tmpPwd">
+	update member
+	set temporary=#{password}
+	where id=#{id}
+</update>
+
 <!-- 위치 -->
 <select id="locationList" resultType="com.ojt.domain.LocVO"><!-- 이렇게 해도 리스트로 넘겨주도록 MyBatis 설계 -->
 	select *
