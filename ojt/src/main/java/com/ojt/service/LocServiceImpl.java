@@ -25,9 +25,4 @@ public class LocServiceImpl implements LocService{
 	public LocVO location(LatLngVO vo)throws Exception{
 		return dao.location(vo);
 	}
-	
-	@Override
-	public List<ItemVO> itemList(String agent) throws Exception{
-		return dao.itemList(agent);
-	}
 }

@@ -1,0 +1,38 @@
+package com.ojt.controller;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.ojt.domain.ItemVO;
+import com.ojt.service.ItemService;
+
+@Controller
+public class ItemController {
+	@Inject
+	ItemService service;
+	
+	private static final Logger Logger=LoggerFactory.getLogger(LocController.class);
+	
+	@RequestMapping(value = "/items", method = RequestMethod.GET)
+	public String getLocation() {
+		Logger.info("get items");
+		return "items";
+	}
+	
+	// 대리점 별 아이템 , 가격 조회
+	@RequestMapping(value="/showItem")
+	public @ResponseBody List<ItemVO> showItem(@RequestParam String agent) throws Exception {
+		List<ItemVO> list=service.itemList(agent);
+		
+		return list;
+	}
+}

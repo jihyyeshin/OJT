@@ -9,5 +9,4 @@ import com.ojt.domain.LocVO;
 public interface LocService {
 	public List<LocVO> locationList(LocVO vo )throws Exception;
 	public LocVO location(LatLngVO vo)throws Exception;
-	public List<ItemVO> itemList(String agent) throws Exception;
 }

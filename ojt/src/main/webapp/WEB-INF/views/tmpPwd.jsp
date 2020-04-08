@@ -13,10 +13,6 @@
   <label for="id">아이디</label>
   <input type="text" id="id" name="id" />
  </p>
- <p>
- <label for="id">비밀번호 힌트</label>
- <input type="text" id="pwdhint" name="pwdhint" />
- </p>
  <p><button type="submit">임시 비밀번호 발급</button>
  <button type="reset">취소</button></p>
 </form>

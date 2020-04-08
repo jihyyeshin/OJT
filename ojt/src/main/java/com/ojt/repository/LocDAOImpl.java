@@ -26,8 +26,5 @@ public class LocDAOImpl implements LocDAO{
 	public LocVO location(LatLngVO vo) throws Exception{
 		return sql.selectOne(namespace+".location", vo);
 	}
-	@Override
-	public List<ItemVO> itemList(String agent) throws Exception{
-		return sql.selectList(namespace+".itemList",agent);
-	}
+	
 }
