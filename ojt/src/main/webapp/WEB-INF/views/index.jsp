@@ -20,7 +20,7 @@
  <p> ${member.name}님 환영합니다.</p>
  <p><a href="./logout">로그아웃</a></p>
  <p><a href="./location?agent=${member.agentF}">상온</a></p>
- <p><a href="./location?agent=${member.agentA}">식품</a></p>
+ <p><a href="./location?agent=${member.agentA}">신선</a></p>
 </c:if>
 
 <p style="color:blue;">${msg}</p>

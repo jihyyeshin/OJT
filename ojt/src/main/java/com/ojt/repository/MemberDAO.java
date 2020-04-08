@@ -8,4 +8,6 @@ public interface MemberDAO {
 	public MemberVO login(MemberVO vo) throws Exception;
 	// 로그인 날짜 업데이트
 	public void loginDate(MemberVO vo) throws Exception;
+	// 로그인 실패 처리: 실패 cnt+1
+	public void loginFail(MemberVO vo) throws Exception;
 }

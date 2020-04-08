@@ -25,4 +25,8 @@ public class MemberServiceImpl implements MemberService{
 	public void loginDate(MemberVO vo) throws Exception{
 		dao.loginDate(vo);
 	}
+	@Override
+	public void loginFail(MemberVO vo) throws Exception{
+		dao.loginFail(vo);
+	}
 }

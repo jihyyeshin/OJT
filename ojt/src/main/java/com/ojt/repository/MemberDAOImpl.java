@@ -29,4 +29,9 @@ public class MemberDAOImpl implements MemberDAO {
 	public void loginDate(MemberVO vo) throws Exception{
 		sql.update(namespace+".loginDate", vo);
 	}
+	
+	@Override
+	public void loginFail(MemberVO vo) throws Exception{
+		sql.update(namespace+".loginFail", vo);
+	}
 }
