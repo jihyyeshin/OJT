@@ -20,4 +20,9 @@ public class ItemDAOImpl implements ItemDAO {
 	public List<ItemVO> itemList(String agent) throws Exception{
 		return sql.selectList(namespace+".itemList",agent);
 	}
+	
+	@Override
+	public ItemVO itemDetail(String item) throws Exception{
+		return sql.selectOne(namespace+".itemDetail", item);
+	}
 }

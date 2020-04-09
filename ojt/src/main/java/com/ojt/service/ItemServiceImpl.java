@@ -18,4 +18,8 @@ public class ItemServiceImpl implements ItemService{
 	public List<ItemVO> itemList(String agent) throws Exception{
 		return dao.itemList(agent);
 	}
+	@Override
+	public ItemVO itemDetail(String item) throws Exception{
+		return dao.itemDetail(item);
+	}
 }

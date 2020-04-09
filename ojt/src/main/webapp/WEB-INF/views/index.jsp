@@ -19,8 +19,16 @@
 <h3>Hello</h3>
  <p> ${member.name}님 환영합니다.</p>
  <p><a href="./logout">로그아웃</a></p>
- <p><a href="./items?agent=${member.agentF}">상온</a></p>
- <p><a href="./items?agent=${member.agentA}">신선</a></p>
+ <form action="./items" method="post">
+ 	<input type="hidden" name="agent" value="${member.agentF}"/>
+ 	<input type="hidden" name="id" value="${member.id}"/>
+ 	<button type="submit">상온</button>
+ </form>
+ <form action="./items" method="post">
+ 	<input type="hidden" name="agent" value="${member.agentA}"/>
+ 	<input type="hidden" name="id" value="${member.id}"/>
+ 	<button type="submit">신선</button>
+ </form>
 </c:if>
 
 <p style="color:blue;">${msg}</p>

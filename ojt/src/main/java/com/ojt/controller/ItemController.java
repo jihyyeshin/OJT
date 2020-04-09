@@ -3,6 +3,8 @@ package com.ojt.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +24,9 @@ public class ItemController {
 	
 	private static final Logger Logger=LoggerFactory.getLogger(LocController.class);
 	
-	@RequestMapping(value = "/items", method = RequestMethod.GET)
-	public String getLocation() {
-		Logger.info("get items");
+	@RequestMapping(value="/items", method=RequestMethod.POST)
+	public String postLocation() {
+		Logger.info("post items");
 		return "items";
 	}
 	
@@ -34,5 +36,15 @@ public class ItemController {
 		List<ItemVO> list=service.itemList(agent);
 		
 		return list;
+	}
+	
+	@RequestMapping(value="/items/detail", method=RequestMethod.GET)
+	public String postDetail(HttpServletRequest req, String item) throws Exception {
+		Logger.info("post detail");
+		HttpSession session = req.getSession();
+		
+		ItemVO vo=service.itemDetail(item);
+		session.setAttribute("item", vo);
+		return "itemDetail";
 	}
 }

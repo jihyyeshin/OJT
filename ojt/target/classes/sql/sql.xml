@@ -52,9 +52,16 @@
 </select>
 
 <!-- 대리점 별 아이템, 가격 조회 -->
-<select id="itemList" parameterType="String" resultType="com.ojt.domain.ItemVO" ><!-- 데이터 넣고  '000000'를 #{agent}로 변경-->
-	select distinct m.nm_item, p.amt_amount
-	from ms_agentitem_g m, ms_pathamtpolicy p
-	where m.cd_agent=#{agent} and m.cd_item=p.cd_item
+<select id="itemList" parameterType="String" resultType="com.ojt.domain.ItemVO" >
+	select distinct g.cd_item, g.nm_item, m.amt_amount
+	from ms_agentitem_g g inner join ms_pathamtpolicy m on g.cd_item=m.cd_item
+	where g.cd_agent=#{agent}
+</select>
+
+<!-- 아이템 별 정보 조회 -->
+<select id="itemDetail" parameterType="String" resultType="com.ojt.domain.ItemVO">
+	select *
+	from ms_agentitem_g
+	where cd_item=#{item}
 </select>
 </mapper> 

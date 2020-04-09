@@ -1,6 +1,5 @@
 package com.ojt.domain;
 
-import java.time.LocalDate;
 
 public class MemberVO {
 	private String id;

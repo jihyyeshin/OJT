@@ -12,10 +12,15 @@
 <title>Location</title>
 </head>
 <body>
-	<h3>자재 정보</h3>
+	<h3>아이템 주문</h3>
+	<!-- 주문관리 -->
+	<form action="./items/order" method="post" onsubmit="_submit();">
+	<input type="submit" value="주문하기">
+	<input type="hidden" name="memberid" value="${param.id}"/>
 	<table></table>
+	</form>
 	<script type="text/javascript">
-	var agentId=${param.agent};// 임시 agentId
+	var agentId=${param.agent};
 	
 	// 로드되자마자
 	$(document).ready(function(){
@@ -25,11 +30,42 @@
 	// 아이템 정보 출력
 	function print(data){
 		$.each(data, function(index, item){
-			var str = '<tr><td>'+item.name+'</td>';
-			str += '<td>' + item.amount + '</td></tr>';
+			var str = '<tr><td><input type="checkbox" id="item" name="item" value="'+item.item+'"></td>';
+			str += '<td><a href="./items/detail?item='+item.item+'">'+item.name+'</a></td>';
+			str += '<td><input type="hidden" name="amount" value="'+item.amount+'">' + item.amount + '</td>';
+			str += '<td><input type="text" name="qty">개</td></tr>';
 			$('table').append(str);
 		});
 	}
+	
+	function _submit()
+	{
+	    //같이 보낼 값
+	    var item=document.getElementsByName("item");
+	    var amount=document.getElementsByName("amount");
+	    var qty=document.getElementsByName("qty");
+	    if (typeof(item.length) == 'undefined') //단일
+	    {
+	        if (item[0].checked==false)
+	        {
+	            amount[0].disabled=true;
+	            qty[0].disabled=true;
+	        }
+	    } else { 
+	    	//다중
+	        for (i=0; i<item.length; i++)
+	        {
+	            if (item[i].checked==false)
+	            {
+	            	//alert(i);
+	            	amount[i].disabled=true;
+		            qty[i].disabled=true;
+	            }
+	        }
+	    }
+	    return true;
+	}
+	
 	// 대리점 별 아이템 및 가격 정보 조회
 	function showItem(){
 		if(agentId!=null){
