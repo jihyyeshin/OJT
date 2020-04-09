@@ -24,8 +24,12 @@ public class ItemController {
 	
 	private static final Logger Logger=LoggerFactory.getLogger(LocController.class);
 	
+	@RequestMapping(value = "/items", method = RequestMethod.GET)
+	public String getItem() {
+		return "notFound";
+	}
 	@RequestMapping(value="/items", method=RequestMethod.POST)
-	public String postLocation() {
+	public String postItem() {
 		Logger.info("post items");
 		return "items";
 	}

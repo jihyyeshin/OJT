@@ -33,6 +33,7 @@
 		$.each(data, function(index, item){
 			var str = '<tr><td><input type="checkbox" name="item" value="'+item.item+'"></td>';
 			str += '<td><a href="./items/detail?item='+item.item+'">'+item.name+'</a></td>';
+			str += '<td><input type="hidden" name="name" value="'+item.name+'"></td>'
 			str += '<td><input type="hidden" name="price" value="'+item.amount+'">' + item.amount + '</td>';
 			str += '<td><input type="text" name="qty">개</td></tr>';
 			$('table').append(str);

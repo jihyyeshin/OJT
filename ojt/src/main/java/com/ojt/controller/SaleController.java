@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,24 +23,29 @@ public class SaleController {
 	SaleService service;
 	private static final Logger Logger=LoggerFactory.getLogger(LocController.class);
 	
+	@RequestMapping(value = "/items/sale", method = RequestMethod.GET)
+	public String getSale() {
+		return "notFound";
+	}
 	// 주문
 	@RequestMapping(value = "/items/sale", method = RequestMethod.POST)
-	public String postSale(String agent, String memberid, String[] item, int[] price, int[] qty) throws Exception{
+	public String postSale(HttpServletRequest req, String agent, String memberid, String[] name, String[] item, int[] price, int[] qty) throws Exception{
 		Logger.info("post sale");
-		//System.out.println("agent: "+agent+" memberid: "+memberid+" item: "+item[1]+" price: "+price[1]+" qty: "+qty[1]);
+		HttpSession session = req.getSession();
+		
 		Date time=new Date();
 		SimpleDateFormat format = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");	
 		String dtime=format.format(time);
-		//System.out.println("look dtime+"+dtime);
 		
 		int amount=0;
 		for(int i=0;i<item.length;i++) {
 			amount+=price[i]*qty[i];
 			SaleItemVO sivo=new SaleItemVO(dtime, price[i]*qty[i], price[i], agent, item[i],qty[i], i+1);
-			service.saleItem(sivo);
+			service.saleItem(sivo); // 주문 아이템 insert
 		}
 		SaleVO svo=new SaleVO(dtime, amount,agent, memberid);
-		service.sale(svo);
-		return "sale"; //주문 완료화면
+		service.sale(svo); // 주문 정보 insert
+		session.setAttribute("memberid", memberid);
+		return "sale"; //주문 완료View
 	}
 }
