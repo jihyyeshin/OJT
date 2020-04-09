@@ -64,4 +64,18 @@
 	from ms_agentitem_g
 	where cd_item=#{item}
 </select>
+
+<!-- 주문정보 -->
+<insert id="sale" parameterType="com.ojt.domain.SaleVO">
+	insert into sl_sale (no_saleslip, amt_amount, cd_agent, cd_customer, dt_sale, gbn_slip)
+	values (#{noSaleslip}, #{amount}, #{agent}, #{memberid}, CURRENT_DATE, 'NN');
+</insert>
+
+<!-- 주문아이템 -->
+<insert id="saleItem" parameterType="com.ojt.domain.SaleItemVO">
+	insert into sl_saleitem 
+		(no_saleslip, amt_amount, amt_price, cd_agent, cd_item, dt_sale, qty_delivtot, seq)
+	values 
+	(#{noSaleslip}, #{amount},#{price},#{agent}, #{item},CURRENT_DATE, #{qty}, #{seq});
+</insert>
 </mapper> 

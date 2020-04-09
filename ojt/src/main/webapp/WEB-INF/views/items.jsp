@@ -14,9 +14,10 @@
 <body>
 	<h3>아이템 주문</h3>
 	<!-- 주문관리 -->
-	<form action="./items/order" method="post" onsubmit="_submit();">
+	<form action="./items/sale" method="post" onsubmit="_submit();">
 	<input type="submit" value="주문하기">
 	<input type="hidden" name="memberid" value="${param.id}"/>
+	<input type="hidden" name="agent" value="${param.agent}"/>	
 	<table></table>
 	</form>
 	<script type="text/javascript">
@@ -30,25 +31,27 @@
 	// 아이템 정보 출력
 	function print(data){
 		$.each(data, function(index, item){
-			var str = '<tr><td><input type="checkbox" id="item" name="item" value="'+item.item+'"></td>';
+			var str = '<tr><td><input type="checkbox" name="item" value="'+item.item+'"></td>';
 			str += '<td><a href="./items/detail?item='+item.item+'">'+item.name+'</a></td>';
-			str += '<td><input type="hidden" name="amount" value="'+item.amount+'">' + item.amount + '</td>';
+			str += '<td><input type="hidden" name="price" value="'+item.amount+'">' + item.amount + '</td>';
 			str += '<td><input type="text" name="qty">개</td></tr>';
 			$('table').append(str);
 		});
 	}
 	
+	// 체크박스에 보내기
 	function _submit()
 	{
 	    //같이 보낼 값
 	    var item=document.getElementsByName("item");
-	    var amount=document.getElementsByName("amount");
+	    var price=document.getElementsByName("price");
 	    var qty=document.getElementsByName("qty");
 	    if (typeof(item.length) == 'undefined') //단일
 	    {
-	        if (item[0].checked==false)
+	        if (item[0].checked==true)
 	        {
-	            amount[0].disabled=true;
+	        	
+	        	price[0].disabled=true;
 	            qty[0].disabled=true;
 	        }
 	    } else { 
@@ -57,12 +60,22 @@
 	        {
 	            if (item[i].checked==false)
 	            {
-	            	//alert(i);
-	            	amount[i].disabled=true;
+	            	price[i].disabled=true;
 		            qty[i].disabled=true;
 	            }
 	        }
 	    }
+	   /*  var aJsonArray=new Array();
+	    for (i=0; i<item.length; i++){
+	    	var aJson=new Object();
+		    aJson.item=item[i];
+		    aJson.price=price[i];
+		    aJson.qty=qty[i];
+		    aJsonArray.push(aJson);
+	    }
+	    var sJson=JSON.stringify(aJsonArray);
+	    
+	    alert(aJson.price[1].val()); */
 	    return true;
 	}
 	
