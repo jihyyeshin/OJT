@@ -41,7 +41,7 @@ public class ItemController {
 		
 		return list;
 	}
-	
+	// 디테일 화면
 	@RequestMapping(value="/items/detail", method=RequestMethod.GET)
 	public String postDetail(HttpServletRequest req, String item) throws Exception {
 		Logger.info("post detail");

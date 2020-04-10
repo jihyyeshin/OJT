@@ -14,11 +14,19 @@
 <body>
 	<h3>아이템 주문</h3>
 	<!-- 주문관리 -->
-	<form action="./items/sale" method="post" onsubmit="_submit();">
-	<input type="submit" value="주문하기">
-	<input type="hidden" name="memberid" value="${param.id}"/>
-	<input type="hidden" name="agent" value="${param.agent}"/>	
-	<table></table>
+	<form method="post">
+		<button type="submit" onclick="javascipt: form.action='./items/basket'">장바구니</button>
+		<input type="hidden" name="memberid" value="${param.id}"/>
+		<input type="hidden" name="agent" value="${param.agent}"/>
+		<input type="hidden" name="type" value="0"/>
+	</form>
+	<form onsubmit="_submit();" method="post">
+		<button type="submit" onclick="javascipt: form.action='./items/sale'">주문하기</button>
+		<button type="submit" onclick="javascipt: form.action='./items/basket'">장바구니넣기</button>
+		<input type="hidden" name="memberid" value="${param.id}"/>
+		<input type="hidden" name="agent" value="${param.agent}"/>
+		<input type="hidden" name="type" value="1"/>
+		<table></table>
 	</form>
 	<script type="text/javascript">
 	var agentId=${param.agent};
@@ -66,17 +74,6 @@
 	            }
 	        }
 	    }
-	   /*  var aJsonArray=new Array();
-	    for (i=0; i<item.length; i++){
-	    	var aJson=new Object();
-		    aJson.item=item[i];
-		    aJson.price=price[i];
-		    aJson.qty=qty[i];
-		    aJsonArray.push(aJson);
-	    }
-	    var sJson=JSON.stringify(aJsonArray);
-	    
-	    alert(aJson.price[1].val()); */
 	    return true;
 	}
 	

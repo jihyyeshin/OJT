@@ -12,5 +12,6 @@
 </head>
 <body>
 <p> ${memberid}님, 주문 완료되었습니다.</p>
+<a href="../">홈으로</a>
 </body>
 </html>
