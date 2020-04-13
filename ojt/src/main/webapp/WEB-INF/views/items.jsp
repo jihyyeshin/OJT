@@ -19,7 +19,7 @@
 		<button type="submit" onclick="javascipt: form.action='./items/insertBasket'">장바구니넣기</button>
 		<input type="hidden" name="memberid" value="${param.memberid}"/>
 		<input type="hidden" name="agent" value="${param.agent}"/>
-		<input type="hidden" name="item"/>
+		<input type="hidden" name="item" value=""/>
 		<table></table>
 	</form>
 	<script type="text/javascript">
@@ -35,7 +35,7 @@
 			var str = '<tr><td><input type="checkbox" name="itemchk" value="'+item.item+'"></td>';
 			str += '<td><a href="javascript:goDetail('+item.item+');">'+item.name+'</a></td>';
 			str += '<td><input type="hidden" name="name" value="'+item.name+'"></td>'
-			str += '<td><input type="hidden" name="price" value="'+item.amount+'">' + item.amount + '</td>';
+			str += '<td><input type="hidden" name="amount" value="'+item.amount+'">' + item.amount + '</td>';
 			str += '<td><input type="text" name="qty">개</td></tr>';
 			$('table').append(str);
 		});
@@ -56,24 +56,27 @@
 	function _submit()
 	{
 	    //같이 보낼 값
-	    var item=document.getElementsByName("item");
-	    var price=document.getElementsByName("price");
+	    var itemchk=document.getElementsByName("itemchk");
+	    var amount=document.getElementsByName("amount");
 	    var qty=document.getElementsByName("qty");
-	    if (typeof(item.length) == 'undefined') //단일
+	    /* alert(itemchk);
+	    alert(amount);
+	    alert(qty); */
+	    if (typeof(itemchk.length) == 'undefined') //단일
 	    {
-	        if (item[0].checked==true)
+	        if (itemchk[0].checked==true)
 	        {
-	        	
-	        	price[0].disabled=true;
+	        	amount[0].disabled=true;
 	            qty[0].disabled=true;
 	        }
 	    } else { 
 	    	//다중
-	        for (i=0; i<item.length; i++)
+	    	//alert(itemchk.length);
+	        for (i=0; i<itemchk.length; i++)
 	        {
-	            if (item[i].checked==false)
+	            if (itemchk[i].checked==false)
 	            {
-	            	price[i].disabled=true;
+	            	amount[i].disabled=true;
 		            qty[i].disabled=true;
 	            }
 	        }

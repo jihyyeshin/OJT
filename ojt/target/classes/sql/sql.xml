@@ -60,9 +60,10 @@
 
 <!-- 아이템 별 정보 조회 -->
 <select id="itemDetail" parameterType="String" resultType="com.ojt.domain.ItemVO">
-	select *
-	from ms_agentitem_g
-	where cd_item=#{item}
+	select *, m.amt_amount
+	from ms_agentitem_g g inner join ms_pathamtpolicy m on g.cd_item=m.cd_item
+	where g.cd_item=#{item}
+	limit 1;
 </select>
 
 <!-- 주문정보 -->

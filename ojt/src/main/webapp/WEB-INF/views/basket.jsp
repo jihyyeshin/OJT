@@ -11,7 +11,7 @@
 <a href="../items">+</a>
 <form method="post" onsubmit="_submit();">
 	<table id="tbl"></table>
-	<button type="submit" onclick="javascipt: form.action='./sale'">주문하기</button>
+	<button type="submit" onclick="javascipt: form.action='./saleBasket'">주문하기</button>
 	<input type="hidden" name="memberid" value="${memberid}"/>
 	<input type="hidden" name="agent" value="${agent}"/>
 </form>
@@ -25,7 +25,6 @@
 	// 장바구니 삭제
 	function delete_func(btn){
 		var parent=btn.parentNode;
-		/* alert(parent.id); */
 		$.ajax({
 			url:"./deleteBasket",
 			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
@@ -44,11 +43,11 @@
 	
 	function print(data){
 		$.each(data, function(index, item){
-			var str = '<div id="'+item.idx+'"><tr><td><input type="checkbox" name="item" value="'+item.item+'"></td>';
-			str += '<td><input type="hidden" name="price" value="'+item.price+'">'+item.price+'</td>';
+			var str = '<div id="'+item.idx+'"><tr><td><input type="checkbox" name="itemchk" value="'+item.item+'"></td>';
+			str += '<td><input type="hidden" name="amount" value="'+item.price+'">'+item.price+'</td>';
 			str += '<td><input type="hidden" name="idx" value="'+item.idx+'"></td>';
 			str += '<td><input type="hidden" name="qty" value="'+item.qty+'">' + item.qty + '</td>';
-			str += '<td><input type="button" value="delete" onclick="delete_func(this);"/></td></div>'
+			str += '<td><input type="button" value="X" onclick="delete_func(this);"/></td></div>'
 			$('table').append(str);
 		});
 	}
@@ -80,26 +79,26 @@
 	function _submit()
 	{
 	    //같이 보낼 값
-	    var item=document.getElementsByName("item");
-	    var price=document.getElementsByName("price");
+	    var itemchk=document.getElementsByName("itemchk");
+	    var amount=document.getElementsByName("amount");
 	    var qty=document.getElementsByName("qty");
 	    var idx=document.getElementsByName("idx");
-	    if (typeof(item.length) == 'undefined') //단일
+	    if (typeof(itemchk.length) == 'undefined') //단일
 	    {
-	        if (item[0].checked==true)
+	        if (itemchk[0].checked==true)
 	        {
 	        	idx[0].disabled=true;
-	        	price[0].disabled=true;
+	        	amount[0].disabled=true;
 	            qty[0].disabled=true;
 	        }
 	    } else { 
 	    	//다중
-	        for (i=0; i<item.length; i++)
+	        for (i=0; i<itemchk.length; i++)
 	        {
-	            if (item[i].checked==false)
+	            if (itemchk[i].checked==false)
 	            {
 	            	idx[i].disabled=true;
-	            	price[i].disabled=true;
+	            	amount[i].disabled=true;
 		            qty[i].disabled=true;
 	            }
 	        }

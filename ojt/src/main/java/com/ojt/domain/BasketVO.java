@@ -3,8 +3,8 @@ package com.ojt.domain;
 public class BasketVO {
 	private int idx;
 	private String memberid;
-	private int amount;
-	private int price;
+	private int amount;//amount*¼ö·®
+	private int price;//amount
 	private String agent; 
 	private String item;
 	private int qty;
