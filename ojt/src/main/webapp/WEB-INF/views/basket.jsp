@@ -29,14 +29,13 @@
 	// 장바구니 삭제
 	function delete_func(btn){
 		var parent=btn.parentNode;
-		//alert(parent.id);
+		/* alert(parent.id); */
 		$.ajax({
 			url:"./deleteBasket",
 			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 			data:"idx="+parent.id,
 			success: function(data){
-				//alert("##"+data);
-				window.location.reload();
+				window.location.reload(false);
 			},
 			error:function(request,status, error){
 				console.log("status:\n"+request.status+"\nerror:\n"+request.error);

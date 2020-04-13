@@ -26,11 +26,13 @@ public class ItemController {
 	
 	@RequestMapping(value = "/items", method = RequestMethod.GET)
 	public String getItem() {
-		return "notFound";
+		System.out.println("/items(get)");
+		return "itemPost";
 	}
 	@RequestMapping(value="/items", method=RequestMethod.POST)
 	public String postItem() {
 		Logger.info("post items");
+		System.out.println("/items(post)");
 		return "items";
 	}
 	

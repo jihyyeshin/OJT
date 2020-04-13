@@ -65,23 +65,29 @@ public class SaleController {
 		session.setAttribute("memberid", memberid);
 		return "basket";
 	}
-
 	@RequestMapping(value = "/basket", method = RequestMethod.POST)
-	public String postBasket(HttpServletRequest req, String agent, String memberid, String[] name, String[] item, int[] price, int[] qty, String type) throws Exception{
+	public String postBasket(HttpServletRequest req, String agent, String memberid, String[] name, String[] item, int[] price, int[] qty/*, String type*/) throws Exception{
 		Logger.info("post basket");
 		HttpSession session = req.getSession();
-		System.out.println("/items/basket(post)");
-		//System.out.println("type: "+type);
-		if (type!=null && type.equals("1")) { // 장바구니 넣기 일 때
-			System.out.println("/items/basket(input)");
-			for(int i=0;i<item.length;i++) {
-				BasketVO bvo=new BasketVO(memberid, price[i]*qty[i], price[i], agent, item[i],qty[i]);
-				service.basket(bvo); // 장바구니 insert
-			}
-		}
+		System.out.println("/items/basket(post)??");
 		session.setAttribute("agent", agent);
 		session.setAttribute("memberid", memberid);
 		return "basket"; // 장바구니 View
+	}
+	// 장바구니 넣기
+	@RequestMapping(value="/insertBasket", method=RequestMethod.POST)
+	public String insertBasket(HttpServletRequest req,String agent, String memberid, String[] name, String[] item, int[] price, int[] qty) throws Exception {
+		System.out.println("/items/basket(input)");
+		HttpSession session = req.getSession();
+		for(int i=0;i<item.length;i++) {
+			BasketVO bvo=new BasketVO(memberid, price[i]*qty[i], price[i], agent, item[i],qty[i]);
+			service.basket(bvo); // 장바구니 insert
+		}
+		System.out.println("agentI"+agent);
+		System.out.println("memberidI"+memberid);
+		session.setAttribute("agent", agent);
+		session.setAttribute("memberid", memberid);
+		return "redirect:/items";
 	}
 	
 	// 장바구니 아이템 조회
@@ -94,9 +100,8 @@ public class SaleController {
 	
 	// 장바구니 삭제
 	@RequestMapping(value="/deleteBasket", method=RequestMethod.GET)
-	public String deletedBasket(HttpServletRequest req, @RequestParam int idx) throws Exception {
+	public String deletedBasket(@RequestParam int idx) throws Exception {
 		Logger.info("delete basket");
-		HttpSession session = req.getSession();
 		System.out.println("/items/deleteBasket");
 		System.out.println("ddidx: "+idx);
 		service.deleteBasket(idx);
