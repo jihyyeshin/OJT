@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<%@ include file="./header.jsp" %></head>
 <title>temporary password</title>
 </head>
 <body>

@@ -30,8 +30,8 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 	
 	@RequestMapping("/")
 	public String index() {
-		Logger.info("index");
-		return "index";
+		Logger.info("login");
+		return "login";
 	}
 	// 회원가입View
 	@RequestMapping(value="/signup", method=RequestMethod.GET)
@@ -48,11 +48,11 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 	}
 	
 	// 로그인View
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String getLogin(HttpServletRequest req) throws Exception{
-		Logger.info("get login");
-		return "login";
-	}
+//	@RequestMapping(value = "/login", method = RequestMethod.GET)
+//	public String getLogin(HttpServletRequest req) throws Exception{
+//		Logger.info("get login");
+//		return "login";
+//	}
 	// 로그인
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(MemberVO vo, HttpServletRequest req, RedirectAttributes rttr) throws Exception {

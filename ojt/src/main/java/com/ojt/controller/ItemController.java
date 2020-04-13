@@ -44,13 +44,29 @@ public class ItemController {
 		return list;
 	}
 	// 디테일 화면
-	@RequestMapping(value="/items/detail", method=RequestMethod.GET)
-	public String postDetail(HttpServletRequest req, String item) throws Exception {
+//	@RequestMapping(value="/items/detail", method=RequestMethod.GET)
+//	public String getDetail(HttpServletRequest req, String agent, String memberid, String item) throws Exception {
+//		Logger.info("get detail");
+//		HttpSession session = req.getSession();
+//		
+//		ItemVO vo=service.itemDetail(item);
+//		session.setAttribute("agent", agent);
+//		session.setAttribute("memberid", memberid);
+//		session.setAttribute("item", vo);
+//		System.out.println("agent"+agent);
+//		return "itemDetail";
+//	}
+	@RequestMapping(value="/items/detail", method=RequestMethod.POST)
+	public String postDetail(HttpServletRequest req, String agent, String memberid, String item) throws Exception {
 		Logger.info("post detail");
 		HttpSession session = req.getSession();
 		
 		ItemVO vo=service.itemDetail(item);
+		session.setAttribute("agent", agent);
+		session.setAttribute("memberid", memberid);
 		session.setAttribute("item", vo);
+		System.out.println("agent"+agent);
+		System.out.println("item"+ vo);
 		return "itemDetail";
 	}
 }

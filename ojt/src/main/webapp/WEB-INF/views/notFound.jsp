@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
+<%@ include file="./header.jsp" %></head>
+<title>NOT FOUND</title>
 </head>
 <body>
 잘못된 페이지 접근입니다.

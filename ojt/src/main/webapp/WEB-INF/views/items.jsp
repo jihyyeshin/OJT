@@ -1,15 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8; application/json;"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Location</title>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1ad9f9f4c70ec392a1d41fe14ab44d29&libraries=services"></script>
-<title>Location</title>
+<%@ include file="./header.jsp" %></head>
+<title>주문</title>
 </head>
 <body>
 	<h3>아이템 주문</h3>
@@ -18,11 +14,12 @@
 		<input type="hidden" name="memberid" value="${param.memberid}"/>
 		<input type="hidden" name="agent" value="${param.agent}"/>
 	</form>
-	<form onsubmit="_submit();" method="post">
+	<form name="paging" onsubmit="_submit();" method="post">
 		<button type="submit" onclick="javascipt: form.action='./items/sale'">주문하기</button>
 		<button type="submit" onclick="javascipt: form.action='./items/insertBasket'">장바구니넣기</button>
 		<input type="hidden" name="memberid" value="${param.memberid}"/>
 		<input type="hidden" name="agent" value="${param.agent}"/>
+		<input type="hidden" name="item"/>
 		<table></table>
 	</form>
 	<script type="text/javascript">
@@ -35,14 +32,25 @@
 	// 아이템 정보 출력
 	function print(data){
 		$.each(data, function(index, item){
-			var str = '<tr><td><input type="checkbox" name="item" value="'+item.item+'"></td>';
-			str += '<td><a href="./items/detail?item='+item.item+'">'+item.name+'</a></td>';
+			var str = '<tr><td><input type="checkbox" name="itemchk" value="'+item.item+'"></td>';
+			str += '<td><a href="javascript:goDetail('+item.item+');">'+item.name+'</a></td>';
 			str += '<td><input type="hidden" name="name" value="'+item.name+'"></td>'
 			str += '<td><input type="hidden" name="price" value="'+item.amount+'">' + item.amount + '</td>';
 			str += '<td><input type="text" name="qty">개</td></tr>';
 			$('table').append(str);
 		});
 	}
+	// go 디테일 페이지
+	function goDetail(item){
+		var f=document.paging;
+		f.item.value=item;
+		f.agent.value=${param.agent};
+		f.memberid.value=${param.memberid};
+
+		f.action="./items/detail"
+		f.method="post"
+		f.submit();
+	};
 	
 	// 체크박스에 보내기
 	function _submit()

@@ -1,21 +1,25 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<%@ include file="./header.jsp" %>
 <title>item detail</title>
 </head>
 <body>
-<h3>¾ÆÀÌÅÛ Á¤º¸</h3>
-<a href="javascript:history.back();">µÚ·Î°¡±â</a>
+<h3>ì•„ì´í…œ ì •ë³´</h3>
 <p> ${item.name}</p>
 <p> ${item.remark}</p>
-<!-- ±×¸² µé¾î¿Í¾ß ÇÔ -->
+<!-- ê·¸ë¦¼ ë“¤ì–´ì™€ì•¼ í•¨ -->
 <form method="post" name="form">
-<input type="hidden" name="item" id="item" value="${item.item}"/>
-<p>¼ö·®: <input type="text" name="qty" id="qty"/></p>
-<button type="submit" onclick="javascipt: form.action='./basket'">Àå¹Ù±¸´Ï</button>
+	<input type="hidden" name="item" id="item" value="${item.item}"/>
+	<p>ìˆ˜ëŸ‰: <input type="text" name="qty" id="qty"/></p>
+	<button type="submit" onclick="javascipt: form.action='./insertBasket'">ì¥ë°”êµ¬ë‹ˆë„£ê¸°</button>
+	<input type="hidden" name="memberid" value="${memberid}"/>
+	<input type="hidden" name="agent" value="${agent}"/>
+	<input type="hidden" name="name" value="${item.name}"/>
+	<input type="hidden" name="price" value="${item.amount}"/>
 </form>
+<a href="../items">ë’¤ë¡œê°€ê¸°</a>
 </body>
 </html>
