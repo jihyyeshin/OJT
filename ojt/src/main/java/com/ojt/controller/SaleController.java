@@ -23,18 +23,19 @@ import com.ojt.domain.SaleVO;
 import com.ojt.service.SaleService;
 
 @Controller
+@RequestMapping("/items/*")
 public class SaleController {
 	@Inject
 	SaleService service;
 	private static final Logger Logger=LoggerFactory.getLogger(LocController.class);
 	
 	// 주문
-	@RequestMapping(value = "/items/sale", method = RequestMethod.GET)
+	@RequestMapping(value = "/sale", method = RequestMethod.GET)
 	public String getSale() {
 		return "notFound";
 	}
 
-	@RequestMapping(value = "/items/sale", method = RequestMethod.POST)
+	@RequestMapping(value = "/sale", method = RequestMethod.POST)
 	public String postSale(HttpServletRequest req, String agent, String memberid, String[] name, String[] item, int[] price, int[] qty) throws Exception{
 		Logger.info("post sale");
 		HttpSession session = req.getSession();
@@ -55,7 +56,7 @@ public class SaleController {
 		return "sale"; //주문 완료View
 	}
 	// 장바구니
-	@RequestMapping(value = "/items/basket", method = RequestMethod.GET)
+	@RequestMapping(value = "/basket", method = RequestMethod.GET)
 	public String getBasket(HttpServletRequest req, String agent, String memberid) {
 		Logger.info("get basket");
 		System.out.println("/items/basket(get)");
@@ -65,13 +66,13 @@ public class SaleController {
 		return "basket";
 	}
 
-	@RequestMapping(value = "/items/basket", method = RequestMethod.POST)
+	@RequestMapping(value = "/basket", method = RequestMethod.POST)
 	public String postBasket(HttpServletRequest req, String agent, String memberid, String[] name, String[] item, int[] price, int[] qty, String type) throws Exception{
 		Logger.info("post basket");
 		HttpSession session = req.getSession();
 		System.out.println("/items/basket(post)");
-		System.out.println();
-		if (type.equals("1")) { // 장바구니 넣기 일 때
+		//System.out.println("type: "+type);
+		if (type!=null && type.equals("1")) { // 장바구니 넣기 일 때
 			System.out.println("/items/basket(input)");
 			for(int i=0;i<item.length;i++) {
 				BasketVO bvo=new BasketVO(memberid, price[i]*qty[i], price[i], agent, item[i],qty[i]);
@@ -84,7 +85,7 @@ public class SaleController {
 	}
 	
 	// 장바구니 아이템 조회
-	@RequestMapping(value="/items/showBasket")
+	@RequestMapping(value="/showBasket")
 	public @ResponseBody List<BasketVO> showBasket(@RequestParam String memberid) throws Exception {
 		List<BasketVO> list=service.basketList(memberid);
 		System.out.println("/items/showBasket");
@@ -92,12 +93,14 @@ public class SaleController {
 	}
 	
 	// 장바구니 삭제
-	@RequestMapping(value="/items/deleteBasket", method=RequestMethod.POST)
-	public String deleteBasket(@RequestParam int idx) throws Exception {
+	@RequestMapping(value="/deleteBasket", method=RequestMethod.GET)
+	public String deletedBasket(HttpServletRequest req, @RequestParam int idx) throws Exception {
 		Logger.info("delete basket");
+		HttpSession session = req.getSession();
 		System.out.println("/items/deleteBasket");
-		System.out.println("idx: "+idx);
+		System.out.println("ddidx: "+idx);
 		service.deleteBasket(idx);
-		return "OK";
+		System.out.println("!??!?");
+		return "redirect:/items/basket";
 	}
 }

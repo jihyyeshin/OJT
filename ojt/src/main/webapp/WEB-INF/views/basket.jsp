@@ -25,23 +25,18 @@
 	$(document).ready(function(){
 		showBasket();
 	});
+	
 	// 장바구니 삭제
-	function deleteB(){
-       	var idx = $("#tbl tr td input").eq(2).val();
-       	alert(idx);
-       // $("#test").text(text);
-		
+	function delete_func(btn){
+		var parent=btn.parentNode;
+		//alert(parent.id);
 		$.ajax({
 			url:"./deleteBasket",
-			type:"POST",
-			//dataType:"json",
 			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-			async:false,
-			data:"idx="+idx,
+			data:"idx="+parent.id,
 			success: function(data){
-				console.log(data+" Deleted");
-				//print(data);
-				if(data=="OK") showBasket();
+				//alert("##"+data);
+				window.location.reload();
 			},
 			error:function(request,status, error){
 				console.log("status:\n"+request.status+"\nerror:\n"+request.error);
@@ -50,15 +45,15 @@
 				console.log("completeD");
 			}
 		});
-
-	}
+	} 
+	
 	function print(data){
 		$.each(data, function(index, item){
-			var str = '<tr><td><input type="checkbox" name="item" value="'+item.item+'"></td>';
+			var str = '<div id="'+item.idx+'"><tr><td><input type="checkbox" name="item" value="'+item.item+'"></td>';
 			str += '<td><input type="hidden" name="price" value="'+item.price+'">'+item.price+'</td>';
 			str += '<td><input type="hidden" name="idx" value="'+item.idx+'"></td>';
 			str += '<td><input type="hidden" name="qty" value="'+item.qty+'">' + item.qty + '</td>';
-			str += '<td><input type="button" onclick="deleteB()" value="삭제"></td></tr>';
+			str += '<td><input type="button" value="delete" onclick="delete_func(this);"/></td></div>'
 			$('table').append(str);
 		});
 	}
