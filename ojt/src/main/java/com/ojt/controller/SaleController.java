@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ojt.domain.BasketVO;
 import com.ojt.domain.ItemVO;
@@ -76,15 +77,13 @@ public class SaleController {
 	}
 	// 장바구니 넣기
 	@RequestMapping(value="/insertBasket", method=RequestMethod.POST)
-	public String insertBasket(HttpServletRequest req,String agent, String memberid, String[] name, String[] item, int[] price, int[] qty) throws Exception {
+	public String insertBasket(HttpServletRequest req, String agent, String memberid, String[] name, String[] item, int[] price, int[] qty) throws Exception {
 		System.out.println("/items/basket(input)");
 		HttpSession session = req.getSession();
 		for(int i=0;i<item.length;i++) {
 			BasketVO bvo=new BasketVO(memberid, price[i]*qty[i], price[i], agent, item[i],qty[i]);
 			service.basket(bvo); // 장바구니 insert
 		}
-		System.out.println("agentI"+agent);
-		System.out.println("memberidI"+memberid);
 		session.setAttribute("agent", agent);
 		session.setAttribute("memberid", memberid);
 		return "redirect:/items";

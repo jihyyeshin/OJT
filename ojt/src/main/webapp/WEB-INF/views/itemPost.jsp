@@ -16,7 +16,6 @@
 </form>
 <script type="text/javascript">
 $(document).ready(function(){
-	//alert("agent!!"+${memberid});
 	$("#frm").submit();
 });
 </script>

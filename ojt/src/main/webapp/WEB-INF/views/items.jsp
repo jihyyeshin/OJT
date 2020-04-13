@@ -13,18 +13,16 @@
 </head>
 <body>
 	<h3>아이템 주문</h3>
-	<!-- 주문관리 -->
 	<form method="post">
 		<button type="submit" onclick="javascipt: form.action='./items/basket'">장바구니</button>
-		<input type="text" name="memberid" value="${param.memberid}"/>
-		<input type="text" name="agent" value="${param.agent}"/>
+		<input type="hidden" name="memberid" value="${param.memberid}"/>
+		<input type="hidden" name="agent" value="${param.agent}"/>
 	</form>
 	<form onsubmit="_submit();" method="post">
 		<button type="submit" onclick="javascipt: form.action='./items/sale'">주문하기</button>
 		<button type="submit" onclick="javascipt: form.action='./items/insertBasket'">장바구니넣기</button>
-		<input type="text" name="memberid" value="${param.memberid}"/>
-		<input type="text" name="agent" value="${param.agent}"/>
-		<!--  <input type="hidden" name="type" value="1"/>-->
+		<input type="hidden" name="memberid" value="${param.memberid}"/>
+		<input type="hidden" name="agent" value="${param.agent}"/>
 		<table></table>
 	</form>
 	<script type="text/javascript">

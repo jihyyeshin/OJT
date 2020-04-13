@@ -12,7 +12,7 @@
 </head>
 <body>
 <p> ${memberid}님의 장바구니</p>
-<a href="javascript:history.back();">+</a>
+<a href="../items">+</a>
 <form method="post" onsubmit="_submit();">
 	<table id="tbl"></table>
 	<button type="submit" onclick="javascipt: form.action='./sale'">주문하기</button>

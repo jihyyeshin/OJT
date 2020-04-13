@@ -20,13 +20,13 @@
  <p> ${member.name}님 환영합니다.</p>
  <p><a href="./logout">로그아웃</a></p>
  <form action="./items" method="post">
- 	<input type="text" name="agent" value="${member.agentF}"/>
- 	<input type="text" name="memberid" value="${member.id}"/>
+ 	<input type="hidden" name="agent" value="${member.agentF}"/>
+ 	<input type="hidden" name="memberid" value="${member.id}"/>
  	<button type="submit">상온</button>
  </form>
  <form action="./items" method="post">
- 	<input type="text" name="agent" value="${member.agentA}"/>
- 	<input type="text" name="memberid" value="${member.id}"/>
+ 	<input type="hidden" name="agent" value="${member.agentA}"/>
+ 	<input type="hidden" name="memberid" value="${member.id}"/>
  	<button type="submit">신선</button>
  </form>
 </c:if>
