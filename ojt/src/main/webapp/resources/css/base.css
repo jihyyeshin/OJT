@@ -15,5 +15,85 @@ body {
   justify-content: center;
   padding-top: 40px;
   padding-bottom: 40px;
-  background-color: #f5f5f5;
+  background-color: #ffffff;
+}
+/* CJ 글씨체 */
+@font-face {
+  font-family: CJBOLD;
+  src: url(../font/CJ_ONLYONE_NEW_title_Bold.woff) format('woff');
+}
+@font-face {
+  font-family: CJLIGHT;
+  src: url(../font/CJ_ONLYONE_NEW_body_Light.woff) format('woff');
+}
+h1{
+	font-family: CJBOLD;
+	font-size:1.75rem;
+}
+h3{
+	font-family: CJBOLD;
+	font-size:1.3rem;
+	color:#a1a1a1;
+}
+h4{
+	font-family: CJBOLD;
+	font-size:1rem;
+	color:#293d87;
+}
+/* 링크 텍스트 */
+a{
+  font-family: CJLIGHT;
+  color:#ffc482;
+  background-color:#fff;
+  border-color:#ededed;
+  text-decoration: underline;
+}
+/* 버튼 스타일 */
+.jihye_btn_blue_default {
+  font-family: CJBOLD;
+  color:#fff;
+  background-color:#9cbdff;
+}
+.jihye_btn_white_default {
+  font-family: CJBOLD;
+  color:#9cbdff;
+  background-color:#fff;
+  border-color:#b8b8b8;
+}
+/* 헤더 스타일 */
+#header {
+    /*항상 고정적*/
+    position: fixed;
+    width:100%;
+    height:50px;
+    background-color:white;
+    border-bottom:1px solid #d4d4d4;
+    
+    top:0;
+    left:0;/*왼쪽 상단을 기준으로 header가 들어감*/
+    
+    z-index:9999;
+}
+
+#header .left{
+    position:absolute;
+    width:25px;
+    height:25px;
+    background:url('../img/back.png');
+    background-size:100%;
+    
+    top:12px;
+    left:16px;/*브라우저 기준*/
+    
+    cursor:pointer;
+    opacity: 0.7;
+}
+
+#header .logo{
+    padding-top:12px;
+    text-align:center;
+}
+
+#header .logo img {
+    height:25px;
 }

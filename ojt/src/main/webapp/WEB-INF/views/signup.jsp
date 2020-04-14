@@ -6,20 +6,24 @@
 <%@ include file="./header.jsp" %></head>
 <title>회원가입</title>
 <body>
-<h3>회원가입</h3>
+<header id="header">
+    <div onclick="location.href='./'" class="left"></div>
+    <h3 class="logo">회원가입</h3>
+</header>
 <form role="form" id="frm" method="post" autocomplete="off">
- <p>이름: <input type="text" id="name" name="name" /></p>
- <p>아이디: <input type="text" id="id" name="id" /></p>
- <p>비밀번호: <input type="password" id="password" name="password" onchange="check_psw();" placeholder="영문, 숫자, 특수문자 조합 8자 이상"/></p>
+<h4>개인 정보</h4>
+ <input type="text" id="name" name="name" class="form-control" placeholder="이름" required autofocus>
+ <input type="text" id="id" name="id" class="form-control" placeholder="아이디" required autofocus>
+ <input type="password" id="password" name="password" onchange="check_psw();" class="form-control" placeholder="비밀번호(영문,숫자,특수문자)" required autofocus>
  <p id = "psw_check_result"></p>
- <label for="addr">거래처 주소: </label>
- <input type="text" id="addr" name="addr"/>
+ <input type="text" id="addr" name="addr" class="form-control" placeholder="거래처 주소" required autofocus>
  <input type="button" onclick="calcResult();" value="대리점할당"/>
- <p>대리점 할당 신선</p>
+<h4>대리점 정보</h4>
+ <p>신선</p>
  <input type="hidden" id="agentA" name="agentA"/>
  <p>이름:</p><p id="resultAgentA"></p>
  <p>주소:</p><p id="resultLocationA"></p>
- <p>대리점 할당 상온</p>
+ <p>상온</p>
  <input type="hidden" id="agentF" name="agentF"/>
  <p>이름:</p><p id="resultAgentF"></p>
  <p>주소:</p><p id="resultLocationF"></p>

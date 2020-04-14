@@ -7,14 +7,16 @@
 <title>temporary password</title>
 </head>
 <body>
-<h3>임시 비밀번호 발급</h3>
+<header id="header">
+    <div onclick="location.href='./'" class="left"></div>
+    <h3 class="logo">임시 비밀번호 발급</h3>
+</header>
 <form role="form" method="post" autocomplete="off" action="./tmpPwd">
  <p>
-  <label for="id">아이디</label>
-  <input type="text" id="id" name="id" />
+  <label for="id" class="sr-only">아이디</label>
+  <input type="text" id="id" name="id" class="form-control" placeholder="ID" required autofocus>
  </p>
- <p><button type="submit">임시 비밀번호 발급</button>
- <button type="reset">취소</button></p>
+ <button type="submit" class="btn btn-lg jihye_btn_blue_default btn-block">임시 비밀번호 발급</button>
 </form>
 </body>
 </html>
