@@ -5,40 +5,44 @@
 <head>
 <%@ include file="./header.jsp" %>
 <title>login</title>
+ <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ <link href="<c:url value="/resources/css/signin.css" />" rel="stylesheet">
 </head>
-<body>
-<h3>배송서비스</h3>
-<c:if test="${member == null }">
-<form role="form" method="post" autocomplete="off" action="./login">
- <p>
-  <label for="id">아이디</label>
-  <input type="text" id="id" name="id" />
- </p>
- <p>
-  <label for="pwd">비밀번호</label>
-  <input type="password" id="password" name="password" />
- </p>
- <p><button type="submit">로그인</button>
- <button type="reset">취소</button></p>
- <p><a href="./signup">회원가입</a></p>
- <p><a href="./tmpPwd">비밀번호를 잊어버리셨나요?</a></p>
-</form>
-</c:if>
+<body class="text-center">
 
-<c:if test="${member != null }">
- <p> ${member.name}님 환영합니다.</p>
- <form action="./items" method="post">
- 	<input type="hidden" name="agent" value="${member.agentF}"/>
- 	<input type="hidden" name="memberid" value="${member.id}"/>
- 	<button type="submit">상온</button>
- </form>
- <form action="./items" method="post">
- 	<input type="hidden" name="agent" value="${member.agentA}"/>
- 	<input type="hidden" name="memberid" value="${member.id}"/>
- 	<button type="submit">신선</button>
- </form>
- <p><a href="./logout">로그아웃</a></p>
-</c:if>
-<p style="color:blue;">${msg}</p>
+<div class="form-signin">
+	<img class="mb-4" src="<c:url value="/resources/img/CJ_logo.png" />"alt="" width="85" height="72">
+	<c:if test="${member == null }">
+	<h1 class="h3 mb-3 font-weight-normal">환영합니다</h1>
+	<form role="form" method="post" autocomplete="off" action="./login">
+		<label for="id" class="sr-only">아이디</label>
+		<input type="text" id="id" name="id" class="form-control" placeholder="ID" required autofocus>
+		 
+		<label for="pwd" class="sr-only">비밀번호</label>
+		<input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+		
+		<p><button type="submit" class="btn btn-lg btn-primary btn-block">로그인</button></p>
+		<p><a href="./signup" class="btn btn-lg btn-primary btn-block">회원가입</a></p>
+		<p><a href="./tmpPwd">비밀번호를 잊어버리셨나요?</a></p>
+	</form>
+	</c:if>
+	
+	<c:if test="${member != null }">
+	<h1 class="h3 mb-3 font-weight-normal"> ${member.name}님 환영합니다.</h1>
+	<form action="./items" method="post">
+		<input type="hidden" name="agent" value="${member.agentF}"/>
+		<input type="hidden" name="memberid" value="${member.id}"/>
+		<p><button type="submit" class="btn btn-lg btn-primary btn-block">상온</button></p>
+	</form>
+	<form action="./items" method="post">
+		<input type="hidden" name="agent" value="${member.agentA}"/>
+		<input type="hidden" name="memberid" value="${member.id}"/>
+		<p><button type="submit" class="btn btn-lg btn-primary btn-block">신선</button></p>
+	</form>
+	
+	<p><a href="./logout">로그아웃</a></p>
+	</c:if>
+	<p style="color:blue;">${msg}</p>
+</div>
 </body>
 </html>

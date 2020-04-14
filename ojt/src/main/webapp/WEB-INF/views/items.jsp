@@ -5,6 +5,7 @@
 <html>
 <head>
 <%@ include file="./header.jsp" %></head>
+ <link href="<c:url value="/resources/css/item.css" />" rel="stylesheet">
 <title>주문</title>
 </head>
 <body>
