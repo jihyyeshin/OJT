@@ -3,32 +3,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file="./header.jsp" %></head>
-<title>회원가입</title>
+	<%@ include file="./header.jsp" %>
+	<link href="<c:url value="/resources/css/signin.css" />" rel="stylesheet">
+	<title>회원가입</title>
+</head>
 <body>
 <header id="header">
-    <div onclick="location.href='./'" class="left"></div>
-    <h3 class="logo">회원가입</h3>
+	<div onclick="location.href='./'" class="left"></div>
+	<h3 class="logo">회원가입</h3>
 </header>
-<form role="form" id="frm" method="post" autocomplete="off">
-<h4>개인 정보</h4>
- <input type="text" id="name" name="name" class="form-control" placeholder="이름" required autofocus>
- <input type="text" id="id" name="id" class="form-control" placeholder="아이디" required autofocus>
- <input type="password" id="password" name="password" onchange="check_psw();" class="form-control" placeholder="비밀번호(영문,숫자,특수문자)" required autofocus>
- <p id = "psw_check_result"></p>
- <input type="text" id="addr" name="addr" class="form-control" placeholder="거래처 주소" required autofocus>
- <input type="button" onclick="calcResult();" value="대리점할당"/>
-<h4>대리점 정보</h4>
- <p>신선</p>
- <input type="hidden" id="agentA" name="agentA"/>
- <p>이름:</p><p id="resultAgentA"></p>
- <p>주소:</p><p id="resultLocationA"></p>
- <p>상온</p>
- <input type="hidden" id="agentF" name="agentF"/>
- <p>이름:</p><p id="resultAgentF"></p>
- <p>주소:</p><p id="resultLocationF"></p>
- <p><button type="button" onclick="check_submit();">회원가입</button>
- <button type="reset">취소</button></p>
+<form role="form" id="frm" method="post" autocomplete="off" class="form-signin">
+	<h4>개인 정보</h4>
+	<input type="text" id="name" name="name" class="form-control" placeholder="이름" required autofocus >
+	<input type="text" id="id" name="id" class="form-control" placeholder="아이디" required autofocus>
+	<input type="password" id="password" name="password" onchange="check_psw();" class="form-control" placeholder="비밀번호(영문,숫자,특수문자)" required autofocus>
+	<p style="font-family: CJLIGHT;" id = "psw_check_result"></p>
+	<input type="text" id="addr" name="addr" class="form-control" placeholder="거래처 주소" required autofocus>
+	<input type="button" onclick="calcResult();" class="btn jihye_btn_blue_default" value="할당"/>
+	<h4>대리점 정보</h4>
+	<input type="hidden" id="agentA" name="agentA"/>
+	<p>신선</p>
+	<p id="resultAgentA"></p>
+	<p id="resultLocationA" style="font-size:10px;"></p>
+	<input type="hidden" id="agentF" name="agentF"/>
+	<p>상온</p>
+	<p id="resultAgentF"></p>
+	<p id="resultLocationF" style="font-size:10px;"></p>
+	<footer id="footer">
+		<h3 onclick="check_submit();">회원가입</h3>
+	</footer>
 </form>
 
 <script type="text/javascript">
@@ -99,7 +102,7 @@
 		}
 		else{
 			if(!check.test(psw)) console.log("숫자");
-			$("#psw_check_result").html("영문, 숫자, 특수문자 조합 8자 이상으로 입력하세요!");
+			$("#psw_check_result").html("영문, 숫자, 특수문자 조합 8자 이상");
 			$("#psw_check_result").css({
 				'color': 'red',
 			});

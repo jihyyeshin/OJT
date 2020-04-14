@@ -7,8 +7,11 @@
 </head>
 <body>
 <header id="header">
-    <div class="left"></div>
-    <h1 class="logo">임시 비밀번호 발급</h1>
+    <div onclick="location.href='./'" class="left"></div>
+    <h3 class="logo">회원가입</h3>
 </header>
+<footer id="footer">
+	<h3>회원가입</h3>
+</footer>
 </body>
 </html>

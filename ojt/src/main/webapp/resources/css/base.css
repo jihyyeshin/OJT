@@ -30,18 +30,14 @@ h1{
 	font-family: CJBOLD;
 	font-size:1.75rem;
 }
-h3{
-	font-family: CJBOLD;
-	font-size:1.3rem;
-	color:#a1a1a1;
-}
+
 h4{
 	font-family: CJBOLD;
 	font-size:1rem;
 	color:#293d87;
 }
 /* 링크 텍스트 */
-a{
+.jihye_link{
   font-family: CJLIGHT;
   color:#ffc482;
   background-color:#fff;
@@ -74,7 +70,11 @@ a{
     
     z-index:9999;
 }
-
+#header h3{
+	font-family: CJBOLD;
+	font-size:1.3rem;
+	color:#a1a1a1;
+}
 #header .left{
     position:absolute;
     width:25px;
@@ -96,4 +96,29 @@ a{
 
 #header .logo img {
     height:25px;
+}
+/* 하단 스타일 */
+#footer{
+	position:fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+	padding: 10px 0;
+	color:#fff;
+    background-color:#9cbdff;
+	z-index:9999;
+}
+#footer h3{
+	font-family: CJBOLD;
+	font-size:1.3rem;
+	color:#fff;
+	padding-top:12px;
+    text-align:center;
+}
+/* 입력 스타일 */
+input {
+	font-family: CJLIGHT;
+}
+p{
+	font-family: CJLIGHT;
 }

@@ -60,9 +60,6 @@
 	    var itemchk=document.getElementsByName("itemchk");
 	    var amount=document.getElementsByName("amount");
 	    var qty=document.getElementsByName("qty");
-	    /* alert(itemchk);
-	    alert(amount);
-	    alert(qty); */
 	    if (typeof(itemchk.length) == 'undefined') //단일
 	    {
 	        if (itemchk[0].checked==true)
