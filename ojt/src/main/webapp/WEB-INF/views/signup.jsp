@@ -64,9 +64,7 @@
 	</table>
 		
 		
-	<footer id="footer">
-		<h3 onclick="check_submit();">회원가입</h3>
-	</footer>
+	<div id="footer" onclick="check_submit();">회원가입 </div>
 	</form>
 	</div>
 	

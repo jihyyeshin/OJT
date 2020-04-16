@@ -1,267 +1,53 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8; application/json;"
-    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <%@ include file="./header.jsp" %></head>
  <link href="<c:url value="/resources/css/item.css" />" rel="stylesheet">
-<title>basket</title>
 </head>
 <body>
-	<header id="header">
-		<div onclick="location.href='./'" class="left"></div>
-		<h3 class="logo">상품 주문</h3>
-		<div onclick="location.href='/items/basket'" class="right"></div>
-	</header>
-	
-	<table class="list-group">
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="checkbox" name="itemchk" value="'+item.item+'">
-			</td>
-			<td>
-			<input type="text" name="qty">개
-			</td>
-		</tr>
+
+	<table class="table">
+	  <thead>
+	    <tr>
+	      <th>Month</th>
+	      <th>Number of Sales</th>
+	      <th>Amount</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr>
+	      <th scope="row">Jan</th>
+	      <td>105</td>
+	      <td>$15,000.00</td>
+	    </tr>
+	    <tr>
+	      <th scope="row">Feb</th>
+	      <td>95</td>
+	      <td>$12,000.00</td>
+	    </tr>
+	    <tr>
+	      <th scope="row">Mar</th>
+	      <td>150</td>
+	      <td>$20,000.00</td>
+	    </tr>
+	    <tr>
+	      <th scope="row">Apr</th>
+	      <td>50</td>
+	      <td>$30,000.00</td>
+	    </tr>
+	    <tr>
+	      <th scope="row">May</th>
+	      <td>80</td>
+	      <td>$15,000.00</td>
+	    </tr>
+	    <tr>
+	      <th scope="row">Jun</th>
+	      <td>110</td>
+	      <td>$22,000.00</td>
+	    </tr>            
+	  </tbody>
 	</table>
 
-	<footer id="footerL">
-		<h3 onclick="check_submit();">주문하기</h3>
-	</footer>
-	<footer id="footerR">
-		<h3 onclick="check_submit();">장바구니</h3>
-	</footer>
 </body>
 </html>
+

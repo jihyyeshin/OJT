@@ -29,6 +29,7 @@ public class SaleDAOImpl implements SaleDAO {
 	}
 	@Override
 	public void basket(BasketVO vo) throws Exception{
+		//System.out.println("IM IN VO "+vo.getName());
 		sql.insert(namespace+".basket", vo);
 	}
 	@Override

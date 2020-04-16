@@ -82,15 +82,16 @@ public class SaleController {
 	public String insertBasket(HttpServletRequest req, String agent, String memberid, String[] name, String[] itemchk, String item, int[] amount, int[] qty) throws Exception {
 		System.out.println("/items/basket(input)");
 		HttpSession session = req.getSession();
-		//System.out.println(itemchk.length);
-		//System.out.println(item);
+
 		if(item.equals("")) {// item list 화면
 			for(int i=0;i<itemchk.length;i++) {
-				BasketVO bvo=new BasketVO(memberid,amount[i]*qty[i], amount[i], agent, itemchk[i],qty[i]);
+				
+				BasketVO bvo=new BasketVO(memberid, name[i], amount[i]*qty[i], amount[i], agent, itemchk[i],qty[i]);
+				//System.out.println("THIS IS NAME!"+bvo.getName());
 				service.basket(bvo); // 장바구니 insert
 			}
 		}else {// item detail 화면
-			BasketVO bvo=new BasketVO(memberid, amount[0]*qty[0], amount[0], agent, item ,qty[0]);
+			BasketVO bvo=new BasketVO(memberid,name[0], amount[0]*qty[0], amount[0], agent, item ,qty[0]);
 			service.basket(bvo); // 장바구니 insert
 		}
 		session.setAttribute("agent", agent);

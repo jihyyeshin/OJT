@@ -2,6 +2,7 @@ package com.ojt.domain;
 
 public class BasketVO {
 	private int idx;
+	private String name;
 	private String memberid;
 	private int amount;//amount*¼ö·®
 	private int price;//amount
@@ -9,13 +10,21 @@ public class BasketVO {
 	private String item;
 	private int qty;
 	public BasketVO() {};
-	public BasketVO(String memberid, int amount, int price, String agent, String item, int qty) {
+	public BasketVO(String memberid, String name, int amount, int price, String agent, String item, int qty) {
 		this.memberid=memberid;
 		this.amount=amount;
 		this.price=price;
 		this.agent=agent;
 		this.item=item;
 		this.qty=qty;
+		this.name=name;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	public int getIdx() {

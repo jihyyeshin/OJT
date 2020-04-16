@@ -9,20 +9,27 @@
 <title>주문</title>
 </head>
 <body>
-	<h3>아이템 주문</h3>
-	<form method="post">
-		<button type="submit" onclick="javascipt: form.action='./items/basket'">장바구니</button>
-		<input type="hidden" name="memberid" value="${param.memberid}"/>
-		<input type="hidden" name="agent" value="${param.agent}"/>
-	</form>
+	<header id="header">
+		<div onclick="location.href='./'" class="left"></div>
+		<h3 class="logo">상품 주문</h3>
+		
+		<form method="post">
+			<button onclick="javascipt: form.action='./items/basket'" class="right"></button>
+			<input type="hidden" name="memberid" value="${param.memberid}"/>
+			<input type="hidden" name="agent" value="${param.agent}"/>
+		</form>
+	</header>
+	
 	<form name="paging" onsubmit="_submit();" method="post">
-		<button type="submit" onclick="javascipt: form.action='./items/sale'">주문하기</button>
-		<button type="submit" onclick="javascipt: form.action='./items/insertBasket'">장바구니넣기</button>
 		<input type="hidden" name="memberid" value="${param.memberid}"/>
 		<input type="hidden" name="agent" value="${param.agent}"/>
 		<input type="hidden" name="item" value=""/>
-		<table></table>
+		<table class="list-group"></table>
+		
+		<button id="footerL" type="submit" onclick="javascipt: form.action='./items/sale'">주문하기</button>
+		<button id="footerR" type="submit" onclick="javascipt: form.action='./items/insertBasket'">장바구니 넣기</button>
 	</form>
+	
 	<script type="text/javascript">
 	var agentId=${param.agent};
 	// 로드되자마자
@@ -34,9 +41,11 @@
 	function print(data){
 		$.each(data, function(index, item){
 			var str = '<tr><td><input type="checkbox" name="itemchk" value="'+item.item+'"></td>';
-			str += '<td><a href="javascript:goDetail('+item.item+');">'+item.name+'</a></td>';
+			str += '<td><a href="javascript:goDetail('+item.item+');"">'+item.name+'</a></td>';
 			str += '<td><input type="hidden" name="name" value="'+item.name+'"></td>'
-			str += '<td><input type="hidden" name="amount" value="'+item.amount+'">' + item.amount + '</td>';
+			str += '<td><input type="hidden" name="amount" value="'+item.amount+'"></td></tr>';
+//			str += '<tr><td id="tdmar">' + item.amount + '</td>';
+			str += '<tr><td>&nbsp;&nbsp;&nbsp;' + item.amount + '</td>';
 			str += '<td><input type="text" name="qty">개</td></tr>';
 			$('table').append(str);
 		});
@@ -60,10 +69,12 @@
 	    var itemchk=document.getElementsByName("itemchk");
 	    var amount=document.getElementsByName("amount");
 	    var qty=document.getElementsByName("qty");
+	    var name=document.getElementsByName("name");
 	    if (typeof(itemchk.length) == 'undefined') //단일
 	    {
 	        if (itemchk[0].checked==true)
 	        {
+	        	name[0].disabled=true;
 	        	amount[0].disabled=true;
 	            qty[0].disabled=true;
 	        }
@@ -74,6 +85,7 @@
 	        {
 	            if (itemchk[i].checked==false)
 	            {
+	            	name[i].disabled=true;
 	            	amount[i].disabled=true;
 		            qty[i].disabled=true;
 	            }

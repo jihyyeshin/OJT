@@ -1,6 +1,7 @@
 html,
 body {
   height: 100%;
+  font-family: CJLIGHT;
 }
 
 body {
@@ -95,6 +96,8 @@ h4{
     height:25px;
     background:url('../img/cart.png');
     background-size:100%;
+    border:0;
+    outline:0;
     
     top:12px;
     right:16px;/*브라우저 기준*/
@@ -118,18 +121,22 @@ h4{
     left: 0;
     bottom: 0;
     width: 100%;
-	padding: 10px 0;
-	color:#fff;
+    padding: 10px 0;
     background-color:#9cbdff;
-	z-index:9999;
-}
-#footer h3{
-	font-family: CJBOLD;
-	font-size:1.3rem;
+    
+    /* font */
+    font-family: CJBOLD;
 	color:#fff;
 	padding-top:12px;
     text-align:center;
+	font-size:1.3rem;
+
+	border-bottom:0;
+	border-right:0;
+	border-left:0;
     border-top:1px solid #d4d4d4;
+   
+	z-index:9999;
 }
 /* 입력 스타일 */
 input {

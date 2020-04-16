@@ -83,14 +83,14 @@
 <!-- 장바구니 -->
 <insert id="basket" parameterType="com.ojt.domain.BasketVO">
 	insert into basket
-		(memberid, amt_amount, amt_price, cd_agent, cd_item, qty_delivtot)
+		(memberid, nm_item, amt_amount, amt_price, cd_agent, cd_item, qty_delivtot)
 	values 
-	(#{memberid}, #{amount},#{price},#{agent}, #{item}, #{qty});
+	(#{memberid}, #{name}, #{amount},#{price},#{agent}, #{item}, #{qty});
 </insert>
 
 <!-- 장바구니 아이템 조회 -->
 <select id="basketList" resultType="com.ojt.domain.BasketVO">
-	select amt_price as price, cd_item as item, qty_delivtot as qty, idx
+	select amt_price as price, nm_item as name, cd_item as item, qty_delivtot as qty, idx
 	from basket
 	where memberid=#{memberid}
 </select>
