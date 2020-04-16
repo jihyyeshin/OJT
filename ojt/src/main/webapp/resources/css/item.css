@@ -1,13 +1,12 @@
 .item-view {
   width: 100%;
-  max-width: 330px;
   padding: 15px;
   margin: 0 auto;
 }
 
 .list-group{
+  width: 100%;
   max-height:550px;
-  text-align:center;
   overflow:scroll;
   -webkit-overflow-scrolling: touch;
   margin-top: 30px;
@@ -17,7 +16,10 @@ a{
 	font-family: CJBOLD;
 	color: black;
 }
-
+#title{
+	font-family: CJBOLD;
+	color: black;
+}
 
 /* 상단 스타일 */
 #header .plus{

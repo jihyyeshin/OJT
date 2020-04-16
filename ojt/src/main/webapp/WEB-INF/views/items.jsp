@@ -41,12 +41,11 @@
 	function print(data){
 		$.each(data, function(index, item){
 			var str = '<tr><td><input type="checkbox" name="itemchk" value="'+item.item+'"></td>';
-			str += '<td><a href="javascript:goDetail('+item.item+');"">'+item.name+'</a></td>';
-			str += '<td><input type="hidden" name="name" value="'+item.name+'"></td>'
-			str += '<td><input type="hidden" name="amount" value="'+item.amount+'"></td></tr>';
-//			str += '<tr><td id="tdmar">' + item.amount + '</td>';
-			str += '<tr><td>&nbsp;&nbsp;&nbsp;' + item.amount + '</td>';
-			str += '<td><input type="text" name="qty">개</td></tr>';
+			str += '<td><a href="javascript:goDetail('+item.item+');"">'+item.name+'</a></td></tr>';
+			str += '<tr style="border-bottom:1px solid #d4d4d4;"><td></td><td style="width: 70%;">' + item.amount + '</td>';
+			str += '<td style="width: 25%;"><input type="text" name="qty" style="width: 25px;">개</td></tr>';
+			str += '<input type="hidden" name="amount" value="'+item.amount+'">';
+			str += '<input type="hidden" name="name" value="'+item.name+'">';
 			$('table').append(str);
 		});
 	}
