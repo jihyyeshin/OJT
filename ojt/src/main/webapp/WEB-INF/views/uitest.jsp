@@ -4,7 +4,7 @@
 <html>
 <head>
 	<%@ include file="./header.jsp" %>
-	<link href="<c:url value="/resources/css/signup.css" />" rel="stylesheet">
+	<link href="<c:url value="/resources/css/signin.css" />" rel="stylesheet">
 	<title>회원가입</title>
 </head>
 <body>
@@ -12,64 +12,25 @@
 	<div onclick="location.href='./'" class="left"></div>
 	<h3 class="logo">회원가입</h3>
 </header>
-
-	<div class="container">
-	<form role="form" id="frm" method="post" autocomplete="off">
+<form role="form" id="frm" method="post" autocomplete="off" class="form-signin">
 	<h4>개인 정보</h4>
-		<table class="table" style="text-align:center;">
-			<tr>
-				<td>
-				<input type="text" id="name" name="name" class="form-control" placeholder="이름" required autofocus >
-				</td>
-			</tr>
-			<tr>
-				<td>
-				<input type="text" id="id" name="id" class="form-control" placeholder="아이디" required autofocus>
-				</td>
-			</tr>
-			<tr>
-				<td>
-				<input type="password" id="password" name="password" onchange="check_psw();" class="form-control" placeholder="비밀번호(영문,숫자,특수문자 8자이상)" required autofocus>
-				</td>
-				<td>
-				<p id = "psw_check_result"></p>
-				</td>
-			</tr>
-			<tr>
-				<td>
-				<input type="text" id="addr" name="addr" class="form-control" placeholder="거래처 주소" required autofocus>
-				</td>
-				<td style="width: 20%;">
-				<input type="button" onclick="calcResult();" class="btn jihye_btn_blue_default" value="할당"/>
-				</td>
-			</tr>
-		</table>
-
+	<input type="text" id="name" name="name" class="form-control" placeholder="이름" required autofocus >
+	<input type="text" id="id" name="id" class="form-control" placeholder="아이디" required autofocus>
+	<input type="password" id="password" name="password" onchange="check_psw();" class="form-control" placeholder="비밀번호(영문,숫자,특수문자 8자이상)" required autofocus>
+	<p style="font-family: CJLIGHT;" id = "psw_check_result"></p>
+	<input type="text" id="addr" name="addr" class="form-control" placeholder="거래처 주소" required autofocus>
+	<input type="button" onclick="calcResult();" class="btn jihye_btn_blue_default" value="할당"/>
 	<h4>대리점 정보</h4>
-	<table class="table">
-		<tr>
-			<td>
-			<input type="hidden" id="agentA" name="agentA"/>
-			<p id="resultAgentA">신선: </p>
-			<!-- <p id="resultLocationA" style="font-size:10px;"></p> -->
-			</td>
-		</tr>
-		<tr>
-			<td>
-			<input type="hidden" id="agentF" name="agentF"/>
-			<p id="resultAgentF">상온: </p>
-			<!-- <p id="resultLocationF" style="font-size:10px;"></p> -->
-			</td>
-		</tr>
-	</table>
-		
-		
+	<input type="hidden" id="agentA" name="agentA"/>
+	<p id="resultAgentA">신선: </p>
+	<!-- <p id="resultLocationA" style="font-size:10px;"></p> -->
+	<input type="hidden" id="agentF" name="agentF"/>
+	<p id="resultAgentF">상온: </p>
+	<!-- <p id="resultLocationF" style="font-size:10px;"></p> -->
 	<footer id="footer">
 		<h3 onclick="check_submit();">회원가입</h3>
 	</footer>
-	</form>
-	</div>
-	
+</form>
 
 <script type="text/javascript">
 	var agentId;
@@ -131,7 +92,7 @@
 		var check = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/;
 		// 영문, 숫자, 특수문자 조합
 		if(check.test(psw)) {
-			$("#psw_check_result").html("O");
+			$("#psw_check_result").html("PASS");
 			$("#psw_check_result").css({
 				'color' : 'green',
 			});
@@ -139,7 +100,7 @@
 		}
 		else{
 			if(!check.test(psw)) console.log("숫자");
-			$("#psw_check_result").html("X");
+			$("#psw_check_result").html("영문, 숫자, 특수문자 조합 8자 이상");
 			$("#psw_check_result").css({
 				'color': 'red',
 			});

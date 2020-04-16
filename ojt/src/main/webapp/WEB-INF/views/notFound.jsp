@@ -7,6 +7,6 @@
 <title>NOT FOUND</title>
 </head>
 <body>
-잘못된 페이지 접근입니다.
+<p>잘못된 페이지 접근입니다.</p>
 </body>
 </html>

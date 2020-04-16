@@ -6,11 +6,11 @@
 <%@ include file="./header.jsp" %>
 <title>login</title>
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
- <link href="<c:url value="/resources/css/signin.css" />" rel="stylesheet">
+ <link href="<c:url value="/resources/css/login.css" />" rel="stylesheet">
 </head>
 <body class="text-center">
 
-<div class="form-signin">
+<div class="form-login">
 	<img class="mb-4" src="<c:url value="/resources/img/CJ_logo.png" />"alt="" width="100" height="88">
 	<c:if test="${member == null }">
 
@@ -26,7 +26,6 @@
 		<p><a href="./tmpPwd" class="jihye_link">비밀번호를 잊어버리셨나요?</a></p>
 	</form>
 	</c:if>
-	
 	<c:if test="${member != null }">
 	<h1 class="mb-3 font-weight-normal"> ${member.name}님 환영합니다.</h1>
 	<form action="./items" method="post">
