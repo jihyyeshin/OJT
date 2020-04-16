@@ -89,6 +89,21 @@ h4{
     opacity: 0.7;
 }
 
+#header .right{
+    position:absolute;
+    width:25px;
+    height:25px;
+    background:url('../img/cart.png');
+    background-size:100%;
+    
+    top:12px;
+    right:16px;/*브라우저 기준*/
+    
+    cursor:pointer;
+    opacity: 0.7;
+}
+
+
 #header .logo{
     padding-top:12px;
     text-align:center;
@@ -114,6 +129,7 @@ h4{
 	color:#fff;
 	padding-top:12px;
     text-align:center;
+    border-top:1px solid #d4d4d4;
 }
 /* 입력 스타일 */
 input {
@@ -122,3 +138,4 @@ input {
 p{
 	font-family: CJLIGHT;
 }
+

@@ -8,10 +8,10 @@
 	<title>회원가입</title>
 </head>
 <body>
-<header id="header">
-	<div onclick="location.href='./'" class="left"></div>
-	<h3 class="logo">회원가입</h3>
-</header>
+	<header id="header">
+		<div onclick="location.href='./'" class="left"></div>
+		<h3 class="logo">회원가입</h3>
+	</header>
 
 	<div class="container">
 	<form role="form" id="frm" method="post" autocomplete="off">
@@ -39,7 +39,7 @@
 				<td>
 				<input type="text" id="addr" name="addr" class="form-control" placeholder="거래처 주소" required autofocus>
 				</td>
-				<td style="width: 20%;">
+				<td style="width: 15%;">
 				<input type="button" onclick="calcResult();" class="btn jihye_btn_blue_default" value="할당"/>
 				</td>
 			</tr>

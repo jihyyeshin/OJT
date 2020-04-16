@@ -27,7 +27,8 @@
 	</form>
 	</c:if>
 	<c:if test="${member != null }">
-	<h1 class="mb-3 font-weight-normal"> ${member.name}님 환영합니다.</h1>
+	<h1> ${member.name}님 환영합니다.</h1>
+	<p>하단 버튼을 눌러 상품을 주문해보세요!</p>
 	<form action="./items" method="post">
 		<input type="hidden" name="agent" value="${member.agentF}"/>
 		<input type="hidden" name="memberid" value="${member.id}"/>

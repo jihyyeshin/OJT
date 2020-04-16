@@ -5,3 +5,54 @@
   padding: 15px;
   margin: 0 auto;
 }
+
+
+.list-group{
+	/* background-color:yellow;  */
+    max-height: 90%;
+    width:100%;
+    text-align:center;
+    overflow:scroll;
+    -webkit-overflow-scrolling: touch;
+   /*  
+    padding-bottom:50px;
+    padding-top: 50px; */
+}
+
+/* 하단 스타일 */
+#footerL{
+	position:fixed;
+    left: 0;
+    bottom: 0;
+    width: 50%;
+	padding: 10px 0;
+    background-color:#9cbdff;
+    border-top:1px solid #d4d4d4;
+    
+	z-index:9999;
+}
+#footerR{
+	position:fixed;
+    right: 0;
+    bottom: 0;
+    width: 50%;
+	padding: 10px 0;
+    background-color:#fff;
+    border-top:1px solid #d4d4d4;
+    
+	z-index:9999;
+}
+#footerR h3{
+	font-family: CJBOLD;
+		color:#9cbdff;
+	padding-top:12px;
+    text-align:center;
+	font-size:1.3rem;
+}
+#footerL h3{
+	font-family: CJBOLD;
+	color:#fff;
+	padding-top:12px;
+    text-align:center;
+	font-size:1.3rem;
+}

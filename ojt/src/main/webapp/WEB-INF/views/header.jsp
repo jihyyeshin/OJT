@@ -13,7 +13,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	<!-- Bootstrap core CSS -->
+	<!-- Bootstrap default CSS -->
     <link href="<c:url value="/resources/css/base.css" />" rel="stylesheet">
 </head>
 <body>
