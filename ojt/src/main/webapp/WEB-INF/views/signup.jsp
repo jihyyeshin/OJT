@@ -40,7 +40,7 @@
 				<input type="text" id="addr" name="addr" class="form-control" placeholder="거래처 주소" required autofocus>
 				</td>
 				<td style="width: 15%;">
-				<input type="button" onclick="calcResult();" class="btn jihye_btn_blue_default" value="할당"/>
+				<input type="button" onclick="calcResult();" class="btn btn_blue_default" value="할당"/>
 				</td>
 			</tr>
 		</table>

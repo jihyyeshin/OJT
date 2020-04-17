@@ -41,7 +41,7 @@ h4{
 	color:#293d87;
 }
 /* 링크 텍스트 */
-.jihye_link{
+.link{
   font-family: CJLIGHT;
   color:#ffc482;
   background-color:#fff;
@@ -49,12 +49,12 @@ h4{
   text-decoration: underline;
 }
 /* 버튼 스타일 */
-.jihye_btn_blue_default {
+.btn_blue_default {
   font-family: CJBOLD;
   color:#fff;
   background-color:#9cbdff;
 }
-.jihye_btn_white_default {
+.btn_white_default {
   font-family: CJBOLD;
   color:#9cbdff;
   background-color:#fff;
@@ -150,7 +150,7 @@ p{
 }
 /* view */
 .view{
- width: 100%;
+ max-width: 80%;
  height:100%;
  margin-top: 50px;
 }

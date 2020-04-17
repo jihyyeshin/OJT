@@ -6,17 +6,25 @@
 
 .list-group{
   width: 100%;
-  max-height:550px;
-  overflow:scroll;
+  max-height:560px;
+  overflow:scroll; 
   -webkit-overflow-scrolling: touch;
-  margin-top: 20px;
 }
+.body{
+	position:absolute;
+	width:100%;
+	top:55px;
+	left:0;
+}
+
 /* 표 스타일 */
 
 #title{
 	font-family: CJLIGHT;
 	font-weight: bold;
 	color: black;
+}
+a{
 	text-decoration: underline;
 }
 
@@ -66,15 +74,3 @@
    
 	z-index:9999;
 }
-
-/* 체크 박스 */
-.check {display:block; position:relative; margin-bottom:12px; padding-left:25px; font-size:15px; cursor:pointer; user-select:none;-webkit-user-select:none; -moz-user-select:none; -ms-user-select:none;}
-.check input {position:absolute; opacity:0; cursor:pointer;}
-.checkmark {position:absolute; top:0; left:0px; width:20px; height:20px; background-color:#fff; border:1px solid #ccc;}
-.check:hover input ~ .checkmark {background-color:#ccc;}
-.check input:checked ~ .checkmark {background-color:#ccc;}
-.checkmark:after {display:none; position:absolute; content:"";}
-.check input:checked ~ .checkmark:after {display:block;}
-.check .checkmark:after {top:2px; left:7px; width:5px; height:10px; border:solid white; border-width:0 3px 3px 0; transform:rotate(45deg);-webkit-transform:rotate(45deg); -ms-transform:rotate(45deg);}
-
-

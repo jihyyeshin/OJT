@@ -12,8 +12,8 @@
 	<div onclick="location.href='../items'" class="left"></div>
 	<h3 class="logo">${memberid}님의 장바구니</h3>
 </header>
-<form class="list-group" method="post" onsubmit="_submit();">
-	<div id="bst"></div>
+<form method="post" onsubmit="_submit();">
+	<table class="body"></table>
 	<button id="footer" type="submit" onclick="javascipt: form.action='./saleBasket'">주문하기</button>
 	<input type="hidden" name="memberid" value="${memberid}"/>
 	<input type="hidden" name="agent" value="${agent}"/>
@@ -27,13 +27,13 @@
 	});
 	
 	// 장바구니 삭제
-	function delete_func(btn){
-		var parent=btn.parentNode;
+	function delete_func(idx){
 		$.ajax({
 			url:"./deleteBasket",
 			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-			data:"idx="+parent.id,
+			data:"idx="+idx,
 			success: function(data){
+				alert("삭제되었습니다.");
 				window.location.reload(false);
 			},
 			error:function(request,status, error){
@@ -47,17 +47,16 @@
 	
 	function print(data){
 		$.each(data, function(index, item){
-			var str = '<div id="'+item.idx+'"><table style="border-bottom:1px solid #d4d4d4;>';
-			str += '<tr><td><input type="checkbox" name="itemchk" value="'+item.item+'"></td>';
+			var str = '<tr><td style="text-align: center;"><input type="checkbox" name="itemchk" value="'+item.item+'"></td>';
 			str += '<td id="title">'+item.name+'</td>';
-			str += '<td><input type="button" value="X" onclick="delete_func(this);"/></td></tr>'
-			str += '<tr"><td></td><td style="width:80%;">'+item.price+'원</td>';
-			str += '<td>'+item.qty + '개</td></tr></table>';
+			str += '<td style="width: 15%;"><input type="button" value="X" onclick="delete_func('+item.idx+');"/></td></tr>'
+			str += '<tr style="border-bottom:1px solid #d4d4d4;">';
+			str += '<td></td><td style="width:75%;">'+item.price+' * '+item.qty+'</td><td></td></tr>';
 			str += '<input type="hidden" name="idx" value="'+item.idx+'">';
 			str += '<input type="hidden" name="qty" value="'+item.qty+'">';
-			str += '<input type="hidden" name="amount" value="'+item.price+'"></div>';
+			str += '<input type="hidden" name="amount" value="'+item.price+'">';
 			
-			$('#bst').append(str);
+			$('table').append(str);
 		});
 	}
 	// 장바구니 조회

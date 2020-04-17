@@ -16,7 +16,7 @@
   <label for="id" class="sr-only">아이디</label>
   <input type="text" id="id" name="id" class="form-control" placeholder="ID" required autofocus>
  </p>
- <button type="submit" class="btn btn-lg jihye_btn_blue_default btn-block">임시 비밀번호 발급</button>
+ <button type="submit" class="btn btn-lg btn_blue_default btn-block">임시 비밀번호 발급</button>
 </form>
 </body>
 </html>

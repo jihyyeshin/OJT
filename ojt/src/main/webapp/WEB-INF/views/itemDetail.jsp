@@ -8,15 +8,16 @@
 <title>item detail</title>
 </head>
 <body>
-<header id="header">
-	<div onclick="location.href='../items'" class="left"></div>
-	<h3 class="logo">아이템 정보</h3>
-</header>
-<div class="view">
-<h4 id="title"> ${item.name}</h4>
-<p> ${item.remark}</p>
-<!-- 그림 들어와야 함 -->
-
+	<header id="header">
+		<div onclick="location.href='../items'" class="left"></div>
+		<h3 class="logo">아이템 정보</h3>
+	</header>
+	
+	<div class="view";>
+	<h4> ${item.name}</h4>
+	<p> ${item.remark}</p>
+	<!-- 그림 들어와야 함 -->
+	<div id="img"></div>
 	<form method="post" name="form">
 		<input type="hidden" name="item" id="item" value="${item.item}"/>
 		<p>수량: <input type="text" name="qty" id="qty"/>개</p>
@@ -28,6 +29,6 @@
 		
 		<button id="footer" type="submit" onclick="javascipt: form.action='./insertBasket'">장바구니넣기</button>
 	</form>
-</div>
+	</div>
 </body>
 </html>

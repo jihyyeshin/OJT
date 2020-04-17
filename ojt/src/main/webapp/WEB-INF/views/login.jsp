@@ -21,9 +21,9 @@
 		<label for="pwd" class="sr-only">비밀번호</label>
 		<input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
 		
-		<p><button type="submit" class="btn btn-lg jihye_btn_blue_default btn-block">로그인</button></p>
-		<p><a href="./signup" class="btn btn-lg jihye_btn_white_default btn-block">회원가입</a></p>
-		<p><a href="./tmpPwd" class="jihye_link">비밀번호를 잊어버리셨나요?</a></p>
+		<p><button type="submit" class="btn btn-lg btn_blue_default btn-block">로그인</button></p>
+		<p><a href="./signup" class="btn btn-lg btn_white_default btn-block">회원가입</a></p>
+		<p><a href="./tmpPwd" class="link">비밀번호를 잊어버리셨나요?</a></p>
 	</form>
 	</c:if>
 	<c:if test="${member != null }">
@@ -32,15 +32,15 @@
 	<form action="./items" method="post">
 		<input type="hidden" name="agent" value="${member.agentF}"/>
 		<input type="hidden" name="memberid" value="${member.id}"/>
-		<p><button type="submit" class="btn btn-lg jihye_btn_blue_default btn-block">상온</button></p>
+		<p><button type="submit" class="btn btn-lg btn_blue_default btn-block">상온</button></p>
 	</form>
 	<form action="./items" method="post">
 		<input type="hidden" name="agent" value="${member.agentA}"/>
 		<input type="hidden" name="memberid" value="${member.id}"/>
-		<p><button type="submit" class="btn btn-lg jihye_btn_white_default btn-block">신선</button></p>
+		<p><button type="submit" class="btn btn-lg btn_white_default btn-block">신선</button></p>
 	</form>
 	
-	<p><a href="./logout" class="jihye_link">로그아웃</a></p>
+	<p><a href="./logout" class="link">로그아웃</a></p>
 	</c:if>
 	<p style="color:blue;font-family: CJLIGHT;">${msg}</p>
 </div>
