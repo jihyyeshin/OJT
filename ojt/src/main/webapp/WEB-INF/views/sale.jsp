@@ -7,7 +7,12 @@
 <title>sale complete</title>
 </head>
 <body>
-<p> ${memberid}님, 주문 완료되었습니다.</p>
-<a href="../">홈으로</a>
+<div class="view">
+<header id="header">
+	<h3 class="logo">주문완료</h3>
+</header>
+<h3 id="title"> ${memberid}님, 주문 완료되었습니다.</h3>
+<a href="../" class="jihye_link" class="logo">홈으로</a>
+</div>
 </body>
 </html>

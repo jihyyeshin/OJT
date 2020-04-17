@@ -31,7 +31,7 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 	@RequestMapping("/")
 	public String index() {
 		Logger.info("login");
-		return "login";//"uitest";
+		return "login";//"uitest";//"login";//
 	}
 	// 회원가입View
 	@RequestMapping(value="/signup", method=RequestMethod.GET)

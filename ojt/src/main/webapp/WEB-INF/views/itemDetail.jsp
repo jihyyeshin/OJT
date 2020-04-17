@@ -12,7 +12,7 @@
 	<div onclick="location.href='../items'" class="left"></div>
 	<h3 class="logo">아이템 정보</h3>
 </header>
-<div class="detail">
+<div class="view">
 <h4 id="title"> ${item.name}</h4>
 <p> ${item.remark}</p>
 <!-- 그림 들어와야 함 -->

@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8; application/json;"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
 <head>
+
+<!-- 상품 주문 -->
 <%@ include file="./header.jsp" %></head>
  <link href="<c:url value="/resources/css/item.css" />" rel="stylesheet">
 <title>주문</title>
@@ -20,11 +21,11 @@
 		</form>
 	</header>
 	
-	<form name="paging" onsubmit="_submit();" method="post">
+	<form class="list-group" name="paging" onsubmit="_submit();" method="post">
 		<input type="hidden" name="memberid" value="${param.memberid}"/>
 		<input type="hidden" name="agent" value="${param.agent}"/>
 		<input type="hidden" name="item" value=""/>
-		<table class="list-group"></table>
+		<table></table>
 		
 		<button id="footerL" type="submit" onclick="javascipt: form.action='./items/sale'">주문하기</button>
 		<button id="footerR" type="submit" onclick="javascipt: form.action='./items/insertBasket'">장바구니 넣기</button>
@@ -40,10 +41,10 @@
 	// 아이템 정보 출력
 	function print(data){
 		$.each(data, function(index, item){
-			var str = '<tr><td><input type="checkbox" name="itemchk" value="'+item.item+'"></td>';
-			str += '<td><a href="javascript:goDetail('+item.item+');"">'+item.name+'</a></td></tr>';
-			str += '<tr style="border-bottom:1px solid #d4d4d4;"><td></td><td style="width: 70%;">' + item.amount + '</td>';
-			str += '<td style="width: 25%;"><input type="text" name="qty" style="width: 25px;">개</td></tr>';
+			var str = '<tr><td style="text-align: center;"><input type="checkbox" name="itemchk" value="'+item.item+'"></td>';			
+			str += '<td><a id="title" href="javascript:goDetail('+item.item+');"">'+item.name+'</a></td></tr>';
+			str += '<tr style="border-bottom:1px solid #d4d4d4;"><td></td><td style="width: 65%;">' + item.amount + '원</td>';
+			str += '<td style="width: 25%;"><input type="text" name="qty" style="width: 50%;">개</td></tr>';
 			str += '<input type="hidden" name="amount" value="'+item.amount+'">';
 			str += '<input type="hidden" name="name" value="'+item.name+'">';
 			$('table').append(str);
