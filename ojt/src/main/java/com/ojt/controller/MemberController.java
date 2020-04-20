@@ -1,5 +1,6 @@
 package com.ojt.controller;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -7,6 +8,11 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,10 +34,27 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 	@Inject
 	MemberService service;
 	
+//	@RequestMapping("/")
+//	public String index() {
+//		Logger.info("login");
+//		
+//		return "login";//"uitest";//
+//	}
 	@RequestMapping("/")
-	public String index() {
-		Logger.info("login");
-		return "login";//"uitest";//"login";//
+	public String index(RedirectAttributes rttr) throws IOException {
+		Connection.Response response = Jsoup.connect("https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=%ED%95%AB%EB%8F%84%EA%B7%B8+375")
+                .method(Connection.Method.GET)
+                .execute();
+		Document googleDocument = response.parse();
+		System.out.println("googleDocument"+googleDocument);
+		Element btnK = googleDocument.select("a[class=thumb]").first();
+		System.out.println("btnK"+btnK);
+		Elements img=btnK.select("img");
+		System.out.println("img"+img);
+		String btnKValue = img.attr("src");		
+		System.out.println("btnKValue"+btnKValue); // Google 검색
+		rttr.addFlashAttribute("msg", btnKValue);
+		return "uitest";
 	}
 	// 회원가입View
 	@RequestMapping(value="/signup", method=RequestMethod.GET)
@@ -121,6 +144,7 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 		rttr.addFlashAttribute("msg", "임시 비밀번호 발급 완료");
 		return "redirect:/";
 	}
+	
 	// 숫자, 영문, 특수문자 한 개 이상 포함한 랜덤 임시 비밀번호
 	 public static String randomPw(){ 
 		  char pwCollectionSpCha[]  = new char[] {'!','@','#','$','%','^','&','*','(',')'}; 
@@ -133,7 +157,7 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 		              '!','@','#','$','%','^','&','*','(',')'}; 
 		  return getRandPw(1, pwCollectionAlpha) + getRandPw(1, pwCollectionNum) + getRandPw(5, pwCollectionAll) + getRandPw(1, pwCollectionSpCha); 
 	 }
-	 
+	 // 랜덤 비밀번호 발급
 	 public static String getRandPw(int size, char[] pwCollection){
 	        String ranPw = "";
 	        for (int i = 0; i < size; i++) {
