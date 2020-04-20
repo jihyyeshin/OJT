@@ -10,7 +10,7 @@
 <title>주문</title>
 </head>
 <body>
-	<header id="header">
+	<header id="header" style="height:80px;">
 		<div onclick="location.href='./'" class="left"></div>
 		<h3 class="logo">상품 주문</h3>
 		
@@ -19,7 +19,7 @@
 			<input type="hidden" name="memberid" value="${param.memberid}"/>
 			<input type="hidden" name="agent" value="${param.agent}"/>
 		</form>
-		<input type="text" id="search" placeholder="Type to search">
+		<input class="search" type="text" id="search" placeholder="상품 검색">
 	</header>
 	
 	<form class="list-group" name="paging" onsubmit="_submit();" method="post">
@@ -27,7 +27,7 @@
 		<input type="hidden" name="agent" value="${param.agent}"/>
 		<input type="hidden" name="item" value=""/>
 		
-		<table id="table"></table>
+		<div id="itemList"></div>
 		
 		<button id="footerL" type="submit" onclick="javascipt: form.action='./items/sale'">주문하기</button>
 		<button id="footerR" type="submit" onclick="javascipt: form.action='./items/insertBasket'">장바구니 넣기</button>
@@ -44,25 +44,27 @@
 	// 아이템 정보 출력
 	function print(data){
 		$.each(data, function(index, item){
-			var str = '<tr><td style="text-align: center;">';
+			var str = '<table style="border-bottom:1px solid #d4d4d4;"><tr><td style="text-align: center;">';
 			str += '<input type="checkbox" name="itemchk" value="'+item.item+'"></td>';			
 			str += '<td><a id="title" href="javascript:goDetail('+item.item+');">'+item.name+'</a></td></tr>';
-			str += '<tr style="border-bottom:1px solid #d4d4d4;"><td></td><td style="width: 65%;">' + item.amount + '원</td>';
-			str += '<td style="width: 25%;"><input type="text" name="qty" style="width: 50%;">개</td></tr>';
+			str += '<tr><td></td><td style="width: 65%;">' + item.amount + '원</td>';
+			str += '<td style="width: 25%;"><input type="text" name="qty" style="width: 50%;">개</td></tr></table>';
 			str += '<input type="hidden" name="amount" value="'+item.amount+'">';
 			str += '<input type="hidden" name="name" value="'+item.name+'">';
-			$('table').append(str);
+			$('#itemList').append(str);
 		});
 	}
 	
 	// 상품 검색
 	function search(){
-		var $rows = $('#table tr');
+		var $rows = $('#itemList table');
 		$('#search').keyup(function() {
 		    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+		    //console.log("val"+val);
 		    
 		    $rows.show().filter(function() {
 		        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+		        //console.log("text"+text);
 		        return !~text.indexOf(val);
 		    }).hide();
 		});

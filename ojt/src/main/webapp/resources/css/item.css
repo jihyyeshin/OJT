@@ -5,16 +5,26 @@
 }
 
 .list-group{
-  width: 100%;
+/*   width: 100%;
   max-height:560px;
   overflow:scroll; 
-  -webkit-overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch; */
+    position:absolute;
+	width:100%;
+	max-height:560px;
+	top:85px;
+	left:0;
+	-webkit-overflow-scrolling: touch;
+	overflow:scroll; 
 }
-.body{
+.basket-group{
 	position:absolute;
 	width:100%;
+	max-height:560px;
 	top:55px;
 	left:0;
+	-webkit-overflow-scrolling: touch;
+	overflow:scroll; 
 }
 
 /* 표 스타일 */
@@ -27,7 +37,17 @@
 a{
 	text-decoration: underline;
 }
-
+/* 검색 */
+.search{
+	position:absolute;
+	width:80%;
+    height:30px;
+	top:55%;
+	left:8%;
+	margin: 0 0 0 10px ;
+    padding-top:12px;
+    text-align:center;
+}
 /* 하단 스타일 */
 #footerL{
 	position:fixed;

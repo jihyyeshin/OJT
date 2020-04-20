@@ -13,7 +13,7 @@
 	<h3 class="logo">${memberid}님의 장바구니</h3>
 </header>
 <form method="post" onsubmit="_submit();">
-	<table class="body"></table>
+	<table class="basket-group"></table>
 	<button id="footer" type="submit" onclick="javascipt: form.action='./saleBasket'">주문하기</button>
 	<input type="hidden" name="memberid" value="${memberid}"/>
 	<input type="hidden" name="agent" value="${agent}"/>
