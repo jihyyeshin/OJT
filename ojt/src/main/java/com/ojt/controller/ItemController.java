@@ -1,11 +1,17 @@
 package com.ojt.controller;
 
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -55,6 +61,18 @@ public class ItemController {
 		session.setAttribute("item", vo);
 		System.out.println("agent"+agent);
 		System.out.println("item"+ vo);
+		
+		String val=URLEncoder.encode(vo.getName(), "UTF-8");// ÀÎÄÚµù
+		
+		Connection.Response response = Jsoup.connect("https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query="+val)
+		                .method(Connection.Method.GET)
+		                .execute();
+
+		Document googleDocument = response.parse();
+		Element btnK = googleDocument.select("a[class=thumb]").first();
+		Elements img=btnK.select("img");
+		String btnKValue = img.attr("src");
+		session.setAttribute("img", btnKValue);
 		return "itemDetail";
 	}
 }
