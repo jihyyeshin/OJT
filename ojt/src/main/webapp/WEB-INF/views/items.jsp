@@ -44,7 +44,7 @@
 	// 아이템 정보 출력
 	function print(data){
 		$.each(data, function(index, item){
-			var str = '<table style="border-bottom:1px solid #d4d4d4;"><tr><td style="text-align: center;">';
+			var str = '<table style="border-bottom:1px solid #d4d4d4;width:100%;"><tr><td style="text-align: center;">';
 			str += '<input type="checkbox" name="itemchk" value="'+item.item+'"></td>';			
 			str += '<td><a id="title" href="javascript:goDetail('+item.item+');">'+item.name+'</a></td></tr>';
 			str += '<tr><td></td><td style="width: 65%;">' + item.amount + '원</td>';
