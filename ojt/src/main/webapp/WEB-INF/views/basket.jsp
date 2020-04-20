@@ -50,8 +50,7 @@
 			var str = '<table style="border-bottom:1px solid #d4d4d4;width:100%;"><tr><td style="text-align: center;"><input type="checkbox" name="itemchk" value="'+item.item+'"></td>';
 			str += '<td id="title">'+item.name+'</td>';
 			str += '<td style="width: 15%;"><input type="button" value="X" onclick="delete_func('+item.idx+');"/></td></tr>'
-			str += '<tr>';
-			str += '<td></td><td style="width:75%;">'+item.price+' * '+item.qty+'</td><td></td></tr></table>';
+			str += '<tr><td></td><td style="width:75%;">'+item.price+' * '+item.qty+'</td><td></td></tr></table>';
 			str += '<input type="hidden" name="idx" value="'+item.idx+'">';
 			str += '<input type="hidden" name="qty" value="'+item.qty+'">';
 			str += '<input type="hidden" name="amount" value="'+item.price+'">';
