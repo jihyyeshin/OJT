@@ -43,4 +43,13 @@ public class LocController {
 		}
 		return result.getAgent()+"|"+result.getAgentName()+"|"+result.getZip()+" "+result.getDetail();
 	}
+	
+	@RequestMapping(value="/postAgent",produces = "application/text; charset=utf8",method=RequestMethod.POST)
+	@ResponseBody
+	public String postAgent(@RequestParam String agentId) throws Exception {
+		Logger.info("post agent");
+		LocVO result=service.agent(agentId);
+		//System.out.println("this is result"+result.getAgent());
+		return result.getAgent()+"|"+result.getAgentName();
+	}
 }

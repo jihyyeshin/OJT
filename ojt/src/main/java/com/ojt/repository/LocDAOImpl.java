@@ -26,5 +26,10 @@ public class LocDAOImpl implements LocDAO{
 	public LocVO location(LatLngVO vo) throws Exception{
 		return sql.selectOne(namespace+".location", vo);
 	}
+	@Override
+	// 대리점 아이디로 선택
+	public LocVO agent(String agentId) throws Exception{
+		return sql.selectOne(namespace+".getAgent", agentId);
+	}
 	
 }

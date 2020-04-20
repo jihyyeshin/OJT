@@ -46,81 +46,133 @@
 		</table>
 
 	<h4>대리점 정보</h4>
+	<input type="radio" name="chk_info" value="A" checked="checked">신선
+	<input type="radio" name="chk_info" value="F">상온
 	<table class="table">
+		<tr>
+			<td>
+			<input type="text" id="agentId" name="agentId" class="form-control" placeholder="대리점ID" required autofocus>
+			</td>
+			<td style="width: 15%;">
+			<input type="button" onclick="agentCalc();" class="btn btn_blue_default" value="검색"/>
+			</td>
+		</tr>
 		<tr>
 			<td>
 			<input type="hidden" id="agentA" name="agentA"/>
 			<p id="resultAgentA">신선: </p>
-			<!-- <p id="resultLocationA" style="font-size:10px;"></p> -->
 			</td>
 		</tr>
 		<tr>
 			<td>
 			<input type="hidden" id="agentF" name="agentF"/>
 			<p id="resultAgentF">상온: </p>
-			<!-- <p id="resultLocationF" style="font-size:10px;"></p> -->
 			</td>
 		</tr>
 	</table>
-		
-		
+
 	<div id="footer" onclick="check_submit();">회원가입 </div>
 	</form>
 	</div>
 	
 
 <script type="text/javascript">
-	var agentId;
 	var resultArray;
+	var loc;
+	/* document.getElementById("useAgent").style.display='none';
+	
+	function calcAgentId(){
+		console.log("?");
+		document.getElementById("useAgent").style.display='block';
+	}
+	 */
+
+	function agentCalc(){
+		var agentId=$("#agentId").val();
+		var radios = document.getElementsByName('chk_info');
+		var gbn, gbnVal;
+		if(radios[0].checked) {
+			gbn='A';
+			gbnVal="신선";
+		}
+		else if(radios[1].checked) {
+			gbn='F';
+			gbnVal="상온";
+		}
+		
+		$.ajax({
+			url:"./postAgent",
+			type:"POST",
+			dataType:"text",
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			async:false,
+			data: "agentId="+agentId,
+			success: function(data){
+				// 받아온 결과물 저장
+				resultArray=data.split('|');
+				$("#resultAgent"+gbn).text(gbnVal+" : "+resultArray[1]);
+				$("#agent"+gbn).val(resultArray[0]);
+			},
+			error:function(request,status, error){
+				console.log("status:\n"+request.status+"\nerror:\n"+request.error);
+			},
+			complete:function(data){
+				console.log("complete");
+			}
+		});
+	}
 	function calcResult(){
-		locCalc('A');
-		locCalc('F');
+		loc=$("#addr").val();
+		if(loc=="" || loc==null || loc==undefined)
+			alert("주소를 입력하세요.")
+		else {
+			locCalc('A');
+			locCalc('F');
+		}
 	}
 	function locCalc(gbn) {
-			var geocoder = new kakao.maps.services.Geocoder();
-			var loc=$("#addr").val();
-			console.log('loc');
-			
-			if(loc=="" || loc==null || loc==undefined)
-				$("#result").html("위치를 입력하세요.");
-			else {
-				var locArray=loc.split(' ');
-				if(locArray[1]==undefined || locArray[1]=="" || locArray[1]==null)
-					loc=locArray[0];
-				else loc=locArray[0]+" "+locArray[1]; 
-				var lat, lng;
-				// 위경도 계산
-				geocoder.addressSearch(loc, function(result, status) {
-				    // 정상적으로 검색이 완료됐으면 
-				     if (status === kakao.maps.services.Status.OK) {
-				    	lat=result[0].y;
-				    	lng=result[0].x;
-				    	// 통신
-				    	$.ajax({
-							url:"./locationTest",
-							type:"POST",
-							dataType:"text",
-							contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-							async:false,
-							data: "location="+loc+"&lat="+lat+"&lng="+lng+"&gbn="+gbn,
-							success: function(data){
-								// 받아온 결과물 저장
-								resultArray=data.split('|');
-								$("#resultAgent"+gbn).append(resultArray[1]);
-								//$("#resultLocation"+gbn).html(resultArray[2]);
-								$("#agent"+gbn).val(resultArray[0]);
-							},
-							error:function(request,status, error){
-								console.log("status:\n"+request.status+"\nerror:\n"+request.error);
-							},
-							complete:function(data){
-								console.log("complete");
-							}
-						});
-				    } 
+		var geocoder = new kakao.maps.services.Geocoder();
+		var gbnVal;
+		if(gbn=='A') gbnVal="신선";
+		else if(gbn=='F') gbnVal="상온";
+		//$("#result").html("위치를 입력하세요.");
+		var locArray=loc.split(' ');
+		if(locArray[1]==undefined || locArray[1]=="" || locArray[1]==null)
+			loc=locArray[0];
+		else loc=locArray[0]+" "+locArray[1]; 
+		var lat, lng;
+		// 위경도 계산
+		geocoder.addressSearch(loc, function(result, status) {
+			// 정상적으로 검색이 완료됐으면 
+			if (status === kakao.maps.services.Status.OK) {
+				lat=result[0].y;
+				lng=result[0].x;
+				// 통신
+				$.ajax({
+					url:"./locationTest",
+					type:"POST",
+					dataType:"text",
+					contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+					async:false,
+						data: "location="+loc+"&lat="+lat+"&lng="+lng+"&gbn="+gbn,
+						success: function(data){
+							// 받아온 결과물 저장
+							resultArray=data.split('|');
+							$("#resultAgent"+gbn).text(gbnVal+" : "+resultArray[1]);
+							//$("#resultLocation"+gbn).html(resultArray[2]);
+							$("#agent"+gbn).val(resultArray[0]);
+						},
+						error:function(request,status, error){
+							console.log("status:\n"+request.status+"\nerror:\n"+request.error);
+						},
+						complete:function(data){
+							console.log("complete");
+						}
 				});
-			}
-		}
+			} 
+		});
+			
+	}
 	
 	var psw_validation = 'false';
 	

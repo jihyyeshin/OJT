@@ -25,4 +25,9 @@ public class LocServiceImpl implements LocService{
 	public LocVO location(LatLngVO vo)throws Exception{
 		return dao.location(vo);
 	}
+	
+	// 대리점 아이디로 선택
+	public LocVO agent(String agentId) throws Exception{
+		return dao.agent(agentId);
+	}
 }

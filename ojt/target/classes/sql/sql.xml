@@ -51,6 +51,14 @@
 	limit 1;
 </select>
 
+<!-- 대리점 조회 -->
+<select id="getAgent" parameterType="String" resultType="com.ojt.domain.LocVO">
+	select cd_agent, nm_agentform
+	from ms_agent
+	where cd_agent=#{agentId}
+	limit 1;
+</select>
+
 <!-- 대리점 별 아이템, 가격 조회 -->
 <select id="itemList" parameterType="String" resultType="com.ojt.domain.ItemVO" >
 	select distinct g.cd_item, g.nm_item, m.amt_amount

@@ -15,6 +15,7 @@
 	
 	<div class="view">
 		<img src="${src}" width="100%"></img>
+		<p></p>
 		<h4> ${item.name}</h4>
 		<p> ${item.remark}</p>
 		
