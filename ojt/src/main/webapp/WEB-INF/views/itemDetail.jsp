@@ -14,7 +14,7 @@
 	</header>
 	
 	<div class="view">
-		<img src="${img}" width="100%"></img>
+		<img src="${src}" width="100%"></img>
 		<h4> ${item.name}</h4>
 		<p> ${item.remark}</p>
 		

@@ -63,16 +63,36 @@ public class ItemController {
 		System.out.println("item"+ vo);
 		
 		String val=URLEncoder.encode(vo.getName(), "UTF-8");// ÀÎÄÚµù
-		
+		System.out.println("name"+vo.getName());
 		Connection.Response response = Jsoup.connect("https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query="+val)
-		                .method(Connection.Method.GET)
-		                .execute();
-
+                .method(Connection.Method.GET)
+                .execute();
+		
 		Document googleDocument = response.parse();
-		Element btnK = googleDocument.select("a[class=thumb]").first();
-		Elements img=btnK.select("img");
-		String btnKValue = img.attr("src");
-		session.setAttribute("img", btnKValue);
+		
+		Element thumb = googleDocument.select("a[class=thumb]").first();
+		System.out.println("thumb"+thumb);
+		if(thumb==null) {
+			//System.out.println("?");
+			session.setAttribute("src", "");
+			return "itemDetail";
+		}
+		
+		Elements img=thumb.select("img");
+		System.out.println("img"+img);
+		if(img==null) {
+			session.setAttribute("src", "");
+			return "itemDetail";
+		} 
+		
+		String src = img.attr("src");
+		System.out.println("src"+src);
+		if(src==null) {
+			session.setAttribute("src", "");
+			return "itemDetail";
+		}
+	
+		session.setAttribute("src", src);
 		return "itemDetail";
 	}
 }
