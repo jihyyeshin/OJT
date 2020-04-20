@@ -19,13 +19,15 @@
 			<input type="hidden" name="memberid" value="${param.memberid}"/>
 			<input type="hidden" name="agent" value="${param.agent}"/>
 		</form>
+		<input type="text" id="search" placeholder="Type to search">
 	</header>
 	
 	<form class="list-group" name="paging" onsubmit="_submit();" method="post">
 		<input type="hidden" name="memberid" value="${param.memberid}"/>
 		<input type="hidden" name="agent" value="${param.agent}"/>
 		<input type="hidden" name="item" value=""/>
-		<table></table>
+		
+		<table id="table"></table>
 		
 		<button id="footerL" type="submit" onclick="javascipt: form.action='./items/sale'">주문하기</button>
 		<button id="footerR" type="submit" onclick="javascipt: form.action='./items/insertBasket'">장바구니 넣기</button>
@@ -36,6 +38,7 @@
 	// 로드되자마자
 	$(document).ready(function(){
 		showItem();
+		search();
 	});
 	
 	// 아이템 정보 출력
@@ -43,7 +46,7 @@
 		$.each(data, function(index, item){
 			var str = '<tr><td style="text-align: center;">';
 			str += '<input type="checkbox" name="itemchk" value="'+item.item+'"></td>';			
-			str += '<td><a id="title" href="javascript:goDetail('+item.item+');"">'+item.name+'</a></td></tr>';
+			str += '<td><a id="title" href="javascript:goDetail('+item.item+');">'+item.name+'</a></td></tr>';
 			str += '<tr style="border-bottom:1px solid #d4d4d4;"><td></td><td style="width: 65%;">' + item.amount + '원</td>';
 			str += '<td style="width: 25%;"><input type="text" name="qty" style="width: 50%;">개</td></tr>';
 			str += '<input type="hidden" name="amount" value="'+item.amount+'">';
@@ -51,6 +54,20 @@
 			$('table').append(str);
 		});
 	}
+	
+	// 상품 검색
+	function search(){
+		var $rows = $('#table tr');
+		$('#search').keyup(function() {
+		    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+		    
+		    $rows.show().filter(function() {
+		        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+		        return !~text.indexOf(val);
+		    }).hide();
+		});
+	}
+	
 	// go 디테일 페이지
 	function goDetail(item){
 		var f=document.paging;
