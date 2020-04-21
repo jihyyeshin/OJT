@@ -12,12 +12,14 @@
 	<div onclick="location.href='../items'" class="left"></div>
 	<h3 class="logo">${memberid}님의 장바구니</h3>
 </header>
-<form class="basket-group" method="post" onsubmit="_submit();">
-	<div id="itemList"></div>
-	<button id="footer" type="submit" onclick="javascipt: form.action='./saleBasket'">주문하기</button>
-	<input type="hidden" name="memberid" value="${memberid}"/>
-	<input type="hidden" name="agent" value="${agent}"/>
-</form>
+<div class ="list_view">
+	<form method="post" onsubmit="_submit();">
+		<div id="itemList"></div>
+		<button id="footer" type="submit" onclick="javascipt: form.action='./saleBasket'">주문하기</button>
+		<input type="hidden" name="memberid" value="${memberid}"/>
+		<input type="hidden" name="agent" value="${agent}"/>
+	</form>
+</div>
 
 <script type="text/javascript">
 	var memberid=${memberid};

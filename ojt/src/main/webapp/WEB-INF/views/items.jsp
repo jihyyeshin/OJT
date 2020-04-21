@@ -21,17 +21,18 @@
 		</form>
 		<input class="search" type="text" id="search" placeholder="상품 검색">
 	</header>
-	
-	<form class="list-group" name="paging" onsubmit="_submit();" method="post">
-		<input type="hidden" name="memberid" value="${param.memberid}"/>
-		<input type="hidden" name="agent" value="${param.agent}"/>
-		<input type="hidden" name="item" value=""/>
-		
-		<div id="itemList"></div>
-		
-		<button id="footerL" type="submit" onclick="javascipt: form.action='./items/sale'">주문하기</button>
-		<button id="footerR" type="submit" onclick="javascipt: form.action='./items/insertBasket'">장바구니 넣기</button>
-	</form>
+	<div class ="list_view">
+		<form name="paging" onsubmit="_submit();" method="post">
+			<input type="hidden" name="memberid" value="${param.memberid}"/>
+			<input type="hidden" name="agent" value="${param.agent}"/>
+			<input type="hidden" name="item" value=""/>
+			
+			<div id="itemList"></div>
+			
+			<button id="footerL" type="submit" onclick="javascipt: form.action='./items/sale'">주문하기</button>
+			<button id="footerR" type="submit" onclick="javascipt: form.action='./items/insertBasket'">장바구니 넣기</button>
+		</form>
+	</div>
 	
 	<script type="text/javascript">
 	var agentId=${param.agent};

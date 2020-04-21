@@ -85,9 +85,7 @@ public class SaleController {
 
 		if(item.equals("")) {// item list 화면
 			for(int i=0;i<itemchk.length;i++) {
-				
 				BasketVO bvo=new BasketVO(memberid, name[i], amount[i]*qty[i], amount[i], agent, itemchk[i],qty[i]);
-				//System.out.println("THIS IS NAME!"+bvo.getName());
 				service.basket(bvo); // 장바구니 insert
 			}
 		}else {// item detail 화면
@@ -112,9 +110,7 @@ public class SaleController {
 	public String deletedBasket(@RequestParam int idx) throws Exception {
 		Logger.info("delete basket");
 		System.out.println("/items/deleteBasket");
-		//System.out.println("ddidx: "+idx);
 		service.deleteBasket(idx);
-		//System.out.println("!??!?");
 		return "redirect:/items/basket";
 	}
 	// 장바구니에서 주문(주문한 상품은 삭제)

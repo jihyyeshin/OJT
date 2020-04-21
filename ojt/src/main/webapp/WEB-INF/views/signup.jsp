@@ -79,13 +79,6 @@
 <script type="text/javascript">
 	var resultArray;
 	var loc;
-	/* document.getElementById("useAgent").style.display='none';
-	
-	function calcAgentId(){
-		console.log("?");
-		document.getElementById("useAgent").style.display='block';
-	}
-	 */
 
 	function agentCalc(){
 		var agentId=$("#agentId").val();
