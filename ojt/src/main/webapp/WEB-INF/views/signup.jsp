@@ -152,7 +152,6 @@
 							// 받아온 결과물 저장
 							resultArray=data.split('|');
 							$("#resultAgent"+gbn).text(gbnVal+" : "+resultArray[1]);
-							//$("#resultLocation"+gbn).html(resultArray[2]);
 							$("#agent"+gbn).val(resultArray[0]);
 						},
 						error:function(request,status, error){

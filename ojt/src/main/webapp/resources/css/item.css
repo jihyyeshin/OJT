@@ -5,16 +5,11 @@
 }
 
 .list-group{
-/*   width: 100%;
-  max-height:560px;
-  overflow:scroll; 
-  -webkit-overflow-scrolling: touch; */
     position:absolute;
 	width:100%;
 	max-height:80%;
 	top:85px;
 	left:0;
-	bottom: 55px;
 	-webkit-overflow-scrolling: touch;
 	overflow:scroll; 
 }
@@ -24,7 +19,6 @@
 	max-height:80%;
 	top:55px;
 	left:0;
-	bottom:55px;
 	-webkit-overflow-scrolling: touch;
 	overflow:scroll;
 }
@@ -56,6 +50,7 @@ a{
     left: 0;
     bottom: 0;
     width: 50%;
+    height:80px;
 	padding: 10px 0;
     background-color:#9cbdff;
     
@@ -79,6 +74,7 @@ a{
     right: 0;
     bottom: 0;
     width: 50%;
+    height:80px;
 	padding: 10px 0;
     background-color:#fff;
     

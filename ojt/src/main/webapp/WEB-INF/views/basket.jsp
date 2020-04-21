@@ -31,10 +31,11 @@
 		$.ajax({
 			url:"./deleteBasket",
 			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-			data:"idx="+idx,
+			data:"idx="+idx+"&memberid="+memberid,
 			success: function(data){
 				alert("삭제되었습니다.");
-				window.location.reload(false);
+				//history.go();
+				window.location.reload();
 			},
 			error:function(request,status, error){
 				console.log("status:\n"+request.status+"\nerror:\n"+request.error);

@@ -107,10 +107,12 @@ public class SaleController {
 	
 	// 장바구니 삭제
 	@RequestMapping(value="/deleteBasket", method=RequestMethod.GET)
-	public String deletedBasket(@RequestParam int idx) throws Exception {
+	public String deletedBasket(HttpServletRequest req, @RequestParam int idx, @RequestParam String memberid) throws Exception {
 		Logger.info("delete basket");
+		HttpSession session = req.getSession();
 		System.out.println("/items/deleteBasket");
 		service.deleteBasket(idx);
+		session.setAttribute("memberid", memberid);
 		return "redirect:/items/basket";
 	}
 	// 장바구니에서 주문(주문한 상품은 삭제)

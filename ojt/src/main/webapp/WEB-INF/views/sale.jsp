@@ -11,7 +11,7 @@
 <header id="header">
 	<h3 class="logo">주문완료</h3>
 </header>
-<h4> ${memberid}님, 주문 완료되었습니다.</h4>
+<p style="text-align: center;font-size: x-large;"> ${memberid}님, 주문 완료되었습니다.</p>
 <p style="text-align: center;"><a href="../" class="link">홈으로</a></p>
 </div>
 </body>

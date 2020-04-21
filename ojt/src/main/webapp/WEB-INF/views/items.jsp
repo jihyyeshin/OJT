@@ -59,11 +59,9 @@
 		var $rows = $('#itemList table');
 		$('#search').keyup(function() {
 		    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
-		    //console.log("val"+val);
 		    
 		    $rows.show().filter(function() {
 		        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
-		        //console.log("text"+text);
 		        return !~text.indexOf(val);
 		    }).hide();
 		});
