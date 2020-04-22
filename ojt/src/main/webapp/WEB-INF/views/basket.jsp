@@ -10,19 +10,21 @@
 <body>
 <header id="header">
 	<div onclick="location.href='../items'" class="left"></div>
-	<h3 class="logo">${memberid}님의 장바구니</h3>
+	<h3 class="logo">${param.memberid}님의 장바구니</h3>
 </header>
 <form method="post" onsubmit="_submit();">
 	<div id="itemList" class ="basket-group"></div>
 	<button id="footer" type="submit" onclick="javascipt: form.action='./saleBasket'">주문하기</button>
-	<input type="hidden" name="memberid" value="${memberid}"/>
-	<input type="hidden" name="agent" value="${agent}"/>
+	<input type="hidden" name="memberid" value="${param.memberid}"/>
+	<input type="hidden" name="agent" value="${param.agent}"/>
 </form>
 
 <script type="text/javascript">
-	var memberid=${memberid};
+
+	var memberid=${param.memberid};
+
 	// 로드되자마자
-	$(document).ready(function(){
+	document.addEventListener("DOMContentLoaded", function(){
 		showBasket();
 	});
 	
@@ -30,18 +32,20 @@
 	function delete_func(idx){
 		$.ajax({
 			url:"./deleteBasket",
+			type:"GET",
 			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 			data:"idx="+idx+"&memberid="+memberid,
 			success: function(data){
 				alert("삭제되었습니다.");
-				//history.go();
-				window.location.reload();
+				
+				localStorage.memberid=memberid;
+				memberid=localStorage.memberid;
 			},
 			error:function(request,status, error){
 				console.log("status:\n"+request.status+"\nerror:\n"+request.error);
 			},
 			complete:function(data){
-				console.log("completeD");
+				window.location.reload();
 			}
 		});
 	} 

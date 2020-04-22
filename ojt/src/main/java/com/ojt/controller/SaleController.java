@@ -61,12 +61,14 @@ public class SaleController {
 	// 장바구니
 	@RequestMapping(value = "/basket", method = RequestMethod.GET)
 	public String getBasket(HttpServletRequest req, String agent, String memberid) {
-		Logger.info("get basket");
-		System.out.println("/items/basket(get)");
-		HttpSession session = req.getSession();
-		session.setAttribute("agent", agent);
-		session.setAttribute("memberid", memberid);
-		return "basket";
+		System.out.println("/items/basket(get) - basketPost");
+		return "basketPost";
+//		Logger.info("get basket");
+//		System.out.println("/items/basket(get)");
+//		HttpSession session = req.getSession();
+//		session.setAttribute("agent", agent);
+//		session.setAttribute("memberid", memberid);
+//		return "basket";
 	}
 	@RequestMapping(value = "/basket", method = RequestMethod.POST)
 	public String postBasket(HttpServletRequest req, String agent, String memberid, String[] name, String[] itemchk, int[] amount, int[] qty/*, String type*/) throws Exception{

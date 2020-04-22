@@ -41,25 +41,6 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 		
 		return "login";//"uitest";//
 	}
-//	@RequestMapping("/")
-//	public String index(RedirectAttributes rttr) throws IOException {
-//		String val=URLEncoder.encode("핫도그375G", "UTF-8");// 인코딩
-//		
-//		Connection.Response response = Jsoup.connect("https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query="+val)
-//                .method(Connection.Method.GET)
-//                .execute();
-//		System.out.println(response);
-//		Document googleDocument = response.parse();
-//		System.out.println("googleDocument"+googleDocument);
-//		Element btnK = googleDocument.select("a[class=thumb]").first();
-//		System.out.println("btnK"+btnK);
-//		Elements img=btnK.select("img");
-//		System.out.println("img"+img);
-//		String btnKValue = img.attr("src");		
-//		System.out.println("btnKValue"+btnKValue); // Google 검색
-//		rttr.addFlashAttribute("msg", btnKValue);
-//		return "uitest";
-//	}
 	// 회원가입View
 	@RequestMapping(value="/signup", method=RequestMethod.GET)
 	public void getSignup() throws Exception{

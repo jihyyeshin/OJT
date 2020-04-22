@@ -8,7 +8,7 @@
     position:absolute;
 	width:100%;
 	max-height:80%;
-	top:85px;
+	top:95px;
 	left:0;
 	-webkit-overflow-scrolling: touch;
 	overflow:scroll; 
@@ -50,7 +50,7 @@ a{
     left: 0;
     bottom: 0;
     width: 50%;
-    height:80px;
+    height:60px;
 	padding: 10px 0;
     background-color:#9cbdff;
     
@@ -74,7 +74,7 @@ a{
     right: 0;
     bottom: 0;
     width: 50%;
-    height:80px;
+    height:60px;
 	padding: 10px 0;
     background-color:#fff;
     

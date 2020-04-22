@@ -10,7 +10,7 @@
 <title>주문</title>
 </head>
 <body>
-	<header id="header" style="height:80px;">
+	<header id="header" style="height:85px;">
 		<div onclick="location.href='./'" class="left"></div>
 		<h3 class="logo">상품 주문</h3>
 		
