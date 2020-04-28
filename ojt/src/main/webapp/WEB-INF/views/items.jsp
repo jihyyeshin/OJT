@@ -25,8 +25,15 @@
 		<input type="hidden" name="memberid" value="${param.memberid}"/>
 		<input type="hidden" name="agent" value="${param.agent}"/>
 		<input type="hidden" name="item" value=""/>
-			
-		<div id="itemList" class ="list-group"></div>
+		<div class="item-list">
+				<div class="recommend-list">
+				
+				this is test data
+				
+
+				</div>
+				<div id="itemList" class ="list-group"></div>
+		</div>
 			
 		<button id="footerL" type="submit" onclick="javascipt: form.action='./items/sale'">주문하기</button>
 		<button id="footerR" type="submit" onclick="javascipt: form.action='./items/insertBasket'">장바구니 넣기</button>
