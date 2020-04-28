@@ -33,20 +33,20 @@ public class SaleController {
 	// ¡÷πÆ
 	@RequestMapping(value = "/sale", method = RequestMethod.GET)
 	public String getSale() {
+		System.out.println("/items/sale (get)");
 		return "notFound";
 	}
 
 	@RequestMapping(value = "/sale", method = RequestMethod.POST)
 	public String postSale(HttpServletRequest req, String agent, String memberid, String[] name, String[] itemchk, int[] amount, int[] qty) throws Exception{
 		Logger.info("post sale");
+		System.out.println("/items/sale (post)");
 		HttpSession session = req.getSession();
-		
 		Date time=new Date();
 		SimpleDateFormat format = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");	
 		String dtime=format.format(time);
 		
 		int tot=0;
-		System.out.println(itemchk.length);
 		for(int i=0;i<itemchk.length;i++) {
 			
 			tot+=amount[i]*qty[i];
@@ -63,12 +63,6 @@ public class SaleController {
 	public String getBasket(HttpServletRequest req, String agent, String memberid) {
 		System.out.println("/items/basket(get) - basketPost");
 		return "basketPost";
-//		Logger.info("get basket");
-//		System.out.println("/items/basket(get)");
-//		HttpSession session = req.getSession();
-//		session.setAttribute("agent", agent);
-//		session.setAttribute("memberid", memberid);
-//		return "basket";
 	}
 	@RequestMapping(value = "/basket", method = RequestMethod.POST)
 	public String postBasket(HttpServletRequest req, String agent, String memberid, String[] name, String[] itemchk, int[] amount, int[] qty/*, String type*/) throws Exception{

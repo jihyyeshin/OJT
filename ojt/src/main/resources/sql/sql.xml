@@ -61,16 +61,23 @@
 
 <!-- 대리점 별 아이템, 가격 조회 -->
 <select id="itemList" parameterType="String" resultType="com.ojt.domain.ItemVO" >
-	select distinct g.cd_item, g.nm_item, m.amt_amount
+	<!-- select distinct g.cd_item, g.nm_item, m.amt_amount
 	from ms_agentitem_g g inner join ms_pathamtpolicy m on g.cd_item=m.cd_item
-	where g.cd_agent=#{agent}
+	where g.cd_agent=#{agent} -->
+	select cd_item, nm_item, amt_amount
+	from ms_agentitem
+	where cd_agent=#{agent}
 </select>
 
 <!-- 아이템 별 정보 조회 -->
 <select id="itemDetail" parameterType="String" resultType="com.ojt.domain.ItemVO">
-	select *, m.amt_amount
+	<!-- select *, m.amt_amount
 	from ms_agentitem_g g inner join ms_pathamtpolicy m on g.cd_item=m.cd_item
 	where g.cd_item=#{item}
+	limit 1; -->
+	select *
+	from ms_agentitem
+	where cd_item=#{item}
 	limit 1;
 </select>
 
