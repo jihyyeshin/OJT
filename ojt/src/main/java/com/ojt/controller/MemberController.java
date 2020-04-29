@@ -35,21 +35,28 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 	@Inject
 	MemberService service;
 	
+	// 스플래시 이미지
+	@RequestMapping(value="/splash", method=RequestMethod.GET)
+	public void splash() {
+		System.out.println("get splash");
+	}
+	// index
 	@RequestMapping("/")
 	public String index() {
 		Logger.info("login");
 		
-		return "uitest";//"login";//"uitest";//
+		return "login";//"uitest";//"login";//"uitest";//
 	}
+	
 	// 회원가입View
 	@RequestMapping(value="/signup", method=RequestMethod.GET)
 	public void getSignup() throws Exception{
-		Logger.info("get signup");
+		System.out.println("get signup");
 	}
 	// 회원가입
 	@RequestMapping(value="/signup", method=RequestMethod.POST)
 	public String postSignup(MemberVO vo, RedirectAttributes rttr) throws Exception{
-		Logger.info("post signup");
+		System.out.println("post signup");
 		service.signup(vo);
 		rttr.addFlashAttribute("msg", "회원가입 완료");
 		return "redirect:/"; // 처음 화면으로 

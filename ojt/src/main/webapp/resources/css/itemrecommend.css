@@ -1,0 +1,55 @@
+/* 아이템 슬라이드 */
+.con_bb {
+	width:100%; 
+	height:50%; 
+	margin:0 auto; 
+	padding-top:10%; 
+	position:relative; 
+	overflow: hidden; 
+}
+.rolling_panel {
+	border-bottom:1px solid #d4d4d4;
+	border-top:1px solid #d4d4d4;
+	text-align:center;
+	float:left;  
+	position: relative; 
+	width: 100%; 
+	height: 100%; 
+	margin: 0; 
+	padding: 0;
+}/* overflow: hidden; }*/
+.rolling_panel ul {
+	text-align:center;
+	position: absolute;
+	width: 100%;
+	margin: 5px; 
+	padding: 0; 
+	list-style: none;
+}
+.rolling_panel ul li {
+	text-align:center; 
+	width: 100%; 
+	height: 320px;
+	z-index:9900;
+}
+
+/* 화살표 */
+.leftarrow {
+	width:50px; 
+	left:5px; 
+	margin-top:25%; 
+	opacity: 0.2;
+	z-index:9999;
+	position:absolute;
+}
+.rightarrow {
+	width:50px; 
+	right:5px; 
+	margin-top:25%; 
+	opacity: 0.2;
+	z-index:9999;
+	position:absolute;
+}
+
+
+
