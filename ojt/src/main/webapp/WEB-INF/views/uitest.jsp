@@ -5,12 +5,25 @@
 <head>
 <%@ include file="./header.jsp"%></head>
 <link href="<c:url value="/resources/css/item.css" />" rel="stylesheet">
-<link href="<c:url value="/resources/css/itemrecommend.css" />" rel="stylesheet">
+<%-- <link href="<c:url value="/resources/css/itemrecommend.css" />" rel="stylesheet"> --%>
+<style type="text/css">
+        .con_bb {width:1200px; height:360px; margin:0 auto; padding-top:180px; overflow: hidden; }
+        
+        
+        .left {float:left; width:50px; margin-top:110px;}
+        .right {float:right; width:50px; margin-top:110px;}
+        .rolling_panel {float:left;  position: relative; width: 1100px; height: 320px; margin: 0; padding: 0; overflow: hidden; }
+        .rolling_panel ul { position: absolute; margin: 5px; padding: 0; list-style: none; }
+        
+        .rolling_panel ul li { float: left; width: 360px; height: 320px;}
+        </style>
+
 </head>
 <body>
-	<div class="test"> <!-- style="width:100%;height:100%;"> -->
+<!-- 	<div class="test"> style="width:100%;height:100%;">
 				<div class="recommend-list">
-	
+	 -->
+	 <div style="width:100%;height:100%;">
 		<div class="con_bb">
 			<div class="leftarrow">
 				<a href="javascript:void(0)" id="prev"> <img
@@ -56,7 +69,6 @@
 				</a>
 			</div>
 		</div>
-	</div>
 	</div>
 
 	<script type="text/javascript">
