@@ -6,19 +6,17 @@
 <%@ include file="./header.jsp" %></head>
  <link href="<c:url value="/resources/css/item.css" />" rel="stylesheet">
   <style type="text/css">
-        .con_mini {width:100%; height:622px; background:url("../images/radger_mini05.jpg") no-repeat center center;}    
-        .con_bb {width:1200px; height:360px; margin:0 auto; padding-top:180px; overflow: hidden; position:relative; }
-        .left {float:left; width:50px; margin-top:110px;}
-        .right {float:right; width:50px; margin-top:110px;}
-        .rolling_panel {float:left;  position: relative; width: 1100px; height: 320px; margin: 0; padding: 0; overflow: hidden; }
+        .con_bb {width:100%; height:50%; margin:0 auto; padding-top:10%; overflow: hidden; position:relative; }
+        .left {width:50px; left:5px; margin-top:25px; opacity: 0.7;position:absolute;}
+        .right {width:50px; right:5px; margin-top:25px; opacity: 0.7;z-index:9999;position:absolute;}
+        .rolling_panel {float:left;  position: relative; width: 100%; height: 50%; margin: 0; padding: 0; overflow: hidden; }
         .rolling_panel ul { position: absolute; margin: 5px; padding: 0; list-style: none; }
-        .rolling_panel ul li { float: left; width: 360px; height: 320px;}
+        .rolling_panel ul li { float: left; width: 360px; height: 320px;z-index:9999;}
         </style>
 </head>
 <body>
-      <div class="con_s">
         <div class="con_bb">
-          <div class="left"><a href="javascript:void(0)" id="prev"><img src="<c:url value="/resources/img/back.png" />" width="100" height="88"></a></div>
+          <div class="left"><a href="javascript:void(0)" id="prev"><img src="<c:url value="/resources/img/left.png" />" width="50px" height="50px"></a></div>
           <div class="rolling_panel">
               <ul>
                   <li><img src="<c:url value="/resources/img/CJ_logo.png" />" alt="a" width="100" height="88"></li>
@@ -28,9 +26,8 @@
                   <li><img src="<c:url value="/resources/img/cart.png" />" alt="e" width="100" height="88"></li>
               </ul>
           </div>
-          <div class="right"><a href="javascript:void(0)" id="next"><img src="<c:url value="/resources/img/back.png" />" width="100" height="88"></a></div>
+          <div class="right"><a href="javascript:void(0)" id="next"><img src="<c:url value="/resources/img/right.png" />" width="50px" height="50px"></a></div>
         </div>
-   </div>
         <script type="text/javascript">
             $(document).ready(function() {
                 var $panel = $(".rolling_panel").find("ul");
