@@ -9,8 +9,6 @@
 </head>
 
 <body>
-
-hello
-
+	<img class="mb-4" src="<c:url value="/resources/img/CJ_logo.png" />"alt="" width="100" height="88">
 </body>
 </html>

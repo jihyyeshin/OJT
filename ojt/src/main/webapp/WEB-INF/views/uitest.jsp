@@ -8,7 +8,9 @@
 <link href="<c:url value="/resources/css/itemrecommend.css" />" rel="stylesheet">
 </head>
 <body>
-	<div class="item-list">
+	<div class="test"> <!-- style="width:100%;height:100%;"> -->
+				<div class="recommend-list">
+	
 		<div class="con_bb">
 			<div class="leftarrow">
 				<a href="javascript:void(0)" id="prev"> <img
@@ -16,10 +18,11 @@
 					height="50px">
 				</a>
 			</div>
+			
 			<div class="rolling_panel">
 				<ul>
 					<li>
-						<table style="width: 100%; height: 60%;">
+						<table>
 							<tr>
 								<td style="width: 60%;"><img
 									src="<c:url value="/resources/img/sampleimg.png" />"
@@ -54,6 +57,8 @@
 			</div>
 		</div>
 	</div>
+	</div>
+
 	<script type="text/javascript">
 		$(document).ready(function() {
         	var $panel = $(".rolling_panel").find("ul");

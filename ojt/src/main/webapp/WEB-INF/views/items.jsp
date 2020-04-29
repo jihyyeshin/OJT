@@ -7,6 +7,8 @@
 <!-- 상품 주문 -->
 <%@ include file="./header.jsp" %></head>
  <link href="<c:url value="/resources/css/item.css" />" rel="stylesheet">
+ <link href="<c:url value="/resources/css/itemrecommend.css" />" rel="stylesheet">
+
 <title>주문</title>
 </head>
 <body>
@@ -26,13 +28,54 @@
 		<input type="hidden" name="agent" value="${param.agent}"/>
 		<input type="hidden" name="item" value=""/>
 		<div class="item-list">
-				<div class="recommend-list">
-				
-				this is test data
-				
+			<div class="recommend-list">
+				<div class="con_bb">
+					<div class="leftarrow">
+						<a href="javascript:void(0)" id="prev"> <img
+							src="<c:url value="/resources/img/left.png" />" width="50px"
+							height="50px">
+						</a>
+					</div>
 
+					<div class="rolling_panel">
+						<ul>
+							<li>
+								<table>
+									<tr>
+										<td style="width: 60%;"><img
+											src="<c:url value="/resources/img/sampleimg.png" />"
+											style="text-align: center;" width="100" height="88"></td>
+										<td style="width: 40%; text-align: left;">
+											<p>제품 이름</p>
+											<p>1000원</p>
+										</td>
+									</tr>
+								</table>
+							</li>
+							<li>
+								<table>
+									<tr>
+										<td style="width: 60%;"><img
+											src="<c:url value="/resources/img/sampleimg.png" />"
+											style="text-align: center;" width="100" height="88"></td>
+										<td style="width: 40%; text-align: left;">
+											<p>제품 이름2</p>
+											<p>2000원</p>
+										</td>
+									</tr>
+								</table>
+							</li>
+						</ul>
+					</div>
+					<div class="rightarrow">
+						<a href="javascript:void(0)" id="next"> <img
+							src="<c:url value="/resources/img/right.png" />" width="50px"
+							height="50px">
+						</a>
+					</div>
 				</div>
-				<div id="itemList" class ="list-group"></div>
+			</div>
+			<div id="itemList" class ="list-group"></div>
 		</div>
 			
 		<button id="footerL" type="submit" onclick="javascipt: form.action='./items/sale'">주문하기</button>
@@ -45,6 +88,34 @@
 	$(document).ready(function(){
 		showItem();
 		search();
+		
+		/* 상품 슬라이드 */
+		var $panel = $(".rolling_panel").find("ul");
+        	var itemWidth = $panel.children().outerWidth();
+        	
+        	// 이전 이벤트
+        	$("#prev").on("click", prev);
+        	$("#prev").mouseover();
+        	// 다음 이벤트
+        	$("#next").on("click", next);
+        	$("#next").mouseover();
+                
+        	// 이전 이벤트 실행
+        	function prev(e) {
+            	$panel.css("left", - itemWidth);
+            	$panel.prepend("<li>" + $panel.find("li:last").html() + "</li>");
+            	$panel.animate({"left": "0px"}, function() {
+                	$(this).find("li:last").remove();
+                });
+            }
+        	// 다음 이벤트 실행
+        	function next(e) {
+            	$panel.animate({"left": - itemWidth + "px"}, function() {
+                	$(this).append("<li>" + $(this).find("li:first").html() + "</li>");
+                	$(this).find("li:first").remove();
+                	$(this).css("left", 0);
+                });
+            }
 	});
 	
 	// 아이템 정보 출력

@@ -1,7 +1,5 @@
 package com.ojt.controller;
 
-import java.io.IOException;
-import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -9,11 +7,6 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +38,7 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 	public String index() {
 		Logger.info("login");
 		
-		return "login";//"uitest";//"login";//"uitest";//
+		return "login";//"login";//"uitest";//
 	}
 	
 	// 회원가입View
