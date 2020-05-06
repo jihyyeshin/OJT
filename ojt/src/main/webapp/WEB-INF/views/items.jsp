@@ -76,7 +76,7 @@
 				</div>
 			</div>
 			<div id="itemList" class ="list-group"></div>
-		</div>
+		</div> 
 			
 		<button id="footerL" type="submit" onclick="javascipt: form.action='./items/sale'">주문하기</button>
 		<button id="footerR" type="submit" onclick="javascipt: form.action='./items/insertBasket'">장바구니 넣기</button>

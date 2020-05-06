@@ -40,4 +40,9 @@ public class SaleServiceImpl implements SaleService {
 	public void deleteBasket(int idx) throws Exception{
 		dao.deleteBasket(idx);
 	}
+	
+	@Override
+	public void recAdd(SaleItemVO vo) throws Exception{
+		dao.recAdd(vo);
+	}
 }

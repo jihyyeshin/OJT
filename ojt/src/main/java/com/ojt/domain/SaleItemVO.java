@@ -8,8 +8,9 @@ public class SaleItemVO {
 	private String item;
 	private int qty;
 	private int seq;
+	private String memberid;
 	
-	public SaleItemVO(String noSaleslip, int amount, int price, String agent, String item, int qty, int seq) {
+	public SaleItemVO(String noSaleslip, int amount, int price, String agent, String item, int qty, int seq, String memberid) {
 		this.noSaleslip=noSaleslip;
 		this.amount=amount;
 		this.price=price;
@@ -17,6 +18,7 @@ public class SaleItemVO {
 		this.item=item;
 		this.qty=qty;
 		this.seq=seq;
+		this.memberid=memberid;
 	}
 	public String getNoSaleslip() {
 		return noSaleslip;
@@ -59,5 +61,11 @@ public class SaleItemVO {
 	}
 	public void setSeq(int seq) {
 		this.seq = seq;
+	}
+	public String getMemberid() {
+		return memberid;
+	}
+	public void setMemberid(String memberid) {
+		this.memberid = memberid;
 	}
 }

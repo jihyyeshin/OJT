@@ -41,4 +41,8 @@ public class SaleDAOImpl implements SaleDAO {
 		//System.out.println("delete??");
 		sql.delete(namespace+".deleteBasket", idx);
 	}
+	@Override
+	public void recAdd(SaleItemVO vo) throws Exception{
+		sql.update(namespace+".recAdd",vo);
+	}
 }

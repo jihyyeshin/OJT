@@ -33,4 +33,8 @@ public class MemberServiceImpl implements MemberService{
 	public void tempPwd(MemberVO vo) throws Exception{
 		dao.tempPwd(vo);
 	}
+	@Override
+	public void recInit() throws Exception{
+		dao.recInit();
+	}
 }

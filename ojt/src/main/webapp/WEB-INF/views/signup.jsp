@@ -4,6 +4,7 @@
 <html>
 <head>
 	<%@ include file="./header.jsp" %>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1ad9f9f4c70ec392a1d41fe14ab44d29&libraries=services"></script>
 	<link href="<c:url value="/resources/css/signup.css" />" rel="stylesheet">
 	<title>회원가입</title>
 </head>

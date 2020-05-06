@@ -51,16 +51,13 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 	public String postSignup(MemberVO vo, RedirectAttributes rttr) throws Exception{
 		System.out.println("post signup");
 		service.signup(vo);
+		// 회원가입 시 recVal -1 처리
+		service.recInit();
+
 		rttr.addFlashAttribute("msg", "회원가입 완료");
 		return "redirect:/"; // 처음 화면으로 
 	}
-	
-	// 로그인View
-//	@RequestMapping(value = "/login", method = RequestMethod.GET)
-//	public String getLogin(HttpServletRequest req) throws Exception{
-//		Logger.info("get login");
-//		return "login";
-//	}
+
 	// 로그인
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(MemberVO vo, HttpServletRequest req, RedirectAttributes rttr) throws Exception {

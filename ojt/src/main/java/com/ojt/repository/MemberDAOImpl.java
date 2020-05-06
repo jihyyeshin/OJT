@@ -39,4 +39,9 @@ public class MemberDAOImpl implements MemberDAO {
 	public void tempPwd(MemberVO vo) throws Exception{
 		sql.update(namespace+".tmpPwd", vo);
 	}
+	
+	@Override
+	public void recInit() throws Exception{
+		sql.update(namespace+"recInit");
+	}
 }
