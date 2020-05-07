@@ -22,4 +22,8 @@ public class ItemServiceImpl implements ItemService{
 	public ItemVO itemDetail(String item) throws Exception{
 		return dao.itemDetail(item);
 	}
+	@Override
+	public void itemCrawl(ItemVO vo) throws Exception{
+		dao.itemCrawl(vo);
+	}
 }

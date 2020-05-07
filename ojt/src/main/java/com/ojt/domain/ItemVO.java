@@ -5,7 +5,14 @@ public class ItemVO {
 	private String nm_item;
 	private int amt_amount;
 	private String remark;//Ό³Έν
+	private String src;
 	
+	public String getSrc() {
+		return src;
+	}
+	public void setSrc(String src) {
+		this.src = src;
+	}
 	public void setRemark(String remark) {
 		this.remark=remark;
 	}

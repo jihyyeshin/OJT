@@ -11,7 +11,7 @@
 <body class="text-center">
 
 <div class="form-login">
-	<img class="mb-4" src="<c:url value="/resources/img/CJ_logo.png" />"alt="" width="100" height="88">
+	<img class="mb-4" src="<c:url value="/resources/img/CJ_logo.png" />" alt="" width="100" height="88">
 	<c:if test="${member == null }">
 
 	<form role="form" method="post" autocomplete="off" action="./login">

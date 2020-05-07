@@ -1,5 +1,7 @@
 package com.ojt.controller;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -31,8 +33,9 @@ public class ItemController {
 	private static final Logger Logger=LoggerFactory.getLogger(LocController.class);
 	
 	@RequestMapping(value = "/items", method = RequestMethod.GET)
-	public String getItem() {
+	public String getItem() throws Exception {
 		System.out.println("/items(get)");
+		//test();
 		return "itemPost";
 	}
 	@RequestMapping(value="/items", method=RequestMethod.POST)
@@ -59,11 +62,8 @@ public class ItemController {
 		session.setAttribute("agent", agent);
 		session.setAttribute("memberid", memberid);
 		session.setAttribute("item", vo);
-		System.out.println("agent"+agent);
-		System.out.println("item"+ vo);
-		
+
 		String val=URLEncoder.encode(vo.getName(), "UTF-8");// 인코딩
-		System.out.println("name"+vo.getName());
 		Connection.Response response = Jsoup.connect("https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query="+val)
                 .method(Connection.Method.GET)
                 .execute();
@@ -71,22 +71,18 @@ public class ItemController {
 		Document googleDocument = response.parse();
 		
 		Element thumb = googleDocument.select("a[class=thumb]").first();
-		System.out.println("thumb"+thumb);
 		if(thumb==null) {
-			//System.out.println("?");
 			session.setAttribute("src", "");
 			return "itemDetail";
 		}
 		
 		Elements img=thumb.select("img");
-		System.out.println("img"+img);
 		if(img==null) {
 			session.setAttribute("src", "");
 			return "itemDetail";
 		} 
 		
 		String src = img.attr("src");
-		System.out.println("src"+src);
 		if(src==null) {
 			session.setAttribute("src", "");
 			return "itemDetail";
@@ -94,5 +90,42 @@ public class ItemController {
 	
 		session.setAttribute("src", src);
 		return "itemDetail";
+	}
+	public void test() throws Exception {
+		String agent="153441";
+		List<ItemVO> list=service.itemList(agent);
+		String src="";
+		for(int i=0;i<list.size();i++) {
+			if(list.get(i).getSrc()!= null) continue;
+			
+			String input=list.get(i).getName();
+			String val=URLEncoder.encode(input, "UTF-8");// 인코딩
+			Connection.Response response = Jsoup.connect("https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query="+val)
+	                .method(Connection.Method.GET)
+	                .execute();
+			
+			Document googleDocument = response.parse();
+			Element thumb = googleDocument.select("a[class=thumb]").first();
+			if(thumb==null) {
+				src= "";
+			}
+			else {
+				Elements img=thumb.select("img");
+				if(img==null) {
+					src= "";
+				} 
+				else {
+					src= img.attr("src");
+					if(src==null) {
+						src= "";
+					}
+				}
+			}
+			ItemVO voinsert = new ItemVO();
+			voinsert.setSrc(src);
+			voinsert.setName(list.get(i).getName());
+			service.itemCrawl(voinsert);
+		}
+		System.out.println("FIN");
 	}
 }

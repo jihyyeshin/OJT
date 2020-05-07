@@ -66,18 +66,26 @@
 
 <!-- 대리점 별 아이템, 가격 조회 -->
 <select id="itemList" parameterType="String" resultType="com.ojt.domain.ItemVO" >
-	select cd_item, nm_item, amt_amount
+	select cd_item, nm_item, amt_amount, src
 	from ms_agentitem
 	where cd_agent=#{agent}
 </select>
 
 <!-- 아이템 별 정보 조회 -->
 <select id="itemDetail" parameterType="String" resultType="com.ojt.domain.ItemVO">
-	select *
+	select cd_item, nm_item, amt_amount, remark
 	from ms_agentitem
 	where cd_item=#{item}
 	limit 1;
 </select>
+
+<!-- 아이템 이미지 크롤링 -->
+<update id="itemCrawl">
+	update ms_agentitem 
+	set src=#{src}
+	where nm_item=#{name}
+</update>
+
 
 <!-- 주문정보 -->
 <insert id="sale" parameterType="com.ojt.domain.SaleVO">

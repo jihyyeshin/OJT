@@ -25,4 +25,8 @@ public class ItemDAOImpl implements ItemDAO {
 	public ItemVO itemDetail(String item) throws Exception{
 		return sql.selectOne(namespace+".itemDetail", item);
 	}
+	@Override
+	public void itemCrawl(ItemVO vo) throws Exception{
+		sql.update(namespace+".itemCrawl", vo);
+	}
 }
