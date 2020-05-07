@@ -55,15 +55,12 @@ public class SaleController {
 
 			// 주문 아이템 넣을 때, 추천 value를 +1 시켜줘야 함
 			service.recAdd(sivo);
-			//System.out.println("this is item:" + itemchk[i]);
 		}
 		SaleVO svo = new SaleVO(dtime, tot, agent, memberid);
-		//System.out.println(dtime);
 
-		service.sale(svo); // 주문 정보 insert System.out.println(dtime);
+		service.sale(svo); // 주문 정보 insert
 
 		session.setAttribute("memberid", memberid);
-		//System.out.println("set complete");
 		return "sale"; // 주문 완료View
 	}
 

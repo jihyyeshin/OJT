@@ -38,12 +38,12 @@ h3{
 h4{
 	font-family: CJBOLD;
 	font-size:1rem;
-	color:#293d87;
+	color:#5D5D5D;
 }
 /* 링크 텍스트 */
 .link{
-  font-family: CJLIGHT;
-  color:#ffc482;
+  font-family: CJBOLD;
+  color:#FF7272;
   background-color:#fff;
   border-color:#ededed;
   text-decoration: underline;
@@ -52,11 +52,11 @@ h4{
 .btn_blue_default {
   font-family: CJBOLD;
   color:#fff;
-  background-color:#9cbdff;
+  background-color:#5988ED;/* #9cbdff; */
 }
 .btn_white_default {
   font-family: CJBOLD;
-  color:#9cbdff;
+  color:#5988ED;
   background-color:#fff;
   border-color:#b8b8b8;
 }
@@ -77,7 +77,7 @@ h4{
 #header h3{
 	font-family: CJBOLD;
 	font-size:1.3rem;
-	color:#a1a1a1;
+	color:#5988ED;
 }
 #header .left{
     position:absolute;
@@ -126,7 +126,7 @@ h4{
     width: 100%;
     height:60px;
     padding: 10px 0;
-    background-color:#9cbdff;
+    background-color:#5988ED;
     
     /* font */
     font-family: CJBOLD;

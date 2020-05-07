@@ -7,7 +7,7 @@
 .item-list{
     position:absolute;
 	width:100%;
-	max-height:80%;
+	max-height:85%;
 	top:95px;
 	left:0;
 	-webkit-overflow-scrolling: touch;
@@ -20,15 +20,22 @@
 	top:5px;
 	bottom:5px;
 	left:0;
-	border-bottom:1px solid #d4d4d4;width:100%;
+	border-bottom:1px solid #d4d4d4;
 }
 .list-group{
 	width:100%;
 	max-height:55%;
-	top:45%;
+	margin-top:10px;
 	left:0;
 	-webkit-overflow-scrolling: touch;
 	overflow:scroll; 
+}
+.list-group table{
+	border-bottom:1px solid #d4d4d4;
+	width:100%;
+}
+th td{
+	padding:10px;
 }
 .basket-group{
 	position:absolute;
@@ -69,7 +76,7 @@ a{
     width: 50%;
     height:60px;
 	padding: 10px 0;
-    background-color:#9cbdff;
+    background-color:#5988ED;
     
     /* font */
     font-family: CJBOLD;
@@ -97,7 +104,7 @@ a{
     
     /* font */
     font-family: CJBOLD;
-	color:#9cbdff;
+	color:#5988ED;
 	padding-top:12px;
     text-align:center;
 	font-size:1.3rem;

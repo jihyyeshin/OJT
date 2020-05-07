@@ -29,6 +29,7 @@
 		<input type="hidden" name="item" value=""/>
 		<div class="item-list">
 			<div class="recommend-list">
+				<p style="text-align:center;">지혜님을 위한 추천 상품</p>
 				<div class="con_bb">
 					<div class="leftarrow">
 						<a href="javascript:void(0)" id="prev"> <img
@@ -40,27 +41,29 @@
 					<div class="rolling_panel">
 						<ul>
 							<li>
-								<table>
+								<table style="width: 100%;">
 									<tr>
 										<td style="width: 60%;"><img
 											src="<c:url value="/resources/img/sampleimg.png" />"
 											style="text-align: center;" width="100" height="88"></td>
 										<td style="width: 40%; text-align: left;">
-											<p>제품 이름</p>
+											<br/>
+											<h4>제품 이름</h4>
 											<p>1000원</p>
 										</td>
 									</tr>
 								</table>
 							</li>
 							<li>
-								<table>
+								<table style="width: 100%;">
 									<tr>
 										<td style="width: 60%;"><img
 											src="<c:url value="/resources/img/sampleimg.png" />"
 											style="text-align: center;" width="100" height="88"></td>
 										<td style="width: 40%; text-align: left;">
-											<p>제품 이름2</p>
-											<p>2000원</p>
+											<br/>
+											<h4>제품 이름</h4>
+											<p>1000원</p>
 										</td>
 									</tr>
 								</table>
@@ -121,7 +124,7 @@
 	// 아이템 정보 출력
 	function print(data){
 		$.each(data, function(index, item){
-			var str = '<table style="border-bottom:1px solid #d4d4d4;width:100%;"><tr><td style="text-align: center;">';
+			var str = '<table><tr><td style="text-align: center;">';
 			str += '<input type="checkbox" name="itemchk" value="'+item.item+'"></td>';			
 			str += '<td><a id="title" href="javascript:goDetail('+item.item+');">'+item.name+'</a></td></tr>';
 			str += '<tr><td></td><td style="width: 65%;">' + item.amount + '원</td>';
