@@ -4,106 +4,296 @@
 <html>
 <head>
 <%@ include file="./header.jsp"%></head>
-<link href="<c:url value="/resources/css/item.css" />" rel="stylesheet">
-<%-- <link href="<c:url value="/resources/css/itemrecommend.css" />" rel="stylesheet"> --%>
-<style type="text/css">
-        .con_bb {width:1200px; height:360px; margin:0 auto; padding-top:180px; overflow: hidden; }
-        
-        
-        .left {float:left; width:50px; margin-top:110px;}
-        .right {float:right; width:50px; margin-top:110px;}
-        .rolling_panel {float:left;  position: relative; width: 1100px; height: 320px; margin: 0; padding: 0; overflow: hidden; }
-        .rolling_panel ul { position: absolute; margin: 5px; padding: 0; list-style: none; }
-        
-        .rolling_panel ul li { float: left; width: 360px; height: 320px;}
-        </style>
-
+<link href="<c:url value="/resources/css/test.css" />" rel="stylesheet">
+<link href="<c:url value="/resources/css/itemrecommend.css" />"
+	rel="stylesheet">
 </head>
 <body>
-<!-- 	<div class="test"> style="width:100%;height:100%;">
-				<div class="recommend-list">
-	 -->
-	 <div style="width:100%;height:100%;">
-		<div class="con_bb">
-			<div class="leftarrow">
-				<a href="javascript:void(0)" id="prev"> <img
-					src="<c:url value="/resources/img/left.png" />" width="50px"
-					height="50px">
-				</a>
+	<header id="header" style="height: 85px;">
+		<div onclick="location.href='./'" class="left"></div>
+		<h3 class="logo">상품 주문</h3>
+
+		<form method="post">
+			<button onclick="javascipt: form.action='./items/basket'"
+				class="right"></button>
+			<input type="hidden" name="memberid" value="${param.memberid}" /> <input
+				type="hidden" name="agent" value="${param.agent}" />
+		</form>
+		<input class="search" type="text" id="search" placeholder="상품 검색">
+	</header>
+	<form name="paging" onsubmit="_submit();" method="post">
+		<input type="hidden" name="memberid" value="${param.memberid}" /> <input
+			type="hidden" name="agent" value="${param.agent}" /> <input
+			type="hidden" name="item" value="" />
+		<div class="item-list">
+			<div class="recommend-list">
+				<h4 style="text-align: center;">${param.memberid}님을위한추천 상품</h4>
+				<div class="con_bb">
+					<div class="leftarrow">
+						<a href="javascript:void(0)" id="prev"> <img
+							src="<c:url value="/resources/img/left.png" />" width="50px"
+							height="50px">
+						</a>
+					</div>
+					<div class="rolling_panel">
+						<ul id="recList">
+						</ul>
+					</div>
+					<div class="rightarrow">
+						<a href="javascript:void(0)" id="next"> <img
+							src="<c:url value="/resources/img/right.png" />" width="50px"
+							height="50px">
+						</a>
+					</div>
+				</div>
 			</div>
+			<!------------------------------------여기----------------------------------------------->
+			<!------------------------------------여기----------------------------------------------->
+			<!------------------------------------여기----------------------------------------------->
+
+			<div id="itemList" style="position:relative;top:20px;bottom:10px;">
+				<table style="float:left;width:50%;">
+					<tbody>
+						<tr>
+							<td>
+								<div style="width: 20%;">
+								&nbsp;&nbsp;
+								<input type="checkbox" name="itemchk" value="174150">
+								</div>
+								<div style="width: 100%;">
+								<img
+								src="https://shopping-phinf.pstatic.net/main_1349763/13497636739.20191231194515.jpg?type=f133"
+								class="center">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td><a id="title" href="javascript:goDetail(174150);">비비고 백300G(GGNH)</a></td>
+						</tr>
+						<tr>
+							<td>3723원</td>
+						</tr>
+						<tr>
+							<td><input type="text" name="qty" style="width: 50%;">개</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;</td>
+						</tr>
+					</tbody>
+				</table>
+				<table style="float:left;width:50%;">
+					<tbody>
+						<tr>
+							<td>
+								<div style="width: 20%;">
+								&nbsp;&nbsp;
+								<input type="checkbox" name="itemchk" value="174150">
+								</div>
+								<div style="width: 100%;">
+								<img
+								src="https://shopping-phinf.pstatic.net/main_1349763/13497636739.20191231194515.jpg?type=f133"
+								class="center">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td><a id="title" href="javascript:goDetail(174150);">비비고 백300G(GGNH)</a></td>
+						</tr>
+						<tr>
+							<td>3723원</td>
+						</tr>
+						<tr>
+							<td><input type="text" name="qty" style="width: 50%;">개</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;</td>
+						</tr>
+					</tbody>
+				</table>
+				<table style="float:left;width:50%;">
+					<tbody>
+						<tr>
+							<td>
+								<div style="width: 20%;">
+								&nbsp;&nbsp;
+								<input type="checkbox" name="itemchk" value="174150">
+								</div>
+								<div style="width: 100%;">
+								<img
+								src="https://shopping-phinf.pstatic.net/main_1349763/13497636739.20191231194515.jpg?type=f133"
+								class="center">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td><a id="title" href="javascript:goDetail(174150);">비비고 백300G(GGNH)</a></td>
+						</tr>
+						<tr>
+							<td>3723원</td>
+						</tr>
+						<tr>
+							<td><input type="text" name="qty" style="width: 50%;">개</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;</td>
+						</tr>
+					</tbody>
+				</table>
+				<table style="float:left;width:50%;">
+					<tbody>
+						<tr>
+							<td>
+								<div style="width: 20%;">
+								&nbsp;&nbsp;
+								<input type="checkbox" name="itemchk" value="174150">
+								</div>
+								<div style="width: 100%;">
+								<img
+								src="https://shopping-phinf.pstatic.net/main_1349763/13497636739.20191231194515.jpg?type=f133"
+								class="center">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td><a id="title" href="javascript:goDetail(174150);">비비고 백300G(GGNH)</a></td>
+						</tr>
+						<tr>
+							<td>3723원</td>
+						</tr>
+						<tr>
+							<td><input type="text" name="qty" style="width: 50%;">개</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;</td>
+						</tr>
+					</tbody>
+				</table>
+				<table style="float:left;width:50%;">
+					<tbody>
+						<tr>
+							<td>
+								<div style="width: 20%;">
+								&nbsp;&nbsp;
+								<input type="checkbox" name="itemchk" value="174150">
+								</div>
+								<div style="width: 100%;">
+								<img
+								src="https://shopping-phinf.pstatic.net/main_1349763/13497636739.20191231194515.jpg?type=f133"
+								class="center">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td><a id="title" href="javascript:goDetail(174150);">비비고 백300G(GGNH)</a></td>
+						</tr>
+						<tr>
+							<td>3723원</td>
+						</tr>
+						<tr>
+							<td><input type="text" name="qty" style="width: 50%;">개</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;</td>
+						</tr>
+					</tbody>
+				</table>
+				<table style="float:left;width:50%;">
+					<tbody>
+						<tr>
+							<td>
+								<div style="width: 20%;">
+								&nbsp;&nbsp;
+								<input type="checkbox" name="itemchk" value="174150">
+								</div>
+								<div style="width: 100%;">
+								<img
+								src="https://shopping-phinf.pstatic.net/main_1349763/13497636739.20191231194515.jpg?type=f133"
+								class="center">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td><a id="title" href="javascript:goDetail(174150);">비비고 백300G(GGNH)</a></td>
+						</tr>
+						<tr>
+							<td>3723원</td>
+						</tr>
+						<tr>
+							<td><input type="text" name="qty" style="width: 50%;">개</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;</td>
+						</tr>
+					</tbody>
+				</table>
+				<table style="float:left;width:50%;">
+					<tbody>
+						<tr>
+							<td>
+								<div style="width: 20%;">
+								&nbsp;&nbsp;
+								<input type="checkbox" name="itemchk" value="174150">
+								</div>
+								<div style="width: 100%;">
+								<img
+								src="https://shopping-phinf.pstatic.net/main_1349763/13497636739.20191231194515.jpg?type=f133"
+								class="center">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td><a id="title" href="javascript:goDetail(174150);">비비고 백300G(GGNH)</a></td>
+						</tr>
+						<tr>
+							<td>3723원</td>
+						</tr>
+						<tr>
+							<td><input type="text" name="qty" style="width: 50%;">개</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;</td>
+						</tr>
+					</tbody>
+				</table>
+				<table style="float:left;width:50%;">
+					<tbody>
+						<tr>
+							<td>
+								<div style="width: 20%;">
+								&nbsp;&nbsp;
+								<input type="checkbox" name="itemchk" value="174150">
+								</div>
+								<div style="width: 100%;">
+								<img
+								src="https://shopping-phinf.pstatic.net/main_1349763/13497636739.20191231194515.jpg?type=f133"
+								class="center">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td><a id="title" href="javascript:goDetail(174150);">비비고 백300G(GGNH)</a></td>
+						</tr>
+						<tr>
+							<td>3723원</td>
+						</tr>
+						<tr>
+							<td><input type="text" name="qty" style="width: 50%;">개</td>
+						</tr>
+						<tr>
+							<td>&nbsp;&nbsp;</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+					
 			
-			<div class="rolling_panel">
-				<ul>
-					<li>
-						<table>
-							<tr>
-								<td style="width: 60%;"><img
-									src="<c:url value="/resources/img/sampleimg.png" />"
-									style="text-align: center;" width="100" height="88"></td>
-								<td style="width: 40%; text-align: left;">
-									<p>제품 이름</p>
-									<p>1000원</p>
-								</td>
-							</tr>
-						</table>
-					</li>
-					<li>
-						<table style="width: 100%; height: 60%;">
-							<tr>
-								<td style="width: 60%;"><img
-									src="<c:url value="/resources/img/sampleimg.png" />"
-									style="text-align: center;" width="100" height="88"></td>
-								<td style="width: 40%; text-align: left;">
-									<p>제품 이름2</p>
-									<p>21000원</p>
-								</td>
-							</tr>
-						</table>
-					</li>
-				</ul>
-			</div>
-			<div class="rightarrow">
-				<a href="javascript:void(0)" id="next"> <img
-					src="<c:url value="/resources/img/right.png" />" width="50px"
-					height="50px">
-				</a>
-			</div>
 		</div>
-	</div>
 
-	<script type="text/javascript">
-		$(document).ready(function() {
-        	var $panel = $(".rolling_panel").find("ul");
-        	var itemWidth = $panel.children().outerWidth();
-        	
-        	// 이전 이벤트
-        	$("#prev").on("click", prev);
-        	$("#prev").mouseover();
-        	// 다음 이벤트
-        	$("#next").on("click", next);
-        	$("#next").mouseover();
-                
-        	// 이전 이벤트 실행
-        	function prev(e) {
-            	$panel.css("left", - itemWidth);
-            	$panel.prepend("<li>" + $panel.find("li:last").html() + "</li>");
-            	$panel.animate({"left": "0px"}, function() {
-                	$(this).find("li:last").remove();
-                });
-            }
-        	// 다음 이벤트 실행
-        	function next(e) {
-            	$panel.animate({"left": - itemWidth + "px"}, function() {
-                	$(this).append("<li>" + $(this).find("li:first").html() + "</li>");
-                	$(this).find("li:first").remove();
-                	$(this).css("left", 0);
-                });
-            }
-		}); 
-	</script>
-
-
-
-
+		<button id="footerL" type="submit"
+			onclick="javascipt: form.action='./items/sale'">주문하기</button>
+		<button id="footerR" type="submit"
+			onclick="javascipt: form.action='./items/insertBasket'">장바구니
+			넣기</button>
+	</form>
 </body>
 </html>

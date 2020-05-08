@@ -29,7 +29,7 @@
 		<input type="hidden" name="item" value=""/>
 		<div class="item-list">
 			<div class="recommend-list">
-				<p style="text-align:center;">${param.memberid}님을 위한 추천 상품</p>
+				<h4 style="text-align:center;">${param.memberid}님을 위한 추천 상품</h4>
 				<div class="con_bb">
 					<div class="leftarrow">
 						<a href="javascript:void(0)" id="prev"> <img
@@ -37,9 +37,8 @@
 							height="50px">
 						</a>
 					</div>
-
-					<div class="rolling_panel" id="recList">
-						<ul>
+					<div class="rolling_panel">
+						<ul id="recList">
 						</ul>
 					</div>
 					<div class="rightarrow">
@@ -50,7 +49,7 @@
 					</div>
 				</div>
 			</div>
-			<div id="itemList" class ="list-group"></div>
+			<div id="itemList" style="position:relative;top:20px;bottom:10px;"></div>
 		</div> 
 			
 		<button id="footerL" type="submit" onclick="javascipt: form.action='./items/sale'">주문하기</button>
@@ -95,24 +94,115 @@
                 });
             }
 	});
-	
+	// 대리점 별 아이템 및 가격 정보 조회
+	function showItem(){
+		if(agentId!=null){
+			$.ajax({
+				url:"./showItem",
+				type:"POST",
+				dataType:"json",
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+				async:false,
+				data:"agent="+agentId,
+				success: function(data){
+					console.log("success");
+					print(data);
+				},
+				error:function(request,status, error){
+					console.log("status:\n"+request.status+"\nerror:\n"+request.error);
+				},
+				complete:function(data){
+					console.log("complete");
+				}
+			});
+		}
+	}
+
 	// 아이템 정보 출력
 	function print(data){
 		$.each(data, function(index, item){
 			var src=item.src;
 			if(src == "") src="<c:url value="/resources/img/CJ_logo_black.png" />";
 			
-			var str = '<table><tr><td style="text-align: center;width: 5%;">';
-			str += '<input type="checkbox" name="itemchk" value="'+item.item+'"></td>';
-			str += '<td style="width: 40%;"><img src="'+src+'" width="90px" class="center"></img></td>';
-			str += '<td style="width: 55%;"><a id="title" href="javascript:goDetail('+item.item+');">'+item.name+'</a></td></tr>';
 			
-			str += '<tr><td></td><td style="text-align:center">' + item.amount + '원</td>';
-			str += '<td><input type="text" name="qty" style="width: 50%;">개</td></tr>';
-			str += '<tr><td>&nbsp&nbsp</td></tr></table>';
+			var str='<table style="float:left;width:50%;height:300px;">';
+			str+=	'<tbody>';
+			str+=	'<tr>';
+			str+=	'<td>';
+			str+=	'<div>';
+			str+=	'&nbsp;&nbsp;';
+			str+=	'<input type="checkbox" name="itemchk" value="'+item.item+'"></td>';
+			str+=	'<img src="'+src+'" class="center">';
+			str+=	'</div>';
+			str+=	'</td>';
+			str+=	'</tr>';
+			str+=	'<tr>';
+			str+=	'<td><a id="title" href="javascript:goDetail('+item.item+');">'+item.name+'</a></td>';
+			str+=	'</tr>';
+			str+=	'<tr>';
+			str+=	'<td>' + item.amount + '원</td>';
+			str+=	'</tr>';
+			str+=	'<tr>';
+			str+=	'<td><input type="text" name="qty" style="width: 50%;">개</td>';
+			str+=	'</tr>';
+			str+=	'<tr>';
+			str+=	'<td>&nbsp;&nbsp;</td>';
+			str+=	'</tr>';
+			str+=	'</tbody>';
+			str+=	'</table>';
 			str += '<input type="hidden" name="amount" value="'+item.amount+'">';
 			str += '<input type="hidden" name="name" value="'+item.name+'">';
 			$('#itemList').append(str);
+		});
+	}
+	
+	// 추천 아이템 및 가격 정보 조회
+	function showRecommendedItems(){
+		if(agentId!=null && memberId!=null){
+			$.ajax({
+				url:"./showRecommendedItems",
+				type:"POST",
+				dataType:"json",
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+				async:false,
+				data:"agent="+agentId+"&memberid="+memberId,
+				success: function(data){
+					console.log("success");
+					console.log(data);
+					printRecItem(data);
+				},
+				error:function(request,status, error){
+					console.log("status:\n"+request.status+"\nerror:\n"+request.error);
+				},
+				complete:function(data){
+					console.log("complete");
+				}
+			});
+		}
+	}
+	
+	// 추천 아이템 출력
+	function printRecItem(data){
+		$.each(data, function(index, item){
+			var src=item.src;
+			if(src == "") src="<c:url value="/resources/img/CJ_logo_black.png" />";
+			
+			var str = '<li>';
+			str +=	'<table style="width: 100%;">';
+			str += '<tr>';
+			str += '<td style="width: 60%;">';
+			str += '<img src="<c:url value="'+src+'" />"';
+			str += 'style="text-align: center;" width="100" height="88"></td>';
+			str += '<td style="width: 40%; text-align: left;">';
+			str += '<br/>';
+			str += '<h4><a id="title" href="javascript:goDetail('+item.item+');">'+item.name+'</a></h4>';
+			str += '<p>' + item.amount + '원</p>';
+			str += '</td>';
+			str += '</tr>';
+			str += '</table>';
+			str += '</li>';
+			
+			$('#recList').append(str);
 		});
 	}
 	
@@ -149,7 +239,6 @@
 	    var amount=document.getElementsByName("amount");
 	    var qty=document.getElementsByName("qty");
 	    var name=document.getElementsByName("name");
-	    //alert(itemchk[0]);
 	    if (typeof(itemchk.length) == 'undefined') //단일
 	    {
 	        if (itemchk[0].checked==true)
@@ -160,7 +249,6 @@
 	        }
 	    } else { 
 	    	//다중
-	    	//alert(itemchk.length);
 	        for (i=0; i<itemchk.length; i++)
 	        {
 	            if (itemchk[i].checked==false)
@@ -174,79 +262,7 @@
 	    return true;
 	}
 	
-	// 대리점 별 아이템 및 가격 정보 조회
-	function showItem(){
-		if(agentId!=null){
-			$.ajax({
-				url:"./showItem",
-				type:"POST",
-				dataType:"json",
-				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-				async:false,
-				data:"agent="+agentId,
-				success: function(data){
-					console.log("success");
-					print(data);
-				},
-				error:function(request,status, error){
-					console.log("status:\n"+request.status+"\nerror:\n"+request.error);
-				},
-				complete:function(data){
-					console.log("complete");
-				}
-			});
-		}
-	}
 	
-	// 대리점 별 아이템 및 가격 정보 조회
-	function showRecommendedItems(){
-		if(agentId!=null && memberId!=null){
-			$.ajax({
-				url:"./showRecommendedItems",
-				type:"POST",
-				dataType:"json",
-				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-				async:false,
-				data:"agent="+agentId+"&memberid="+memberId,
-				success: function(data){
-					console.log("success");
-					console.log(data);
-					printRecItem(data);
-				},
-				error:function(request,status, error){
-					console.log("status:\n"+request.status+"\nerror:\n"+request.error);
-				},
-				complete:function(data){
-					console.log("complete");
-				}
-			});
-		}
-	}
-	
-	// 아이템 정보 출력
-	function printRecItem(data){
-		$.each(data, function(index, item){
-			var src=item.src;
-			if(src == "") src="<c:url value="/resources/img/CJ_logo_black.png" />";
-			
-			var str = '<li>';
-			str +=	'<table style="width: 100%;">';
-			str += '<tr>';
-			str += '<td style="width: 60%;">';
-			str += '<img src="<c:url value="'+src+'" />"';
-			str += 'style="text-align: center;" width="100" height="88"></td>';
-			str += '<td style="width: 40%; text-align: left;">';
-			str += '<br/>';
-			str += '<h4><a id="title" href="javascript:goDetail('+item.item+');">'+item.name+'</a></h4>';
-			str += '<p>' + item.amount + '원</p>';
-			str += '</td>';
-			str += '</tr>';
-			str += '</table>';
-			str += '</li>';
-			
-			$('#recList').append(str);
-		});
-	}
 </script>
 </body>
 </html>

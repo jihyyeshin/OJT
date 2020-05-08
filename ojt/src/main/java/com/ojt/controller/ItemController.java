@@ -61,12 +61,8 @@ public class ItemController {
 		SaleVO vo=new SaleVO();
 		vo.setAgent(agent);
 		vo.setMemberid(memberid);
-		System.out.println("this is agent:"+agent);
-		System.out.println("this is memberid:"+memberid);
 
 		List<ItemVO> list=service.itemRecommendList(vo);
-		for(int i=0;i<list.size();i++)
-			System.out.println(list.get(i).getName());
 		return list;
 	}
 	// 디테일 화면
