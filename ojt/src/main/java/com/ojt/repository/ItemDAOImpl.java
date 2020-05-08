@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import com.ojt.domain.ItemVO;
+import com.ojt.domain.SaleVO;
 
 @Service
 public class ItemDAOImpl implements ItemDAO {
@@ -28,5 +29,9 @@ public class ItemDAOImpl implements ItemDAO {
 	@Override
 	public void itemCrawl(ItemVO vo) throws Exception{
 		sql.update(namespace+".itemCrawl", vo);
+	}
+	@Override
+	public List<ItemVO> itemRecommendList(SaleVO vo) throws Exception{
+		return sql.selectList(namespace+".itemRecommendList", vo);
 	}
 }

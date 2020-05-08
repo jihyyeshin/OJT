@@ -38,7 +38,6 @@ public class SaleDAOImpl implements SaleDAO {
 	}
 	@Override
 	public void deleteBasket(int idx) throws Exception{
-		//System.out.println("delete??");
 		sql.delete(namespace+".deleteBasket", idx);
 	}
 	@Override

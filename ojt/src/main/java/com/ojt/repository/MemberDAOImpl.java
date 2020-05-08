@@ -41,7 +41,7 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 	
 	@Override
-	public void recInit() throws Exception{
-		sql.update(namespace+"recInit");
+	public void recInit(MemberVO vo) throws Exception{
+		sql.insert(namespace+".recInit", vo);
 	}
 }

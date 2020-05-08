@@ -33,11 +33,13 @@
 	set temporary=#{password}
 	where id=#{id}
 </update>
-<!-- 회원가입 시 recVal 재설정 -->
-<update id="recInit">
-	update ms_agentitem 
-	set recVal=recVal+1
-</update>
+
+<!-- 회원가입 시 rec에 insert -->
+<insert id="recInit" parameterType="com.ojt.domain.MemberVO">
+	insert into rec 
+	select m.cd_item, #{id}, 0
+	from ms_agentitem m
+</insert>
 
 <!-- 위치 -->
 <select id="locationList" resultType="com.ojt.domain.LocVO"><!-- 이렇게 해도 리스트로 넘겨주도록 MyBatis 설계 -->
@@ -71,6 +73,22 @@
 	where cd_agent=#{agent}
 </select>
 
+<select id="itemRecommendList" parameterType="com.ojt.domain.SaleVO" resultType="com.ojt.domain.ItemVO" >
+	select m1.cd_item, m1.nm_item, m1.remark, m1.amt_amount, m1.src,  
+		(case when sqrt(SUM(r1.isSold))*sqrt(SUM(r2.isSold))=0 then 0 else SUM(r1.isSold * r2.isSold)/(sqrt(SUM(r1.isSold))*sqrt(SUM(r2.isSold))) end) as result
+	from ms_agentitem m1, (select cd_item, sum(qty_delivtot) selTot
+							from sl_saleitem
+							where cd_customer=#{memberid} and cd_agent=#{agent}
+							group by cd_item
+							order by selTot desc
+							limit 3) m2
+		, rec r1 inner join rec r2 on r1.member=r2.member
+	where m1.cd_item=r1.cd_item and m2.cd_item=r2.cd_item and m1.cd_agent=#{agent} and m1.cd_item != m2.cd_item
+	group by m1.cd_item, m1.nm_item, m1.remark, m1.amt_amount, m1.src
+	order by result DESC
+	limit 2;
+</select>
+
 <!-- 아이템 별 정보 조회 -->
 <select id="itemDetail" parameterType="String" resultType="com.ojt.domain.ItemVO">
 	select cd_item, nm_item, amt_amount, remark
@@ -101,13 +119,11 @@
 	(#{noSaleslip}, #{amount},#{price},#{agent}, #{item},CURRENT_DATE, #{qty}, #{seq}, #{memberid});
 </insert>
 
-<!-- 주문 시 recVal update -->
+<!-- 주문 시 rec issold update -->
 <update id="recAdd">
-	update ms_agentitem 
-	set recVal=(select recVal 
-				from ms_agentitem 
-				where cd_item=#{item} and cd_agent=#{agent})+1 
-	where cd_item=#{item} and cd_agent=#{agent}
+	update rec
+	set isSold=1
+	where cd_item=#{item} and member=#{memberid};
 </update>
 
 <!-- 장바구니 -->

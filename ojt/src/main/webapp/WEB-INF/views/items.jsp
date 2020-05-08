@@ -38,36 +38,8 @@
 						</a>
 					</div>
 
-					<div class="rolling_panel">
+					<div class="rolling_panel" id="recList">
 						<ul>
-							<li>
-								<table style="width: 100%;">
-									<tr>
-										<td style="width: 60%;"><img
-											src="<c:url value="/resources/img/sampleimg.png" />"
-											style="text-align: center;" width="100" height="88"></td>
-										<td style="width: 40%; text-align: left;">
-											<br/>
-											<h4>제품 이름</h4>
-											<p>1000원</p>
-										</td>
-									</tr>
-								</table>
-							</li>
-							<li>
-								<table style="width: 100%;">
-									<tr>
-										<td style="width: 60%;"><img
-											src="<c:url value="/resources/img/sampleimg.png" />"
-											style="text-align: center;" width="100" height="88"></td>
-										<td style="width: 40%; text-align: left;">
-											<br/>
-											<h4>제품 이름</h4>
-											<p>1000원</p>
-										</td>
-									</tr>
-								</table>
-							</li>
 						</ul>
 					</div>
 					<div class="rightarrow">
@@ -87,10 +59,13 @@
 	
 	<script type="text/javascript">
 	var agentId=${param.agent};
+	var memberId=${param.memberid};
 	// 로드되자마자
 	$(document).ready(function(){
 		showItem();
 		search();
+		// 추천 리스트
+		showRecommendedItems();
 		
 		/* 상품 슬라이드 */
 		var $panel = $(".rolling_panel").find("ul");
@@ -127,13 +102,14 @@
 			var src=item.src;
 			if(src == "") src="<c:url value="/resources/img/CJ_logo_black.png" />";
 			
-			var str = '<table><tr><td style="text-align: center;width: 10%;">';
+			var str = '<table><tr><td style="text-align: center;width: 5%;">';
 			str += '<input type="checkbox" name="itemchk" value="'+item.item+'"></td>';
-			str += '<td style="width: 35%;"><img src="'+src+'" width="90px"></img></td>';
+			str += '<td style="width: 40%;"><img src="'+src+'" width="90px" class="center"></img></td>';
 			str += '<td style="width: 55%;"><a id="title" href="javascript:goDetail('+item.item+');">'+item.name+'</a></td></tr>';
 			
 			str += '<tr><td></td><td style="text-align:center">' + item.amount + '원</td>';
-			str += '<td><input type="text" name="qty" style="width: 50%;">개</td></tr></table>';
+			str += '<td><input type="text" name="qty" style="width: 50%;">개</td></tr>';
+			str += '<tr><td>&nbsp&nbsp</td></tr></table>';
 			str += '<input type="hidden" name="amount" value="'+item.amount+'">';
 			str += '<input type="hidden" name="name" value="'+item.name+'">';
 			$('#itemList').append(str);
@@ -220,6 +196,56 @@
 				}
 			});
 		}
+	}
+	
+	// 대리점 별 아이템 및 가격 정보 조회
+	function showRecommendedItems(){
+		if(agentId!=null && memberId!=null){
+			$.ajax({
+				url:"./showRecommendedItems",
+				type:"POST",
+				dataType:"json",
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+				async:false,
+				data:"agent="+agentId+"&memberid="+memberId,
+				success: function(data){
+					console.log("success");
+					console.log(data);
+					printRecItem(data);
+				},
+				error:function(request,status, error){
+					console.log("status:\n"+request.status+"\nerror:\n"+request.error);
+				},
+				complete:function(data){
+					console.log("complete");
+				}
+			});
+		}
+	}
+	
+	// 아이템 정보 출력
+	function printRecItem(data){
+		$.each(data, function(index, item){
+			var src=item.src;
+			if(src == "") src="<c:url value="/resources/img/CJ_logo_black.png" />";
+			
+			var str = '<li>';
+			str +=	'<table style="width: 100%;">';
+			str += '<tr>';
+			str += '<td style="width: 60%;">';
+			str += '<img src="<c:url value="'+src+'" />"';
+			str += 'style="text-align: center;" width="100" height="88"></td>';
+			str += '<td style="width: 40%; text-align: left;">';
+			str += '<br/>';
+			str += '<h4><a id="title" href="javascript:goDetail('+item.item+');">'+item.name+'</a></h4>';
+			str += '<p>' + item.amount + '원</p>';
+			str += '</td>';
+			str += '</tr>';
+			str += '</table>';
+			str += '</li>';
+			
+			$('#recList').append(str);
+		});
 	}
 </script>
 </body>

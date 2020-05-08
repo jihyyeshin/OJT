@@ -53,7 +53,7 @@ public class SaleController {
 					memberid);
 			service.saleItem(sivo); // 주문 아이템 insert
 
-			// 주문 아이템 넣을 때, 추천 value를 +1 시켜줘야 함
+			// 주문 아이템 넣을 때, sold=1 시켜줘야 함
 			service.recAdd(sivo);
 		}
 		SaleVO svo = new SaleVO(dtime, tot, agent, memberid);
@@ -143,11 +143,10 @@ public class SaleController {
 					memberid);
 			service.saleItem(sivo); // 주문 아이템 insert
 
-			/* 주문 아이템 넣을 때, 추천 value를 +1 시켜줘야 함 */
+			// 주문 아이템 넣을 때, sold=1 시켜줘야 함
 			service.recAdd(sivo);
 
 			// 주문한 아이템 장바구니에서 delete
-			// System.out.println("idx: "+idx[i]);
 			service.deleteBasket(idx[i]);
 		}
 		SaleVO svo = new SaleVO(dtime, tot, agent, memberid);

@@ -8,5 +8,5 @@ public interface MemberService {
 	public void loginDate(MemberVO vo) throws Exception;
 	public void loginFail(MemberVO vo) throws Exception;
 	public void tempPwd(MemberVO vo) throws Exception;
-	public void recInit() throws Exception;
+	public void recInit(MemberVO vo) throws Exception;
 }

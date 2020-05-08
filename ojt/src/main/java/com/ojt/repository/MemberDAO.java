@@ -13,5 +13,5 @@ public interface MemberDAO {
 	// 임시 비밀번호
 	public void tempPwd(MemberVO vo) throws Exception;
 	// 회원가입 시 recVal 초기화
-	public void recInit() throws Exception;
+	public void recInit(MemberVO vo) throws Exception;
 }

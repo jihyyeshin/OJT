@@ -5,7 +5,7 @@ public class SaleVO {
 	private int amount;
 	private String agent;
 	private String memberid;
-	
+	public SaleVO() {}
 	public SaleVO(String noSaleslip, int amount,String agent, String memberid) {
 		this.noSaleslip=noSaleslip;
 		this.amount=amount;

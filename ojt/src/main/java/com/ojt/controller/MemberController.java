@@ -51,8 +51,9 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 	public String postSignup(MemberVO vo, RedirectAttributes rttr) throws Exception{
 		System.out.println("post signup");
 		service.signup(vo);
-		// 회원가입 시 recVal -1 처리
-		service.recInit();
+		
+		// 회원가입 시 rec Insert 처리
+		service.recInit(vo);
 
 		rttr.addFlashAttribute("msg", "회원가입 완료");
 		return "redirect:/"; // 처음 화면으로 

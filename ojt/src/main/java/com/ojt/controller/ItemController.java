@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ojt.domain.ItemVO;
+import com.ojt.domain.SaleVO;
 import com.ojt.service.ItemService;
 
 @Controller
@@ -35,7 +36,6 @@ public class ItemController {
 	@RequestMapping(value = "/items", method = RequestMethod.GET)
 	public String getItem() throws Exception {
 		System.out.println("/items(get)");
-		//test();
 		return "itemPost";
 	}
 	@RequestMapping(value="/items", method=RequestMethod.POST)
@@ -50,6 +50,23 @@ public class ItemController {
 	public @ResponseBody List<ItemVO> showItem(@RequestParam String agent) throws Exception {
 		List<ItemVO> list=service.itemList(agent);
 		
+		return list;
+	}
+	
+	@RequestMapping(value="/showRecommendedItems")
+	@ResponseBody
+	public List<ItemVO> showRecItem(@RequestParam String agent, String memberid) throws Exception {
+		System.out.println("showRecommendedItems");
+		
+		SaleVO vo=new SaleVO();
+		vo.setAgent(agent);
+		vo.setMemberid(memberid);
+		System.out.println("this is agent:"+agent);
+		System.out.println("this is memberid:"+memberid);
+
+		List<ItemVO> list=service.itemRecommendList(vo);
+		for(int i=0;i<list.size();i++)
+			System.out.println(list.get(i).getName());
 		return list;
 	}
 	// 디테일 화면
