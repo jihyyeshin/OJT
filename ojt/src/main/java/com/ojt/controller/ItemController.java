@@ -72,19 +72,19 @@ public class ItemController {
 		
 		Element thumb = googleDocument.select("a[class=thumb]").first();
 		if(thumb==null) {
-			session.setAttribute("src", "");
+			session.setAttribute("src", "/app/resources/img/CJ_logo_black.png");
 			return "itemDetail";
 		}
 		
 		Elements img=thumb.select("img");
 		if(img==null) {
-			session.setAttribute("src", "");
+			session.setAttribute("src", "/app/resources/img/CJ_logo_black.png");
 			return "itemDetail";
 		} 
 		
 		String src = img.attr("src");
 		if(src==null) {
-			session.setAttribute("src", "");
+			session.setAttribute("src", "/app/resources/img/CJ_logo_black.png");
 			return "itemDetail";
 		}
 	
