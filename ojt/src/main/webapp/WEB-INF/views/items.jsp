@@ -133,7 +133,6 @@
 		$.each(data, function(index, item){
 			var src=item.src;
 			if(src == "") src="<c:url value="/resources/img/CJ_logo_black.png" />";
-			//console.log("agent?"+item.agent);
 			var amounts=numberWithCommas(item.amount);
 			
 			var str='<table style="float:left;width:50%;height:300px;">';

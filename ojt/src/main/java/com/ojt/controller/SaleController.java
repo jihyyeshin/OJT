@@ -52,8 +52,8 @@ public class SaleController {
 			if(agent[i].equals(agentF)) totF += amount[i] * qty[i];
 			else if(agent[i].equals(agentA)) totA += amount[i] * qty[i];
 			
-			SaleItemVO sivo = new SaleItemVO(dtime, amount[i] * qty[i], amount[i], agent[i], itemchk[i], qty[i], i + 1,
-					memberid);
+			SaleItemVO sivo = new SaleItemVO(dtime, "",amount[i] * qty[i], amount[i], agent[i], itemchk[i], qty[i], i + 1,
+					memberid, "");
 			service.saleItem(sivo); // 주문 아이템 insert
 
 			// 주문 아이템 넣을 때, sold=1 시켜줘야 함
@@ -124,7 +124,16 @@ public class SaleController {
 	public @ResponseBody List<BasketVO> showBasket(@RequestParam String memberid) throws Exception {
 		List<BasketVO> list = service.basketList(memberid);
 		System.out.println("/items/showBasket");
-//		System.out.println("this is show basket agent:"+list.get(0).getAgent());
+		return list;
+	}
+	
+	// 장바구니 - 최근 구매 목록 조회
+	@RequestMapping(value="/showRecent")
+	public @ResponseBody List<SaleItemVO> showRecent(@RequestParam String memberid) throws Exception{
+		System.out.println("/items/showRecent");
+		System.out.println("show recent memberid"+memberid);
+		List<SaleItemVO> list = service.showRecent(memberid);
+		
 		return list;
 	}
 
@@ -145,7 +154,6 @@ public class SaleController {
 	public String postBasketSale(HttpServletRequest req, String[] agent, String agentF, String agentA, String memberid, String[] name, String[] itemchk,
 			int[] amount, int[] qty, int[] idx) throws Exception {
 		Logger.info("post sale basket");
-//		System.out.println("this is saleBasket agentF: "+agentF);
 		HttpSession session = req.getSession();
 
 		Date time = new Date();
@@ -154,15 +162,13 @@ public class SaleController {
 
 		int totF = 0;
 		int totA = 0;
-//		System.out.println("this is salebasket length: "+itemchk.length);
 		for (int i = 0; i < itemchk.length; i++) {
 			
 			if(agent[i].equals(agentF)) totF += amount[i] * qty[i];
 			else if(agent[i].equals(agentA)) totA += amount[i] * qty[i];
 
-
-			SaleItemVO sivo = new SaleItemVO(dtime, amount[i] * qty[i], amount[i], agent[i], itemchk[i], qty[i], i + 1,
-					memberid);
+			SaleItemVO sivo = new SaleItemVO(dtime, "",amount[i] * qty[i], amount[i], agent[i], itemchk[i], qty[i], i + 1,
+					memberid, "");
 			service.saleItem(sivo); // 주문 아이템 insert
 
 			// 주문 아이템 넣을 때, sold=1 시켜줘야 함
@@ -183,6 +189,58 @@ public class SaleController {
 			service.sale(svo); // 주문 정보 insert
 		}
 		
+		session.setAttribute("memberid", memberid);
+		session.setAttribute("agentF", agentF);
+		session.setAttribute("agentA", agentA);
+		return "sale"; // 주문 완료View
+	}
+	// 최근 주문한 상품 동일하게 주문!
+	@RequestMapping(value = "/saleRecent", method = RequestMethod.POST)
+	public String postRecentSale(HttpServletRequest req, String[] agent, String agentF, String agentA, String memberid,
+			String[] item, int[] amount, int[] qty) throws Exception {
+		Logger.info("post sale recent");
+		System.out.println("post sale recent");
+		System.out.println(agent[0]);
+		System.out.println(agentF);
+		System.out.println(agentA);
+		System.out.println(memberid);
+		System.out.println(item[0]);
+
+		HttpSession session = req.getSession();
+
+		Date time = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String dtime = format.format(time);
+
+		int totF = 0;
+		int totA = 0;
+		System.out.println(item.length);
+		for (int i = 0; i < item.length; i++) {
+
+			if (agent[i].equals(agentF))
+				totF += amount[i] * qty[i];
+			else if (agent[i].equals(agentA))
+				totA += amount[i] * qty[i];
+
+			SaleItemVO sivo = new SaleItemVO(dtime, "", amount[i] * qty[i], amount[i], agent[i], item[i], qty[i],
+					i + 1, memberid, "");
+			service.saleItem(sivo); // 주문 아이템 insert
+
+			// 주문 아이템 넣을 때, sold=1 시켜줘야 함
+			service.recAdd(sivo);
+		}
+		SaleVO svo = new SaleVO();
+
+		if (totF != 0) {
+			svo = new SaleVO(dtime, totF, agentF, memberid);
+			service.sale(svo); // 주문 정보 insert
+		}
+
+		if (totA != 0) {
+			svo = new SaleVO(dtime, totA, agentA, memberid);
+			service.sale(svo); // 주문 정보 insert
+		}
+
 		session.setAttribute("memberid", memberid);
 		session.setAttribute("agentF", agentF);
 		session.setAttribute("agentA", agentA);

@@ -44,4 +44,8 @@ public class SaleDAOImpl implements SaleDAO {
 	public void recAdd(SaleItemVO vo) throws Exception{
 		sql.update(namespace+".recAdd",vo);
 	}
+	@Override
+	public List<SaleItemVO> showRecent(String memberid) throws Exception{
+		return sql.selectList(namespace+".showRecent", memberid);
+	}
 }

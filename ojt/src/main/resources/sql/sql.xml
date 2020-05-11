@@ -154,6 +154,14 @@
 	from basket
 	where memberid=#{memberid}
 </select>
+<!-- 장바구니 - 최근 주문 아이템 조회 -->
+<select id="showRecent" resultType="com.ojt.domain.SaleItemVO">
+	select s.dt_sale,s.cd_agent agent,s.cd_item item,s.qty_delivTot qty, s.amt_price price, (select nm_item from ms_agentitem where cd_item=s.cd_item) as name
+	from sl_saleitem s
+	where s.no_saleslip=(select no_saleslip from sl_sale where cd_customer=#{memberid} order by no_saleslip desc limit 1) and s.cd_customer=#{memberid}
+	order by s.seq asc;
+</select>
+
 <!-- 장바구니 아이템 삭제 -->
 <delete id="deleteBasket">
 	delete from basket

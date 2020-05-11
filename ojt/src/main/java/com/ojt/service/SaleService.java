@@ -13,4 +13,5 @@ public interface SaleService {
 	public List<BasketVO> basketList(String memberid) throws Exception;
 	public void deleteBasket(int idx) throws Exception;
 	public void recAdd(SaleItemVO vo) throws Exception;
+	public List<SaleItemVO> showRecent(String memberid) throws Exception;
 }

@@ -45,4 +45,8 @@ public class SaleServiceImpl implements SaleService {
 	public void recAdd(SaleItemVO vo) throws Exception{
 		dao.recAdd(vo);
 	}
+	@Override
+	public List<SaleItemVO> showRecent(String memberid) throws Exception{
+		return dao.showRecent(memberid);
+	}
 }
