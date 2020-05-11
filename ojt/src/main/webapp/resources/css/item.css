@@ -15,35 +15,57 @@
 }
 .recommend-list{
 	width:100%;
-	max-height:40%;
+	max-height:30%;
 	top:5px;
 	bottom:5px;
 	left:0;
 	border-bottom:1px solid #d4d4d4;
-	position:relative
-
+	position:relative;
  }
 .list-group{
-	max-height:60%;
+	max-height:70%;
 	margin-top:10px;
 	margin-bottom:55px;
 	left:0;
 	overflow:scroll;
-	position:relative;	
+	position:relative;
 }
+
 
 td{
 	text-align:center;
 }
-
+/* 장바구니 스타일 */
 .basket-group{
 	position:absolute;
 	width:100%;
 	max-height:80%;
 	top:55px;
 	left:0;
-	-webkit-overflow-scrolling: touch;
 	overflow:scroll;
+}
+.recent-order{
+	width:90%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	max-height:40%;
+}
+.recent-order table{
+	width:100%;
+}
+.recent-list{
+	border-top:1px solid #d4d4d4;
+	overflow:scroll;
+}
+.recent-list table{
+	width:100%;
+}
+.recent-list tr{
+	border-bottom:1px solid #d4d4d4;
+}
+.basket-list{
+	max-height:60%;
 }
 
 /* 표 스타일 */

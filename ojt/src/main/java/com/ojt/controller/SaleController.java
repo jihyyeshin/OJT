@@ -173,9 +173,6 @@ public class SaleController {
 		}
 		SaleVO svo = new SaleVO();
 
-//		System.out.println("look totA"+totA);
-//
-//		System.out.println("look totF"+totF);
 		if(totF != 0) {
 			svo = new SaleVO(dtime, totF, agentF, memberid);
 			service.sale(svo); // 주문 정보 insert

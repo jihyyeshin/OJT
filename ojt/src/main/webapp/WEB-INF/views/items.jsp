@@ -153,7 +153,7 @@
 			str+=	'<td><a id="title" href="javascript:goDetail('+item.item+', '+item.agent+');">'+item.name+'</a></td>';
 			str+=	'</tr>';
 			str+=	'<tr>';
-			str+=	'<td style="font-family: CJBOLD;">' + amounts + '원</td>';
+			str+=	'<td style="font-family: CJBOLD;color:#FF7272;">' + amounts + '원</td>';
 			str+=	'</tr>';
 			str+=	'<tr>';
 			str+=	'<td><input type="text" name="qty" style="width: 50%;">개</td>';

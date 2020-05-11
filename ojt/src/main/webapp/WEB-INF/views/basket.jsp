@@ -12,13 +12,44 @@
 	<div onclick="location.href='../items'" class="left"></div>
 	<h3 class="logo">${param.memberid}님의 장바구니</h3>
 </header>
-<form method="post" onsubmit="_submit();">
-	<div id="itemList" class ="basket-group"></div>
+<div class="basket-group">
+<form>
+			<div class="recent-order ">
+				<div style="height:10px;width:100%;background-color:white;"></div>
+				<h4 style="text-align:center;">최근 주문 내역 (2020-05-11)</h4>
+				<table class="recent-list">
+					<tr>
+						<td style="width: 50%;">이름</td>
+						<td style="width: 50%;">1,000(원) * 100(개)</td>
+					</tr>
+				</table>
+				<table>
+					<tr style="height: 5px;">
+						<td></td>
+					</tr>
+					<tr>
+						<td><button type="button" class="btn" style="width:90%;">그대로 주문</button></td>
+					</tr>
+					<tr style="height: 10px;">
+						<td></td>
+					</tr>
+				</table>
+
+			
+			</div>
+		</form>
+		<div style="height:10px;width:100%;background-color:#d4d4d4;"></div>
+		<div style="height:10px;width:100%;background-color:white;"></div>
+		
+	<form method="post" onsubmit="_submit();">
+	<div id="itemList" class="basket-list"></div>
 	<button id="footer" type="submit" onclick="javascipt: form.action='./saleBasket'">주문하기</button>
 	<input type="hidden" name="memberid" value="${param.memberid}"/>
 	<input type="hidden" name="agentF" value="${param.agentF}"/>
 	<input type="hidden" name="agentA" value="${param.agentA}"/>
-</form>
+	
+	</form>
+</div>
 
 <script type="text/javascript">
 
@@ -29,6 +60,10 @@
 		showBasket();
 	});
 	
+	// 가격 포맷 생성
+	function numberWithCommas(x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
 	// 장바구니 삭제
 	function delete_func(idx){
 		$.ajax({
@@ -56,7 +91,7 @@
 			var str = '<table style="border-bottom:1px solid #d4d4d4;width:100%;"><tr><td style="text-align: center;"><input type="checkbox" name="itemchk" value="'+item.item+'"></td>';
 			str += '<td id="title">'+item.name+'</td>';
 			str += '<td style="width: 15%;"><input type="button" value="X" onclick="delete_func('+item.idx+');"/></td></tr>'
-			str += '<tr><td></td><td style="width:75%;">'+item.price+' * '+item.qty+'</td><td></td></tr></table>';
+			str += '<tr><td></td><td style="width:75%;font-family:CJBOLD;color:#FF7272;">'+numberWithCommas(item.price)+'(원) * '+item.qty+'(개)</td><td></td></tr></table>';
 			str += '<input type="hidden" name="idx" value="'+item.idx+'">';
 			str += '<input type="hidden" name="agent" value="'+item.agent+'">';
 			str += '<input type="hidden" name="qty" value="'+item.qty+'">';
