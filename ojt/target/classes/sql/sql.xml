@@ -67,34 +67,43 @@
 </select>
 
 <!-- 대리점 별 아이템, 가격 조회 -->
-<select id="itemList" parameterType="String" resultType="com.ojt.domain.ItemVO" >
-	select cd_item, nm_item, amt_amount, src
+<!-- 겹치는 아이템은 하나만 출력 (규칙: max cd_agent로  가져옴) -->
+<select id="itemList" resultType="com.ojt.domain.ItemVO" >
+	select max(cd_agent) cd_agent,cd_item,  nm_item, amt_amount, src
 	from ms_agentitem
-	where cd_agent=#{agent}
+	where cd_agent=#{agentF} or cd_agent=#{agentA}
+	group by cd_item,  nm_item, amt_amount, src
+	<!-- select cd_agent, cd_item, nm_item, amt_amount, src
+	from ms_agentitem
+	where cd_agent=#{agentF} or cd_agent=#{agentA} -->
 </select>
 
-<select id="itemRecommendList" parameterType="com.ojt.domain.SaleVO" resultType="com.ojt.domain.ItemVO" >
-	select m1.cd_item, m1.nm_item, m1.remark, m1.amt_amount, m1.src,  
+<select id="itemRecommendList" parameterType="com.ojt.domain.RecVO" resultType="com.ojt.domain.ItemVO" >
+	select distinct(m1.cd_item),m1.cd_agent, m1.nm_item, m1.remark, m1.amt_amount, m1.src,  
 		(case when sqrt(SUM(r1.isSold))*sqrt(SUM(r2.isSold))=0 then 0 else SUM(r1.isSold * r2.isSold)/(sqrt(SUM(r1.isSold))*sqrt(SUM(r2.isSold))) end) as result
 	from ms_agentitem m1, (select cd_item, sum(qty_delivtot) selTot
 							from sl_saleitem
-							where cd_customer=#{memberid} and cd_agent=#{agent}
+							where cd_customer=#{memberid}
 							group by cd_item
 							order by selTot desc
 							limit 3) m2
 		, rec r1 inner join rec r2 on r1.member=r2.member
-	where m1.cd_item=r1.cd_item and m2.cd_item=r2.cd_item and m1.cd_agent=#{agent} and m1.cd_item != m2.cd_item
-	group by m1.cd_item, m1.nm_item, m1.remark, m1.amt_amount, m1.src
+	where m1.cd_item=r1.cd_item and m2.cd_item=r2.cd_item and m1.cd_item != m2.cd_item and (m1.cd_agent=#{agentF} or m1.cd_agent=#{agentA})
+	group by m1.cd_item, m1.nm_item, m1.remark, m1.amt_amount, m1.src, m1.cd_agent
 	order by result DESC
 	limit 2;
 </select>
 
 <!-- 아이템 별 정보 조회 -->
 <select id="itemDetail" parameterType="String" resultType="com.ojt.domain.ItemVO">
-	select cd_item, nm_item, amt_amount, remark
+	select max(cd_agent) cd_agent, cd_item, nm_item, amt_amount, remark
 	from ms_agentitem
 	where cd_item=#{item}
-	limit 1;
+	group by cd_item, nm_item, amt_amount, remark
+	<!-- select max(cd_agent), cd_item, nm_item, amt_amount, remark
+	from ms_agentitem
+	where cd_item=#{item}
+	limit 1; -->
 </select>
 
 <!-- 아이템 이미지 크롤링 -->
@@ -128,6 +137,11 @@
 
 <!-- 장바구니 -->
 <insert id="basket" parameterType="com.ojt.domain.BasketVO">
+<!-- 	insert into basket
+			(cd_agent, cd_item, memberid, nm_item, amt_amount, amt_price, qty_delivtot)
+	select max(cd_agent), #{item}, #{memberid}, #{name}, #{amount}, #{price}, #{qty}
+	from ms_agentitem
+	where cd_item=#{item} and (cd_agent=#{agentF} or cd_agent=#{agentA}) -->
 	insert into basket
 		(memberid, nm_item, amt_amount, amt_price, cd_agent, cd_item, qty_delivtot)
 	values 
@@ -136,7 +150,7 @@
 
 <!-- 장바구니 아이템 조회 -->
 <select id="basketList" resultType="com.ojt.domain.BasketVO">
-	select amt_price as price, nm_item as name, cd_item as item, qty_delivtot as qty, idx
+	select cd_agent as agent, amt_price as price, nm_item as name, cd_item as item, qty_delivtot as qty, idx
 	from basket
 	where memberid=#{memberid}
 </select>

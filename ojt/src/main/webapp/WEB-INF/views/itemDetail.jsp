@@ -18,14 +18,17 @@
 		<img src="${src} " width="100%"></img>
 		<p></p>
 		<h4 style="text-align:center;"> ${item.name}</h4>
-		<p> ${item.remark}</p>
+		<p style="text-align:center;"> ${item.remark}</p>
 		
 		<form method="post" name="form">
 			<input type="hidden" name="item" id="item" value="${item.item}"/>
 			<p style="text-align:center;">수량: <input type="text" name="qty" id="qty"/>개</p>
 			
 			<input type="hidden" name="memberid" value="${memberid}"/>
-			<input type="hidden" name="agent" value="${agent}"/>
+			<input type="hidden" name="agentF" value="${agentF}"/>
+			<input type="hidden" name="agentA" value="${agentA}"/>
+			<input type="hidden" name="agent" value="${item.agent}"/>
+			
 			<input type="hidden" name="name" value="${item.name}"/>
 			<input type="hidden" name="amount" value="${item.amount}"/>
 			

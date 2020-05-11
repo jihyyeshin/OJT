@@ -30,14 +30,14 @@
 	<h1> ${member.name}님 환영합니다.</h1>
 	<p>하단 버튼을 눌러 상품을 주문해보세요!</p>
 	<form action="./items" method="post">
-		<input type="hidden" name="agent" value="${member.agentF}"/>
+		<input type="hidden" name="agentF" value="${member.agentF}"/>
+		<input type="hidden" name="agentA" value="${member.agentA}"/>
 		<input type="hidden" name="memberid" value="${member.id}"/>
-		<p><button type="submit" class="btn btn-lg btn_blue_default btn-block">상온</button></p>
+		<p><button type="submit" class="btn btn-lg btn_blue_default btn-block">상품주문</button></p>
 	</form>
-	<form action="./items" method="post">
-		<input type="hidden" name="agent" value="${member.agentA}"/>
+	<form action="#" method="post">
 		<input type="hidden" name="memberid" value="${member.id}"/>
-		<p><button type="submit" class="btn btn-lg btn_white_default btn-block">신선</button></p>
+		<p><button class="btn btn-lg btn_white_default btn-block">주문내역</button></p>
 	</form>
 	
 	<p><a href="./logout" class="link">로그아웃</a></p>

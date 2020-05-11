@@ -16,7 +16,8 @@
 	<div id="itemList" class ="basket-group"></div>
 	<button id="footer" type="submit" onclick="javascipt: form.action='./saleBasket'">주문하기</button>
 	<input type="hidden" name="memberid" value="${param.memberid}"/>
-	<input type="hidden" name="agent" value="${param.agent}"/>
+	<input type="hidden" name="agentF" value="${param.agentF}"/>
+	<input type="hidden" name="agentA" value="${param.agentA}"/>
 </form>
 
 <script type="text/javascript">
@@ -57,6 +58,7 @@
 			str += '<td style="width: 15%;"><input type="button" value="X" onclick="delete_func('+item.idx+');"/></td></tr>'
 			str += '<tr><td></td><td style="width:75%;">'+item.price+' * '+item.qty+'</td><td></td></tr></table>';
 			str += '<input type="hidden" name="idx" value="'+item.idx+'">';
+			str += '<input type="hidden" name="agent" value="'+item.agent+'">';
 			str += '<input type="hidden" name="qty" value="'+item.qty+'">';
 			str += '<input type="hidden" name="amount" value="'+item.price+'">';
 			
@@ -95,6 +97,8 @@
 	    var amount=document.getElementsByName("amount");
 	    var qty=document.getElementsByName("qty");
 	    var idx=document.getElementsByName("idx");
+	    var agent=document.getElementsByName("agent");
+	    
 	    if (typeof(itemchk.length) == 'undefined') //단일
 	    {
 	        if (itemchk[0].checked==true)
@@ -102,6 +106,7 @@
 	        	idx[0].disabled=true;
 	        	amount[0].disabled=true;
 	            qty[0].disabled=true;
+	            agent[0].disabled=true;
 	        }
 	    } else { 
 	    	//다중
@@ -109,9 +114,10 @@
 	        {
 	            if (itemchk[i].checked==false)
 	            {
-	            	idx[i].disabled=true;
-	            	amount[i].disabled=true;
-		            qty[i].disabled=true;
+	            	idx[0].disabled=true;
+		        	amount[0].disabled=true;
+		            qty[0].disabled=true;
+		            agent[i].disabled=true;
 	            }
 	        }
 	    }

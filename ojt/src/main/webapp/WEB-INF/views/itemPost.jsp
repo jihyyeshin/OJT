@@ -10,7 +10,8 @@
 <body>
 <form id="frm" name="frm" action="./items" method="POST">
 	<input type="hidden" name="memberid" value="${memberid}"/>
-	<input type="hidden" name="agent" value="${agent}"/>
+	<input type="hidden" name="agentF" value="${agentF}"/>
+	<input type="hidden" name="agentA" value="${agentA}"/>
 </form>
 <script type="text/javascript">
 $(document).ready(function(){

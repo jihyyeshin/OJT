@@ -16,16 +16,19 @@
 		<div onclick="location.href='./'" class="left"></div>
 		<h3 class="logo">상품 주문</h3>
 		
+		<!-- 장바구니 상품 조회 -->
 		<form method="post">
 			<button onclick="javascipt: form.action='./items/basket'" class="right"></button>
 			<input type="hidden" name="memberid" value="${param.memberid}"/>
-			<input type="hidden" name="agent" value="${param.agent}"/>
+			<input type="hidden" name="agentF" value="${param.agentF}"/>
+			<input type="hidden" name="agentA" value="${param.agentA}"/>
 		</form>
 		<input class="search" type="text" id="search" placeholder="상품 검색">
 	</header>
 	<form name="paging" onsubmit="_submit();" method="post">
 		<input type="hidden" name="memberid" value="${param.memberid}"/>
-		<input type="hidden" name="agent" value="${param.agent}"/>
+		<input type="hidden" name="agentF" value="${param.agentF}"/>
+		<input type="hidden" name="agentA" value="${param.agentA}"/>
 		<input type="hidden" name="item" value=""/>
 		<div class="item-list">
 			<div class="recommend-list">
@@ -57,7 +60,8 @@
 	</form>
 	
 	<script type="text/javascript">
-	var agentId=${param.agent};
+	var agentF=${param.agentF};
+	var agentA=${param.agentA};
 	var memberId=${param.memberid};
 	// 로드되자마자
 	$(document).ready(function(){
@@ -96,14 +100,15 @@
 	});
 	// 대리점 별 아이템 및 가격 정보 조회
 	function showItem(){
-		if(agentId!=null){
+		
+		if(agentF!=null && agentA!=null){
 			$.ajax({
 				url:"./showItem",
 				type:"POST",
 				dataType:"json",
 				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 				async:false,
-				data:"agent="+agentId,
+				data:"agentF="+agentF+"&agentA="+agentA,
 				success: function(data){
 					console.log("success");
 					print(data);
@@ -118,29 +123,37 @@
 		}
 	}
 
+	// 가격 포맷 생성
+	function numberWithCommas(x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+
 	// 아이템 정보 출력
 	function print(data){
 		$.each(data, function(index, item){
 			var src=item.src;
 			if(src == "") src="<c:url value="/resources/img/CJ_logo_black.png" />";
-			
+			//console.log("agent?"+item.agent);
+			var amounts=numberWithCommas(item.amount);
 			
 			var str='<table style="float:left;width:50%;height:300px;">';
 			str+=	'<tbody>';
 			str+=	'<tr>';
 			str+=	'<td>';
-			str+=	'<div>';
+			str+=	'<div style="width: 20%;">';
 			str+=	'&nbsp;&nbsp;';
-			str+=	'<input type="checkbox" name="itemchk" value="'+item.item+'"></td>';
-			str+=	'<img src="'+src+'" class="center">';
+			str+=	'<input type="checkbox" name="itemchk" value="'+item.item+'">';
+			str+=	'</div>';
+			str+=	'<div style="width: 100%;">';
+			str+=	'<img src="'+src+'" class="center" style="height:100px;">';
 			str+=	'</div>';
 			str+=	'</td>';
 			str+=	'</tr>';
 			str+=	'<tr>';
-			str+=	'<td><a id="title" href="javascript:goDetail('+item.item+');">'+item.name+'</a></td>';
+			str+=	'<td><a id="title" href="javascript:goDetail('+item.item+', '+item.agent+');">'+item.name+'</a></td>';
 			str+=	'</tr>';
 			str+=	'<tr>';
-			str+=	'<td>' + item.amount + '원</td>';
+			str+=	'<td style="font-family: CJBOLD;">' + amounts + '원</td>';
 			str+=	'</tr>';
 			str+=	'<tr>';
 			str+=	'<td><input type="text" name="qty" style="width: 50%;">개</td>';
@@ -151,6 +164,7 @@
 			str+=	'</tbody>';
 			str+=	'</table>';
 			str += '<input type="hidden" name="amount" value="'+item.amount+'">';
+			str += '<input type="hidden" name="agent" value="'+item.agent+'">';
 			str += '<input type="hidden" name="name" value="'+item.name+'">';
 			$('#itemList').append(str);
 		});
@@ -158,14 +172,14 @@
 	
 	// 추천 아이템 및 가격 정보 조회
 	function showRecommendedItems(){
-		if(agentId!=null && memberId!=null){
+		if(agentF!=null && agentA!=null &&memberId!=null){
 			$.ajax({
 				url:"./showRecommendedItems",
 				type:"POST",
 				dataType:"json",
 				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 				async:false,
-				data:"agent="+agentId+"&memberid="+memberId,
+				data:"agentF="+agentF+"&agentA"+agentA+"&memberid="+memberId,
 				success: function(data){
 					console.log("success");
 					console.log(data);
@@ -187,6 +201,8 @@
 			var src=item.src;
 			if(src == "") src="<c:url value="/resources/img/CJ_logo_black.png" />";
 			
+			if(index==0) console.log("rec agent"+item.agent);
+			
 			var str = '<li>';
 			str +=	'<table style="width: 100%;">';
 			str += '<tr>';
@@ -195,7 +211,7 @@
 			str += 'style="text-align: center;" width="100" height="88"></td>';
 			str += '<td style="width: 40%; text-align: left;">';
 			str += '<br/>';
-			str += '<h4><a id="title" href="javascript:goDetail('+item.item+');">'+item.name+'</a></h4>';
+			str += '<h4><a id="title" href="javascript:goDetail('+item.item+', '+item.agent+');">'+item.name+'</a></h4>';
 			str += '<p>' + item.amount + '원</p>';
 			str += '</td>';
 			str += '</tr>';
@@ -220,10 +236,15 @@
 	}
 	
 	// go 디테일 페이지
-	function goDetail(item){
+	function goDetail(item, agent){
 		var f=document.paging;
 		f.item.value=item;
-		f.agent.value=${param.agent};
+		console.log("detail click item!"+item);
+		console.log("detail click!"+agent);
+		f.agent.value=agent;
+		f.agentF.value=agentF;
+		f.agentA.value=agentA;
+		
 		f.memberid.value=${param.memberid};
 
 		f.action="./items/detail"
@@ -238,6 +259,7 @@
 	    var itemchk=document.getElementsByName("itemchk");
 	    var amount=document.getElementsByName("amount");
 	    var qty=document.getElementsByName("qty");
+	    var agent=document.getElementsByName("agent");
 	    var name=document.getElementsByName("name");
 	    if (typeof(itemchk.length) == 'undefined') //단일
 	    {
@@ -246,6 +268,7 @@
 	        	name[0].disabled=true;
 	        	amount[0].disabled=true;
 	            qty[0].disabled=true;
+	            agent[0].disabled=true;
 	        }
 	    } else { 
 	    	//다중
@@ -256,6 +279,7 @@
 	            	name[i].disabled=true;
 	            	amount[i].disabled=true;
 		            qty[i].disabled=true;
+		            agent[i].disabled=true;
 	            }
 	        }
 	    }

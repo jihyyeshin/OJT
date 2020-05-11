@@ -7,14 +7,18 @@ public class BasketVO {
 	private int amount;//amount*¼ö·®
 	private int price;//amount
 	private String agent; 
+//	private String agentA;
 	private String item;
 	private int qty;
 	public BasketVO() {};
-	public BasketVO(String memberid, String name, int amount, int price, String agent, String item, int qty) {
+
+	public BasketVO(String memberid, String name, int amount, int price, String agent,
+			/* String agentA, */ String item, int qty) {
 		this.memberid=memberid;
 		this.amount=amount;
 		this.price=price;
 		this.agent=agent;
+//		this.agentA=agentA;
 		this.item=item;
 		this.qty=qty;
 		this.name=name;
@@ -57,6 +61,12 @@ public class BasketVO {
 	public void setAgent(String agent) {
 		this.agent = agent;
 	}
+//	public String getAgentA() {
+//		return agentA;
+//	}
+//	public void setAgentA(String agentA) {
+//		this.agentA = agentA;
+//	}
 	public String getItem() {
 		return item;
 	}

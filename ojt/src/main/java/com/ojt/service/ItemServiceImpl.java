@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.ojt.domain.ItemVO;
+import com.ojt.domain.RecVO;
 import com.ojt.domain.SaleVO;
 import com.ojt.repository.ItemDAO;
 
@@ -16,8 +17,8 @@ public class ItemServiceImpl implements ItemService{
 	private ItemDAO dao;
 	
 	@Override
-	public List<ItemVO> itemList(String agent) throws Exception{
-		return dao.itemList(agent);
+	public List<ItemVO> itemList(RecVO vo) throws Exception{
+		return dao.itemList(vo);
 	}
 	@Override
 	public ItemVO itemDetail(String item) throws Exception{
@@ -28,7 +29,7 @@ public class ItemServiceImpl implements ItemService{
 		dao.itemCrawl(vo);
 	}
 	@Override
-	public List<ItemVO> itemRecommendList(SaleVO vo) throws Exception{
+	public List<ItemVO> itemRecommendList(RecVO vo) throws Exception{
 		return dao.itemRecommendList(vo);
 	}
 }

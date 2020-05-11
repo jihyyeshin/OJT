@@ -3,6 +3,7 @@ package com.ojt.controller;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ojt.domain.ItemVO;
-import com.ojt.domain.SaleVO;
+import com.ojt.domain.RecVO;
 import com.ojt.service.ItemService;
 
 @Controller
@@ -47,19 +48,26 @@ public class ItemController {
 	
 	// 대리점 별 아이템 , 가격 조회
 	@RequestMapping(value="/showItem")
-	public @ResponseBody List<ItemVO> showItem(@RequestParam String agent) throws Exception {
-		List<ItemVO> list=service.itemList(agent);
+	public @ResponseBody List<ItemVO> showItem(@RequestParam String agentF, @RequestParam String agentA) throws Exception {
+		System.out.println("agentF:"+agentF);
+		System.out.println("agentA:"+agentA);
+		RecVO vo=new RecVO();
+		vo.setAgentF(agentF);
+		vo.setAgentA(agentA);
+		
+		List<ItemVO> list=service.itemList(vo);
 		
 		return list;
 	}
 	
 	@RequestMapping(value="/showRecommendedItems")
 	@ResponseBody
-	public List<ItemVO> showRecItem(@RequestParam String agent, String memberid) throws Exception {
+	public List<ItemVO> showRecItem(@RequestParam String agentF, String agentA, String memberid) throws Exception {
 		System.out.println("showRecommendedItems");
 		
-		SaleVO vo=new SaleVO();
-		vo.setAgent(agent);
+		RecVO vo=new RecVO();
+		vo.setAgentF(agentF);
+		vo.setAgentA(agentA);
 		vo.setMemberid(memberid);
 
 		List<ItemVO> list=service.itemRecommendList(vo);
@@ -67,12 +75,18 @@ public class ItemController {
 	}
 	// 디테일 화면
 	@RequestMapping(value="/items/detail", method=RequestMethod.POST)
-	public String postDetail(HttpServletRequest req, String agent, String memberid, String item) throws Exception {
+	public String postDetail(HttpServletRequest req, String agentF, String agentA,
+			/* String agent, */ String memberid, String item) throws Exception {
 		Logger.info("post detail");
 		HttpSession session = req.getSession();
 		
+//		System.out.println("detail: agent"+agent);
+		System.out.println("detail: item"+item);
 		ItemVO vo=service.itemDetail(item);
-		session.setAttribute("agent", agent);
+		System.out.println("detail: agent:"+vo.getAgent());
+		//session.setAttribute("agent", agent);
+		session.setAttribute("agentF", agentF);
+		session.setAttribute("agentA", agentA);
 		session.setAttribute("memberid", memberid);
 		session.setAttribute("item", vo);
 
@@ -104,41 +118,41 @@ public class ItemController {
 		session.setAttribute("src", src);
 		return "itemDetail";
 	}
-	public void test() throws Exception {
-		String agent="153441";
-		List<ItemVO> list=service.itemList(agent);
-		String src="";
-		for(int i=0;i<list.size();i++) {
-			if(list.get(i).getSrc()!= null) continue;
-			
-			String input=list.get(i).getName();
-			String val=URLEncoder.encode(input, "UTF-8");// 인코딩
-			Connection.Response response = Jsoup.connect("https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query="+val)
-	                .method(Connection.Method.GET)
-	                .execute();
-			
-			Document googleDocument = response.parse();
-			Element thumb = googleDocument.select("a[class=thumb]").first();
-			if(thumb==null) {
-				src= "";
-			}
-			else {
-				Elements img=thumb.select("img");
-				if(img==null) {
-					src= "";
-				} 
-				else {
-					src= img.attr("src");
-					if(src==null) {
-						src= "";
-					}
-				}
-			}
-			ItemVO voinsert = new ItemVO();
-			voinsert.setSrc(src);
-			voinsert.setName(list.get(i).getName());
-			service.itemCrawl(voinsert);
-		}
-		System.out.println("FIN");
-	}
+//	public void test() throws Exception {
+//		String agent="153441";
+//		List<ItemVO> list=service.itemList(agents);
+//		String src="";
+//		for(int i=0;i<list.size();i++) {
+//			if(list.get(i).getSrc()!= null) continue;
+//			
+//			String input=list.get(i).getName();
+//			String val=URLEncoder.encode(input, "UTF-8");// 인코딩
+//			Connection.Response response = Jsoup.connect("https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query="+val)
+//	                .method(Connection.Method.GET)
+//	                .execute();
+//			
+//			Document googleDocument = response.parse();
+//			Element thumb = googleDocument.select("a[class=thumb]").first();
+//			if(thumb==null) {
+//				src= "";
+//			}
+//			else {
+//				Elements img=thumb.select("img");
+//				if(img==null) {
+//					src= "";
+//				} 
+//				else {
+//					src= img.attr("src");
+//					if(src==null) {
+//						src= "";
+//					}
+//				}
+//			}
+//			ItemVO voinsert = new ItemVO();
+//			voinsert.setSrc(src);
+//			voinsert.setName(list.get(i).getName());
+//			service.itemCrawl(voinsert);
+//		}
+//		System.out.println("FIN");
+//	}
 }

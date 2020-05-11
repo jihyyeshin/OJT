@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import com.ojt.domain.ItemVO;
+import com.ojt.domain.RecVO;
 import com.ojt.domain.SaleVO;
 
 @Service
@@ -18,8 +19,8 @@ public class ItemDAOImpl implements ItemDAO {
 	private static String namespace="sql";
 	
 	@Override
-	public List<ItemVO> itemList(String agent) throws Exception{
-		return sql.selectList(namespace+".itemList",agent);
+	public List<ItemVO> itemList(RecVO vo) throws Exception{
+		return sql.selectList(namespace+".itemList",vo);
 	}
 	
 	@Override
@@ -31,7 +32,7 @@ public class ItemDAOImpl implements ItemDAO {
 		sql.update(namespace+".itemCrawl", vo);
 	}
 	@Override
-	public List<ItemVO> itemRecommendList(SaleVO vo) throws Exception{
+	public List<ItemVO> itemRecommendList(RecVO vo) throws Exception{
 		return sql.selectList(namespace+".itemRecommendList", vo);
 	}
 }

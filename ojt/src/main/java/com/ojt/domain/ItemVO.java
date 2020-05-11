@@ -1,12 +1,19 @@
 package com.ojt.domain;
 
 public class ItemVO {
+	private String cd_agent;
 	private String cd_item;
 	private String nm_item;
 	private int amt_amount;
 	private String remark;//Ό³Έν
 	private String src;
 	
+	public String getAgent() {
+		return cd_agent;
+	}
+	public void setAgent(String cd_agent) {
+		this.cd_agent = cd_agent;
+	}
 	public String getSrc() {
 		return src;
 	}
