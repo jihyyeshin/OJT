@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ojt.domain.BasketVO;
 import com.ojt.domain.SaleItemVO;
+import com.ojt.domain.SaleListVO;
 import com.ojt.domain.SaleVO;
 
 @Service
@@ -29,7 +30,6 @@ public class SaleDAOImpl implements SaleDAO {
 	}
 	@Override
 	public void basket(BasketVO vo) throws Exception{
-		//System.out.println("IM IN VO "+vo.getName());
 		sql.insert(namespace+".basket", vo);
 	}
 	@Override
@@ -47,5 +47,9 @@ public class SaleDAOImpl implements SaleDAO {
 	@Override
 	public List<SaleItemVO> showRecent(String memberid) throws Exception{
 		return sql.selectList(namespace+".showRecent", memberid);
+	}
+	@Override
+	public List<SaleListVO> showSaleList(String memberid) throws Exception{
+		return sql.selectList(namespace+".showSaleList", memberid);
 	}
 }

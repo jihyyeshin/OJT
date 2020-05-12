@@ -158,6 +158,26 @@
 	where cd_item=#{item} and member=#{memberid};
 </update>
 
+<!-- 주문 내역 조회 -->
+<select id="showSaleList" resultType="com.ojt.domain.SaleListVO">
+	
+	<!-- SELECT s.dt_sale::date+2 dt_deliv, (select gbn_agent from ms_agent where cd_agent=s.cd_agent) gbn_agent, 
+		cd_agent, (select nm_item from ms_agentitem where cd_item=s.cd_item) nm_item, amt_amount 
+	FROM sl_saleitem s
+	<![CDATA[WHERE (CURRENT_DATE - s.dt_sale::date) < 3]]> and cd_customer=#{memberid}
+	ORDER BY s.no_saleslip desc; -->
+	
+	select t.*
+	from (SELECT s.dt_sale::date+2 dt_deliv, 
+			(select gbn_agent from ms_agent where cd_agent=s.cd_agent) gbn_agent, 
+			cd_agent, 
+			(select nm_item from ms_agentitem where cd_item=s.cd_item) nm_item, 
+			amt_amount 
+		FROM sl_saleitem s
+		WHERE cd_customer='123'
+		ORDER BY s.no_saleslip desc) t
+	<![CDATA[where (t.dt_deliv - current_date) < 3 and (t.dt_deliv - current_date)>= 0]]>
+</select>
 <!-- 장바구니 -->
 <insert id="basket" parameterType="com.ojt.domain.BasketVO">
 <!-- 	insert into basket

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ojt.domain.BasketVO;
 import com.ojt.domain.SaleItemVO;
+import com.ojt.domain.SaleListVO;
 import com.ojt.domain.SaleVO;
 
 public interface SaleService {
@@ -14,4 +15,5 @@ public interface SaleService {
 	public void deleteBasket(int idx) throws Exception;
 	public void recAdd(SaleItemVO vo) throws Exception;
 	public List<SaleItemVO> showRecent(String memberid) throws Exception;
+	public List<SaleListVO> showSaleList(String memberid) throws Exception;
 }

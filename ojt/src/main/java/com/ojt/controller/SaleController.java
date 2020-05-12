@@ -17,7 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ojt.domain.BasketVO;
+import com.ojt.domain.DataSet;
+import com.ojt.domain.ItemVO;
+import com.ojt.domain.RecVO;
 import com.ojt.domain.SaleItemVO;
+import com.ojt.domain.SaleListVO;
 import com.ojt.domain.SaleVO;
 import com.ojt.service.SaleService;
 
@@ -259,5 +263,12 @@ public class SaleController {
 	public String postSaleList() {
 		System.out.println("/items/saleList (post)");
 		return "saleList";
+	}
+	
+	@RequestMapping(value="/showSaleList")
+	public @ResponseBody List<SaleListVO> showSaleList(@RequestParam String memberid) throws Exception {
+		System.out.println("showSaleList");
+		List<SaleListVO> list=service.showSaleList(memberid);
+		return list;
 	}
 }

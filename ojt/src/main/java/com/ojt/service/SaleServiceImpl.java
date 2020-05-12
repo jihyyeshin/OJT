@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ojt.domain.BasketVO;
 import com.ojt.domain.SaleItemVO;
+import com.ojt.domain.SaleListVO;
 import com.ojt.domain.SaleVO;
 import com.ojt.repository.SaleDAO;
 
@@ -48,5 +49,9 @@ public class SaleServiceImpl implements SaleService {
 	@Override
 	public List<SaleItemVO> showRecent(String memberid) throws Exception{
 		return dao.showRecent(memberid);
+	}
+	@Override
+	public List<SaleListVO> showSaleList(String memberid) throws Exception{
+		return dao.showSaleList(memberid);
 	}
 }
