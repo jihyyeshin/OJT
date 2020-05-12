@@ -11,4 +11,5 @@ public interface ItemService {
 	public ItemVO itemDetail(String item) throws Exception;
 	public void itemCrawl(ItemVO vo) throws Exception;
 	public List<ItemVO> itemRecommendList(RecVO vo) throws Exception;
+	public int getListCnt(RecVO vo) throws Exception;
 }

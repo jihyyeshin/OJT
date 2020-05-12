@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ojt.domain.DataSet;
 import com.ojt.domain.ItemVO;
 import com.ojt.domain.RecVO;
 import com.ojt.service.ItemService;
@@ -48,16 +49,31 @@ public class ItemController {
 	
 	// 대리점 별 아이템 , 가격 조회
 	@RequestMapping(value="/showItem")
-	public @ResponseBody List<ItemVO> showItem(@RequestParam String agentF, @RequestParam String agentA) throws Exception {
-		System.out.println("agentF:"+agentF);
-		System.out.println("agentA:"+agentA);
+	public @ResponseBody DataSet showItem(@RequestParam int page, @RequestParam String agentF, @RequestParam String agentA) throws Exception {
+		System.out.println("showItem");
+		DataSet set=new DataSet();
 		RecVO vo=new RecVO();
 		vo.setAgentF(agentF);
 		vo.setAgentA(agentA);
 		
+		int totCnt=service.getListCnt(vo);
+		
+		/* 10개씩 출력 */
+		if(page==1) {
+			vo.setStartNum(1);
+			vo.setEndNum(10);
+		}else {
+			vo.setStartNum(page+(9*(page-1)));
+			vo.setEndNum(page*10);
+		}
+		
 		List<ItemVO> list=service.itemList(vo);
 		
-		return list;
+		set.setList(list);
+		set.setStartNum(vo.getStartNum());
+		set.setTotCnt(totCnt);
+		//System.out.println("totCnt"+totCnt);
+		return set;
 	}
 	
 	@RequestMapping(value="/showRecommendedItems")

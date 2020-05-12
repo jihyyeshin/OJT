@@ -53,8 +53,9 @@
 				</div>
 			</div>
 			<div id="itemList" style="position:relative;top:20px;bottom:10px;"></div>
+			<button type="button" onclick="pagingItem()" class="btn" style="width:100%;border-radius: 0px;">더보기</button>
 		</div> 
-			
+		
 		<button id="footerL" type="submit" onclick="javascipt: form.action='./items/sale'">주문하기</button>
 		<button id="footerR" type="submit" onclick="javascipt: form.action='./items/insertBasket'">장바구니 넣기</button>
 	</form>
@@ -63,9 +64,13 @@
 	var agentF=${param.agentF};
 	var agentA=${param.agentA};
 	var memberId=${param.memberid};
+	
+	var page=1;
+	
 	// 로드되자마자
 	$(document).ready(function(){
-		showItem();
+   		console.log(page);
+		showItem(page++);
 		search();
 		// 추천 리스트
 		showRecommendedItems();
@@ -98,9 +103,24 @@
                 });
             }
 	});
+	
+	function pagingItem(){
+   		console.log(page);
+		showItem(page);
+		page++;
+	}
+	// 페이징 처리
+	/* $(window).scroll(function(){   //스크롤이 최하단 으로 내려가면 리스트를 조회하고 page를 증가시킨다.
+		alert("hi scroll");
+	     if($(window).scrollTop() >= $(document).height() - $(window).height()){
+	    	 console.log("??");
+	    	 showItem(page);
+	         page++;   
+	     } 
+	});
+	 */
 	// 대리점 별 아이템 및 가격 정보 조회
-	function showItem(){
-		
+	function showItem(page){
 		if(agentF!=null && agentA!=null){
 			$.ajax({
 				url:"./showItem",
@@ -108,10 +128,23 @@
 				dataType:"json",
 				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 				async:false,
-				data:"agentF="+agentF+"&agentA="+agentA,
-				success: function(data){
+				data:"agentF="+agentF+"&agentA="+agentA+"&page="+page,
+				success: function(returnData){
 					console.log("success");
-					print(data);
+					console.log(returnData.totCnt);
+					var data=returnData.list;
+					
+					if(page==1){
+						// html 비우기
+						$('#itemList').html("");
+					}
+					if(returnData.startNum <= returnData.totCnt){
+						if(data.length>0){//데이터가 있을 경우
+							print(data);
+						}else{
+							alert('더 이상 데이터가 없습니다.');
+						}
+					}
 				},
 				error:function(request,status, error){
 					console.log("status:\n"+request.status+"\nerror:\n"+request.error);

@@ -69,13 +69,36 @@
 <!-- 대리점 별 아이템, 가격 조회 -->
 <!-- 겹치는 아이템은 하나만 출력 (규칙: max cd_agent로  가져옴) -->
 <select id="itemList" resultType="com.ojt.domain.ItemVO" >
-	select max(cd_agent) cd_agent,cd_item,  nm_item, amt_amount, src
+	<!-- select max(cd_agent) cd_agent,cd_item,  nm_item, amt_amount, src
 	from ms_agentitem
 	where cd_agent=#{agentF} or cd_agent=#{agentA}
-	group by cd_item,  nm_item, amt_amount, src
-	<!-- select cd_agent, cd_item, nm_item, amt_amount, src
-	from ms_agentitem
-	where cd_agent=#{agentF} or cd_agent=#{agentA} -->
+	group by cd_item,  nm_item, amt_amount, src -->
+	<!-- select max(m.cd_agent) cd_agent,m.cd_item,  m.nm_item, m.amt_amount, m.src, 
+		(select count(cd_item) from sl_saleitem where cd_item=m.cd_item) cnt
+	from ms_agentitem m
+	where m.cd_agent=#{agentF} or m.cd_agent=#{agentA}
+	group by m.cd_item,  m.nm_item, m.amt_amount, m.src
+	order by cnt desc -->
+	select S.*
+	from (
+	SELECT ROW_NUMBER() over(order by cnt desc) rnum,T.*
+	FROM (select  max(m.cd_agent) cd_agent,m.cd_item,  m.nm_item, m.amt_amount, m.src, 
+			(select count(cd_item) from sl_saleitem where cd_item=m.cd_item) cnt
+		from ms_agentitem m
+		where m.cd_agent=#{agentF} or m.cd_agent=#{agentA}
+		group by m.cd_item,  m.nm_item, m.amt_amount, m.src) T
+	) S
+	WHERE S.rnum BETWEEN #{startNum} and #{endNum}
+</select>
+
+<!-- 아이템 수 -->
+<select id="getListCnt" resultType="int">
+	select count(T.*)
+	from (select max(m.cd_agent) cd_agent,m.cd_item,  m.nm_item, m.amt_amount, m.src, 
+			(select count(cd_item) from sl_saleitem where cd_item=m.cd_item) cnt
+	from ms_agentitem m
+	where m.cd_agent=#{agentF} or m.cd_agent=#{agentA}
+	group by m.cd_item,  m.nm_item, m.amt_amount, m.src) T
 </select>
 
 <select id="itemRecommendList" parameterType="com.ojt.domain.RecVO" resultType="com.ojt.domain.ItemVO" >

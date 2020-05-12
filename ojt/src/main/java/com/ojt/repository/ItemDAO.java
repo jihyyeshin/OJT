@@ -15,4 +15,6 @@ public interface ItemDAO {
 	public void itemCrawl(ItemVO vo) throws Exception;
 	// 추천 아이템 리스트
 	public List<ItemVO> itemRecommendList(RecVO vo) throws Exception;
+	// 아이템 리스트 수
+	public int getListCnt(RecVO vo) throws Exception;
 }

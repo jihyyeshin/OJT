@@ -32,4 +32,8 @@ public class ItemServiceImpl implements ItemService{
 	public List<ItemVO> itemRecommendList(RecVO vo) throws Exception{
 		return dao.itemRecommendList(vo);
 	}
+	@Override
+	public int getListCnt(RecVO vo) throws Exception{
+		return dao.getListCnt(vo);
+	}
 }
