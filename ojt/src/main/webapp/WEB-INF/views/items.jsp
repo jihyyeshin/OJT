@@ -168,7 +168,7 @@
 		}
 	}
 	
-	// 추천 아이템 및 가격 정보 조회
+	// 베스트 상품의 동일 상품군 조회
 	function showLvlItems(){
 		if(agentF!=null && agentA!=null &&memberId!=null){
 			$.ajax({
@@ -180,7 +180,6 @@
 				data:"agentF="+agentF+"&agentA"+agentA+"&memberid="+memberId,
 				success: function(data){
 					console.log("success");
-					console.log(data);
 					printRecItem('lvl', data);
 				},
 				error:function(request,status, error){

@@ -38,3 +38,27 @@ td {
 	width: 100%;
 	overflow: scroll;
 }
+
+#footerDelivDate{
+	position:fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height:30px;
+    padding: 5px 0;
+    background-color:white;
+    
+    /* font */
+    font-family: CJBOLD;
+	color:black;
+	padding-top:5px;
+    text-align:center;
+	font-size:1rem;
+
+	border-bottom:0;
+	border-right:0;
+	border-left:0;
+    border-top:1px solid #d4d4d4;
+   
+	z-index:9999;
+}

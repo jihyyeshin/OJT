@@ -22,10 +22,8 @@ import com.ojt.domain.MemberVO;
 import com.ojt.domain.SaleListVO;
 import com.ojt.service.MemberService;
 import com.ojt.service.SaleService;
-/**
- * Handles requests for the application home page.
- */
 
+/****************************************************회원 관련 Func***************************************************************/
 @Controller
 public class MemberController {
 
@@ -35,17 +33,17 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 	@Inject
 	SaleService service2;
 	
-	// 스플래시 이미지
+	// Splash Image
 	@RequestMapping(value="/splash", method=RequestMethod.GET)
 	public void splash() {
 		System.out.println("get splash");
 	}
-	// index
+	// Index - 홈 화면
 	@RequestMapping("/")
 	public String index() {
 		Logger.info("login");
 		
-		return "login";//"login";//"uitest";//
+		return "uitest";//"login";//"uitest";//
 	}
 	
 	// 회원가입View
@@ -57,16 +55,15 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 	@RequestMapping(value="/signup", method=RequestMethod.POST)
 	public String postSignup(MemberVO vo, RedirectAttributes rttr) throws Exception{
 		System.out.println("post signup");
-		service.signup(vo);
 		
-		// 회원가입 시 rec Insert 처리
-		service.recInit(vo);
+		service.signup(vo);
+		service.recInit(vo);// 회원가입 시 rec Insert 처리
 
 		rttr.addFlashAttribute("msg", "회원가입 완료");
 		return "redirect:/"; // 처음 화면으로 
 	}
 
-	// 로그인
+	// 로그인 및 로그인 조건
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(MemberVO vo, HttpServletRequest req, RedirectAttributes rttr) throws Exception {
 		Logger.info("post login");

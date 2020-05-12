@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ojt.domain.LocVO;
 import com.ojt.domain.LatLngVO;
 import com.ojt.service.LocService;
-
+/****************************************************위치 기반 대리점 선택***************************************************************/
 @Controller
 public class LocController {
 	@Inject
@@ -49,7 +49,6 @@ public class LocController {
 	public String postAgent(@RequestParam String agentId) throws Exception {
 		Logger.info("post agent");
 		LocVO result=service.agent(agentId);
-		//System.out.println("this is result"+result.getAgent());
 		return result.getAgent()+"|"+result.getAgentName();
 	}
 }

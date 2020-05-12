@@ -1,6 +1,7 @@
 package com.ojt.controller;
 
 import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.List;
 
@@ -17,13 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ojt.domain.BasketVO;
-import com.ojt.domain.DataSet;
-import com.ojt.domain.ItemVO;
-import com.ojt.domain.RecVO;
 import com.ojt.domain.SaleItemVO;
-import com.ojt.domain.SaleListVO;
 import com.ojt.domain.SaleVO;
 import com.ojt.service.SaleService;
+/****************************************************주문 관련 Func***************************************************************/
 
 @Controller
 @RequestMapping("/items/*")
@@ -198,7 +196,7 @@ public class SaleController {
 		session.setAttribute("agentA", agentA);
 		return "sale"; // 주문 완료View
 	}
-	// 최근 주문한 상품 동일하게 주문!
+	// 최근 주문한 상품 동일하게 주문
 	@RequestMapping(value = "/saleRecent", method = RequestMethod.POST)
 	public String postRecentSale(HttpServletRequest req, String[] agent, String agentF, String agentA, String memberid,
 			String[] item, int[] amount, int[] qty) throws Exception {

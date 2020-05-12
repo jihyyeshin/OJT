@@ -17,51 +17,7 @@
 		<h3 class="logo">나의 주문정보</h3>
 	</header>
 	<div class="sale-list" id="saleList">
-		<!-- <div class="sales center">
-			<h4 style="text-align: center;">배송예정날짜: 2020.05.30(토)</h4>
-			<h4 style="color: #5988ED;">신선</h4>
-			<table>
-				<tr>
-					<td>상품상품상품100KG</td>
-					<td>1,000원</td>
-				</tr>
-				<tr>
-					<td>상품상품상품100KG</td>
-					<td>1,000원</td>
-				</tr>
-				<tr>
-					<td>상품상품상품100KG</td>
-					<td>1,000원</td>
-				</tr>
-				<tr>
-					<td>상품상품상품100KG</td>
-					<td>1,000원</td>
-				</tr>
-
-			</table>
-			<h4 style="color: #5988ED;">상온</h4>
-			<table>
-				<tr>
-					<td>상품상품상품100KG</td>
-					<td>1,000원</td>
-				</tr>
-				<tr>
-					<td>상품상품상품100KG</td>
-					<td>1,000원</td>
-				</tr>
-				<tr>
-					<td>상품상품상품100KG</td>
-					<td>1,000원</td>
-				</tr>
-				<tr>
-					<td>상품상품상품100KG</td>
-					<td>1,000원</td>
-				</tr>
-
-			</table>
-		</div>
-		<div style="width:100%;height:10px;background-color:#F5F5F5;"></div>
-		 -->
+		
 	</div>
 	<script type="text/javascript">
 		var memberid=${param.memberid};
