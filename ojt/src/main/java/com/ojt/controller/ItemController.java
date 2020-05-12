@@ -89,6 +89,21 @@ public class ItemController {
 		List<ItemVO> list=service.itemRecommendList(vo);
 		return list;
 	}
+	@RequestMapping(value="/showLvlItems")
+	@ResponseBody
+	public List<ItemVO> showLvlItems(@RequestParam String agentF, String agentA, String memberid) throws Exception {
+		System.out.println("showLvlItems");
+		
+		RecVO vo=new RecVO();
+		vo.setAgentF(agentF);
+		vo.setAgentA(agentA);
+		vo.setMemberid(memberid);
+
+		List<ItemVO> list=service.itemLvlList(vo);
+		System.out.println("itejmjs?"+list.get(0).getItem());
+		return list;
+	}
+	
 	// 디테일 화면
 	@RequestMapping(value="/items/detail", method=RequestMethod.POST)
 	public String postDetail(HttpServletRequest req, String agentF, String agentA,
@@ -96,11 +111,7 @@ public class ItemController {
 		Logger.info("post detail");
 		HttpSession session = req.getSession();
 		
-//		System.out.println("detail: agent"+agent);
-		System.out.println("detail: item"+item);
 		ItemVO vo=service.itemDetail(item);
-		System.out.println("detail: agent:"+vo.getAgent());
-		//session.setAttribute("agent", agent);
 		session.setAttribute("agentF", agentF);
 		session.setAttribute("agentA", agentA);
 		session.setAttribute("memberid", memberid);

@@ -2,6 +2,7 @@ package com.ojt.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -13,10 +14,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ojt.domain.MemberVO;
+import com.ojt.domain.SaleListVO;
 import com.ojt.service.MemberService;
+import com.ojt.service.SaleService;
 /**
  * Handles requests for the application home page.
  */
@@ -27,6 +32,8 @@ public class MemberController {
 private static final Logger Logger=LoggerFactory.getLogger(MemberController.class);
 	@Inject
 	MemberService service;
+	@Inject
+	SaleService service2;
 	
 	// 스플래시 이미지
 	@RequestMapping(value="/splash", method=RequestMethod.GET)
@@ -148,6 +155,27 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 	            ranPw += pwCollection[selectRandomPw];
 	        }
 	        return ranPw;
-	 }
-}
+		}
 
+		// 주문 내역
+		@RequestMapping(value = "/saleList", method = RequestMethod.GET)
+		public String getSaleList() {
+			System.out.println("/items/saleList (get)");
+			return "notFound";
+		}
+
+		// 주문 내역
+		@RequestMapping(value = "/saleList", method = RequestMethod.POST)
+		public String postSaleList() {
+			System.out.println("/items/saleList (post)");
+			return "saleList";
+		}
+
+		@RequestMapping(value = "/showSaleList")
+		public @ResponseBody List<SaleListVO> showSaleList(@RequestParam String memberid) throws Exception {
+			System.out.println("showSaleList");
+			System.out.println(memberid);
+			List<SaleListVO> list = service2.showSaleList(memberid);
+			return list;
+		}
+	}

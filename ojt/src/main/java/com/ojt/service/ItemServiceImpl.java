@@ -36,4 +36,9 @@ public class ItemServiceImpl implements ItemService{
 	public int getListCnt(RecVO vo) throws Exception{
 		return dao.getListCnt(vo);
 	}
+	@Override
+	public List<ItemVO> itemLvlList(RecVO vo) throws Exception{
+		return dao.itemLvlList(vo);
+	}
+	
 }

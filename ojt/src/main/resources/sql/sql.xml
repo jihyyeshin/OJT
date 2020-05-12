@@ -4,29 +4,34 @@
 
 <mapper namespace="sql">
 
+<!-- ************************************* 회원 관련 쿼리 ****************************************** -->
 <!-- 회원가입 -->
 <insert id="signup">
 	insert into member (id, name, password, addr, agentF, agentA)
 		values (#{id}, #{name}, #{password}, #{addr}, #{agentF}, #{agentA})
 </insert>
+
 <!-- 로그인 -->
 <select id="login" resultType="com.ojt.domain.MemberVO">
 	select *
 	from member
 	where (id=#{id} and password=#{password}) or (id=#{id} and temporary=#{password})
 </select>
+
 <!-- 로그인 시 현재 날짜, 실패=0 으로 업데이트 -->
 <update id="loginDate">
 	update member
 	set (finalInDtm, failInCnt)=(CURRENT_DATE, 0)
 	where (id=#{id} and password=#{password}) or (id=#{id} and temporary=#{password})
 </update>
+
 <!-- 로그인 실패 처리 -->
 <update id="loginFail">
 	update member
 	set failInCnt=failInCnt+1
 	where id=#{id}
 </update>
+
 <!-- 임시 비밀번호 발급 -->
 <update id="tmpPwd">
 	update member
@@ -41,12 +46,14 @@
 	from ms_agentitem m
 </insert>
 
+<!-- ************************************* 위치 관련 쿼리 ****************************************** -->
 <!-- 위치 -->
 <select id="locationList" resultType="com.ojt.domain.LocVO"><!-- 이렇게 해도 리스트로 넘겨주도록 MyBatis 설계 -->
 	select *
 	from ms_agent
 	where addr_zip like '서울%'
 </select>
+
 <!-- 가장 가까운 위치 -->
 <select id="location" parameterType="com.ojt.domain.LatLngVO" resultType="com.ojt.domain.LocVO">
 	select cd_agent,nm_agentform, addr_zip, addr_detail, 
@@ -58,6 +65,7 @@
 	limit 1;
 </select>
 
+<!-- ************************************* 대리점 아이템 관련 쿼리 ****************************************** -->
 <!-- 대리점 조회 -->
 <select id="getAgent" parameterType="String" resultType="com.ojt.domain.LocVO">
 	select cd_agent, nm_agentform
@@ -69,16 +77,6 @@
 <!-- 대리점 별 아이템, 가격 조회 -->
 <!-- 겹치는 아이템은 하나만 출력 (규칙: max cd_agent로  가져옴) -->
 <select id="itemList" resultType="com.ojt.domain.ItemVO" >
-	<!-- select max(cd_agent) cd_agent,cd_item,  nm_item, amt_amount, src
-	from ms_agentitem
-	where cd_agent=#{agentF} or cd_agent=#{agentA}
-	group by cd_item,  nm_item, amt_amount, src -->
-	<!-- select max(m.cd_agent) cd_agent,m.cd_item,  m.nm_item, m.amt_amount, m.src, 
-		(select count(cd_item) from sl_saleitem where cd_item=m.cd_item) cnt
-	from ms_agentitem m
-	where m.cd_agent=#{agentF} or m.cd_agent=#{agentA}
-	group by m.cd_item,  m.nm_item, m.amt_amount, m.src
-	order by cnt desc -->
 	select S.*
 	from (
 	SELECT ROW_NUMBER() over(order by cnt desc) rnum,T.*
@@ -91,7 +89,7 @@
 	WHERE S.rnum BETWEEN #{startNum} and #{endNum}
 </select>
 
-<!-- 아이템 수 -->
+<!-- 대리점 아이템 수 -->
 <select id="getListCnt" resultType="int">
 	select count(T.*)
 	from (select max(m.cd_agent) cd_agent,m.cd_item,  m.nm_item, m.amt_amount, m.src, 
@@ -101,6 +99,7 @@
 	group by m.cd_item,  m.nm_item, m.amt_amount, m.src) T
 </select>
 
+<!-- 추천 엔진: 대리점 아이템 추천 -->
 <select id="itemRecommendList" parameterType="com.ojt.domain.RecVO" resultType="com.ojt.domain.ItemVO" >
 	select distinct(m1.cd_item),m1.cd_agent, m1.nm_item, m1.remark, m1.amt_amount, m1.src,  
 		(case when sqrt(SUM(r1.isSold))*sqrt(SUM(r2.isSold))=0 then 0 else SUM(r1.isSold * r2.isSold)/(sqrt(SUM(r1.isSold))*sqrt(SUM(r2.isSold))) end) as result
@@ -114,19 +113,28 @@
 	where m1.cd_item=r1.cd_item and m2.cd_item=r2.cd_item and m1.cd_item != m2.cd_item and (m1.cd_agent=#{agentF} or m1.cd_agent=#{agentA})
 	group by m1.cd_item, m1.nm_item, m1.remark, m1.amt_amount, m1.src, m1.cd_agent
 	order by result DESC
-	limit 2;
+	limit 6;
 </select>
 
-<!-- 아이템 별 정보 조회 -->
+<!-- 상품군 별 아이템 추천 -->
+<select id="itemLvlList" resultType="com.ojt.domain.ItemVO" >
+	select distinct(m.cd_item),m.cd_agent, m.nm_item, m.remark, m.amt_amount, m.src 
+	from ms_agentitem m, (
+		select s.cd_item, (select lvl_item from ms_agentitem where cd_item=s.cd_item), sum(s.qty_delivtot) selTot
+		from sl_saleitem s
+		where s.cd_customer=#{memberid}
+		group by s.cd_item
+		order by selTot desc
+		limit 3 ) T
+	where m.lvl_item=T.lvl_item and m.cd_item != T.cd_item and (m.cd_agent=#{agentF} or m.cd_agent=#{agentA})
+</select>
+
+<!-- 아이템 별 디테일 정보 조회-->
 <select id="itemDetail" parameterType="String" resultType="com.ojt.domain.ItemVO">
 	select max(cd_agent) cd_agent, cd_item, nm_item, amt_amount, remark
 	from ms_agentitem
 	where cd_item=#{item}
 	group by cd_item, nm_item, amt_amount, remark
-	<!-- select max(cd_agent), cd_item, nm_item, amt_amount, remark
-	from ms_agentitem
-	where cd_item=#{item}
-	limit 1; -->
 </select>
 
 <!-- 아이템 이미지 크롤링 -->
@@ -136,7 +144,7 @@
 	where nm_item=#{name}
 </update>
 
-
+<!-- ************************************* 주문 관련 쿼리 ****************************************** -->
 <!-- 주문정보 -->
 <insert id="sale" parameterType="com.ojt.domain.SaleVO">
 	insert into sl_sale (no_saleslip, amt_amount, cd_agent, cd_customer, dt_sale, gbn_slip)
@@ -160,13 +168,6 @@
 
 <!-- 주문 내역 조회 -->
 <select id="showSaleList" resultType="com.ojt.domain.SaleListVO">
-	
-	<!-- SELECT s.dt_sale::date+2 dt_deliv, (select gbn_agent from ms_agent where cd_agent=s.cd_agent) gbn_agent, 
-		cd_agent, (select nm_item from ms_agentitem where cd_item=s.cd_item) nm_item, amt_amount 
-	FROM sl_saleitem s
-	<![CDATA[WHERE (CURRENT_DATE - s.dt_sale::date) < 3]]> and cd_customer=#{memberid}
-	ORDER BY s.no_saleslip desc; -->
-	
 	select t.*
 	from (SELECT s.dt_sale::date+2 dt_deliv, 
 			(select gbn_agent from ms_agent where cd_agent=s.cd_agent) gbn_agent, 
@@ -178,13 +179,10 @@
 		ORDER BY s.no_saleslip desc) t
 	<![CDATA[where (t.dt_deliv - current_date) < 3 and (t.dt_deliv - current_date)>= 0]]>
 </select>
+
+<!-- ************************************* 장바구니 관련 쿼리 ****************************************** -->
 <!-- 장바구니 -->
 <insert id="basket" parameterType="com.ojt.domain.BasketVO">
-<!-- 	insert into basket
-			(cd_agent, cd_item, memberid, nm_item, amt_amount, amt_price, qty_delivtot)
-	select max(cd_agent), #{item}, #{memberid}, #{name}, #{amount}, #{price}, #{qty}
-	from ms_agentitem
-	where cd_item=#{item} and (cd_agent=#{agentF} or cd_agent=#{agentA}) -->
 	insert into basket
 		(memberid, nm_item, amt_amount, amt_price, cd_agent, cd_item, qty_delivtot)
 	values 
@@ -197,6 +195,7 @@
 	from basket
 	where memberid=#{memberid}
 </select>
+
 <!-- 장바구니 - 최근 주문 아이템 조회 -->
 <select id="showRecent" resultType="com.ojt.domain.SaleItemVO">
 	select s.dt_sale,s.cd_agent agent,s.cd_item item,s.qty_delivTot qty, s.amt_price price, (select nm_item from ms_agentitem where cd_item=s.cd_item) as name
@@ -210,4 +209,5 @@
 	delete from basket
 	where idx=#{idx}
 </delete>
+
 </mapper> 

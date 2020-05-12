@@ -35,23 +35,46 @@
 				<h4 style="text-align:center;">${param.memberid}님을 위한 추천 상품</h4>
 				<div class="con_bb">
 					<div class="leftarrow">
-						<a href="javascript:void(0)" id="prev"> <img
+						<a href="javascript:void(0)" id="prevR"> <img
 							src="<c:url value="/resources/img/left.png" />" width="50px"
 							height="50px">
 						</a>
 					</div>
-					<div class="rolling_panel">
+					<div class="rolling_panel" id="rollR">
 						<ul id="recList">
 						</ul>
 					</div>
 					<div class="rightarrow">
-						<a href="javascript:void(0)" id="next"> <img
+						<a href="javascript:void(0)" id="nextR"> <img
 							src="<c:url value="/resources/img/right.png" />" width="50px"
 							height="50px">
 						</a>
 					</div>
 				</div>
 			</div>
+			
+			<div class="lvl-list">
+				<h4 style="text-align:center;color:;">이런 상품은 어떤가요?</h4>
+				<div class="con_bb">
+					<div class="leftarrow">
+						<a href="javascript:void(0)" id="prevL"> <img
+							src="<c:url value="/resources/img/left.png" />" width="50px"
+							height="50px">
+						</a>
+					</div>
+					<div class="rolling_panel" id="rollL">
+						<ul id="lvlList">
+						</ul>
+					</div>
+					<div class="rightarrow">
+						<a href="javascript:void(0)" id="nextL"> <img
+							src="<c:url value="/resources/img/right.png" />" width="50px"
+							height="50px">
+						</a>
+					</div>
+				</div>
+			</div>
+			
 			<div id="itemList" style="position:relative;top:20px;bottom:10px;"></div>
 			<button type="button" onclick="pagingItem()" class="btn" style="width:100%;border-radius: 0px;">더보기</button>
 		</div> 
@@ -66,59 +89,25 @@
 	var memberId=${param.memberid};
 	
 	var page=1;
-	
+/********************************************************** ready Func **********************************************************/
+
 	// 로드되자마자
 	$(document).ready(function(){
-   		//console.log(page);
+		/* 상품 조회 */ 
+		// 상품 일부 조회(더보기 버튼 사용)
 		showItem(page++);
 		search();
 		// 추천 리스트
 		showRecommendedItems();
+		// 상품군 리스트
+		showLvlItems();
 		
 		/* 상품 슬라이드 */
-		var $panel = $(".rolling_panel").find("ul");
-        	var itemWidth = $panel.children().outerWidth();
-        	
-        	// 이전 이벤트
-        	$("#prev").on("click", prev);
-        	$("#prev").mouseover();
-        	// 다음 이벤트
-        	$("#next").on("click", next);
-        	$("#next").mouseover();
-                
-        	// 이전 이벤트 실행
-        	function prev(e) {
-            	$panel.css("left", - itemWidth);
-            	$panel.prepend("<li>" + $panel.find("li:last").html() + "</li>");
-            	$panel.animate({"left": "0px"}, function() {
-                	$(this).find("li:last").remove();
-                });
-            }
-        	// 다음 이벤트 실행
-        	function next(e) {
-            	$panel.animate({"left": - itemWidth + "px"}, function() {
-                	$(this).append("<li>" + $(this).find("li:first").html() + "</li>");
-                	$(this).find("li:first").remove();
-                	$(this).css("left", 0);
-                });
-            }
+		slide('R');
+		slide('L');
 	});
-	// 페이징 처리
-	function pagingItem(){
-   		//console.log(page);
-		showItem(page);
-		page++;
-	}
-	// 페이징 처리
-	/* $(window).scroll(function(){   //스크롤이 최하단 으로 내려가면 리스트를 조회하고 page를 증가시킨다.
-		alert("hi scroll");
-	     if($(window).scrollTop() >= $(document).height() - $(window).height()){
-	    	 console.log("??");
-	    	 showItem(page);
-	         page++;   
-	     } 
-	});
-	 */
+	
+/********************************************************** 상품 조회 **********************************************************/
 	// 대리점 별 아이템 및 가격 정보 조회
 	function showItem(page){
 		if(agentF!=null && agentA!=null){
@@ -131,7 +120,6 @@
 				data:"agentF="+agentF+"&agentA="+agentA+"&page="+page,
 				success: function(returnData){
 					console.log("success");
-					//console.log(returnData.totCnt);
 					var data=returnData.list;
 					
 					if(page==1){
@@ -155,12 +143,57 @@
 			});
 		}
 	}
-
-	// 가격 포맷 생성
-	function numberWithCommas(x) {
-	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	
+	// 추천 아이템 및 가격 정보 조회
+	function showRecommendedItems(){
+		if(agentF!=null && agentA!=null &&memberId!=null){
+			$.ajax({
+				url:"./showRecommendedItems",
+				type:"POST",
+				dataType:"json",
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+				async:false,
+				data:"agentF="+agentF+"&agentA"+agentA+"&memberid="+memberId,
+				success: function(data){
+					console.log("success");
+					printRecItem('rec', data);
+				},
+				error:function(request,status, error){
+					console.log("status:\n"+request.status+"\nerror:\n"+request.error);
+				},
+				complete:function(data){
+					console.log("complete");
+				}
+			});
+		}
 	}
-
+	
+	// 추천 아이템 및 가격 정보 조회
+	function showLvlItems(){
+		if(agentF!=null && agentA!=null &&memberId!=null){
+			$.ajax({
+				url:"./showLvlItems",
+				type:"POST",
+				dataType:"json",
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+				async:false,
+				data:"agentF="+agentF+"&agentA"+agentA+"&memberid="+memberId,
+				success: function(data){
+					console.log("success");
+					console.log(data);
+					printRecItem('lvl', data);
+				},
+				error:function(request,status, error){
+					console.log("status:\n"+request.status+"\nerror:\n"+request.error);
+				},
+				complete:function(data){
+					console.log("complete");
+				}
+			});
+		}
+	}
+	
+/********************************************************** 출력 Func **********************************************************/
 	// 아이템 정보 출력
 	function print(data){
 		$.each(data, function(index, item){
@@ -201,39 +234,11 @@
 			$('#itemList').append(str);
 		});
 	}
-	
-	// 추천 아이템 및 가격 정보 조회
-	function showRecommendedItems(){
-		if(agentF!=null && agentA!=null &&memberId!=null){
-			$.ajax({
-				url:"./showRecommendedItems",
-				type:"POST",
-				dataType:"json",
-				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-				async:false,
-				data:"agentF="+agentF+"&agentA"+agentA+"&memberid="+memberId,
-				success: function(data){
-					console.log("success");
-					console.log(data);
-					printRecItem(data);
-				},
-				error:function(request,status, error){
-					console.log("status:\n"+request.status+"\nerror:\n"+request.error);
-				},
-				complete:function(data){
-					console.log("complete");
-				}
-			});
-		}
-	}
-	
 	// 추천 아이템 출력
-	function printRecItem(data){
+	function printRecItem(value, data){
 		$.each(data, function(index, item){
 			var src=item.src;
 			if(src == "") src="<c:url value="/resources/img/CJ_logo_black.png" />";
-			
-			if(index==0) console.log("rec agent"+item.agent);
 			
 			var str = '<li>';
 			str +=	'<table style="width: 100%;">';
@@ -250,10 +255,12 @@
 			str += '</table>';
 			str += '</li>';
 			
-			$('#recList').append(str);
+			$('#'+value+'List').append(str);
 		});
 	}
 	
+	
+/********************************************************** 상품 검색 & 디테일  ********************************************************/
 	// 상품 검색
 	function search(){
 		var $rows = $('#itemList table');
@@ -284,6 +291,8 @@
 		f.submit();
 	};
 	
+	
+/********************************************************** Submit Func **********************************************************/
 	// 체크박스에 보내기
 	function _submit()
 	{
@@ -317,8 +326,58 @@
 	    }
 	    return true;
 	}
-	
-	
+
+/********************************************************** 기타 Func **********************************************************/
+	// 페이징 처리
+	function pagingItem(){
+   		//console.log(page);
+		showItem(page);
+		page++;
+	}
+	/* $(window).scroll(function(){   //스크롤이 최하단 으로 내려가면 리스트를 조회하고 page를 증가시킨다.
+		alert("hi scroll");
+	     if($(window).scrollTop() >= $(document).height() - $(window).height()){
+	    	 console.log("??");
+	    	 showItem(page);
+	         page++;   
+	     } 
+	});
+	 */
+
+	// 가격 포맷 생성
+	function numberWithCommas(x) {
+	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+	 
+	function slide(val){
+		var $panel = $("#roll"+val).find("ul");
+        var itemWidth = $panel.children().outerWidth();
+        	
+        // 이전 이벤트
+        $("#prev"+val).on("click", prev);
+        $("#prev"+val).mouseover();
+        // 다음 이벤트
+        $("#next"+val).on("click", next);
+        $("#next"+val).mouseover();
+            
+        // 이전 이벤트 실행
+        function prev(e) {
+            $panel.css("left", - itemWidth);
+            $panel.prepend("<li>" + $panel.find("li:last").html() + "</li>");
+            $panel.animate({"left": "0px"}, function() {
+               	$(this).find("li:last").remove();
+            });
+        }
+        // 다음 이벤트 실행
+        function next(e) {
+            $panel.animate({"left": - itemWidth + "px"}, function() {
+                $(this).append("<li>" + $(this).find("li:first").html() + "</li>");
+                $(this).find("li:first").remove();
+                $(this).css("left", 0);
+            });
+        }
+	}
+
 </script>
 </body>
 </html>

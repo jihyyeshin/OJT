@@ -251,24 +251,5 @@ public class SaleController {
 		return "sale"; // 주문 완료View
 	}
 
-	// 주문 내역
-	@RequestMapping(value = "/saleList", method = RequestMethod.GET)
-	public String getSaleList() {
-		System.out.println("/items/saleList (get)");
-		return "notFound";
-	}
-
-	// 주문 내역
-	@RequestMapping(value = "/saleList", method = RequestMethod.POST)
-	public String postSaleList() {
-		System.out.println("/items/saleList (post)");
-		return "saleList";
-	}
 	
-	@RequestMapping(value="/showSaleList")
-	public @ResponseBody List<SaleListVO> showSaleList(@RequestParam String memberid) throws Exception {
-		System.out.println("showSaleList");
-		List<SaleListVO> list=service.showSaleList(memberid);
-		return list;
-	}
 }

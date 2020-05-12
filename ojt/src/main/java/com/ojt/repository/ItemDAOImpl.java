@@ -39,4 +39,9 @@ public class ItemDAOImpl implements ItemDAO {
 	public int getListCnt(RecVO vo) throws Exception{
 		return sql.selectOne(namespace+".getListCnt", vo);
 	}
+	@Override
+	public List<ItemVO> itemLvlList(RecVO vo) throws Exception{
+		System.out.println("itemLvlListDAO");
+		return sql.selectList(namespace+".itemLvlList", vo);
+	}
 }
