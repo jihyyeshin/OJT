@@ -69,7 +69,7 @@
 	
 	// 로드되자마자
 	$(document).ready(function(){
-   		console.log(page);
+   		//console.log(page);
 		showItem(page++);
 		search();
 		// 추천 리스트
@@ -103,9 +103,9 @@
                 });
             }
 	});
-	
+	// 페이징 처리
 	function pagingItem(){
-   		console.log(page);
+   		//console.log(page);
 		showItem(page);
 		page++;
 	}
@@ -131,7 +131,7 @@
 				data:"agentF="+agentF+"&agentA="+agentA+"&page="+page,
 				success: function(returnData){
 					console.log("success");
-					console.log(returnData.totCnt);
+					//console.log(returnData.totCnt);
 					var data=returnData.list;
 					
 					if(page==1){

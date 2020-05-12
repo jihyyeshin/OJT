@@ -35,9 +35,9 @@
 		<input type="hidden" name="memberid" value="${member.id}"/>
 		<p><button type="submit" class="btn btn-lg btn_blue_default btn-block">상품주문</button></p>
 	</form>
-	<form action="#" method="post">
+	<form action="./items/saleList" method="post">
 		<input type="hidden" name="memberid" value="${member.id}"/>
-		<p><button class="btn btn-lg btn_white_default btn-block">주문내역조회</button></p>
+		<p><button type="submit" class="btn btn-lg btn_white_default btn-block">주문내역조회</button></p>
 	</form>
 	
 	<p><a href="./logout" class="link">로그아웃</a></p>
