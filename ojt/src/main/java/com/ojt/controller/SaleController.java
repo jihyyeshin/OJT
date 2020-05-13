@@ -30,7 +30,7 @@ public class SaleController {
 	@Inject
 	SaleService service;
 	private static final Logger Logger = LoggerFactory.getLogger(LocController.class);
-
+	/******************************************기본 주문 Func******************************************/
 	// 주문
 	@RequestMapping(value = "/sale", method = RequestMethod.GET)
 	public String getSale() {
@@ -86,6 +86,7 @@ public class SaleController {
 		return "sale"; // 주문 완료View
 	}
 
+	/******************************************주문 확인(배송날짜입력)******************************************/
 	// 주문 Final Check (배송 날짜 선택, 주문할 내역 확인)
 	@RequestMapping(value = "/saleCheck", method = RequestMethod.POST)
 	public String postSaleCheck(HttpServletRequest req, String[] agent, String agentF, String agentA, String memberid, 
@@ -108,10 +109,7 @@ public class SaleController {
 			}
 			
 			slist.add(sivo);
-			System.out.println("this is sivo"+sivo.getItem());
-			System.out.println("amount"+amount[i]);
-			System.out.println("amount"+qty[i]);
-			System.out.println(sivo.getAmount());
+			
 			totVal+=(amount[i] * qty[i]);
 		}
 		System.out.println("totV"+totVal);
@@ -125,7 +123,7 @@ public class SaleController {
 		session.setAttribute("saleDiv", saleDiv);
 		return "saleCheck";
 	}
-
+	/******************************************장바구니 View******************************************/
 	// 장바구니 조회
 	@RequestMapping(value = "/basket", method = RequestMethod.GET)
 	public String getBasket(HttpServletRequest req, String agentF, String agentA, String memberid) {
@@ -146,7 +144,7 @@ public class SaleController {
 		session.setAttribute("memberid", memberid);
 		return "basket"; // 장바구니 View
 	}
-
+	/******************************************장바구니 처리(조회, 입력, 삭제, 주문) Func******************************************/
 	// 장바구니 넣기
 	@RequestMapping(value = "/insertBasket", method = RequestMethod.POST)
 	public String insertBasket(HttpServletRequest req, String[] agent, String agentF, String agentA, String memberid, String[] name, String[] itemchk,
@@ -177,16 +175,6 @@ public class SaleController {
 		return list;
 	}
 	
-	// 장바구니 - 최근 구매 목록 조회
-	@RequestMapping(value="/showRecent")
-	public @ResponseBody List<SaleItemVO> showRecent(@RequestParam String memberid) throws Exception{
-		System.out.println("/items/showRecent");
-		System.out.println("show recent memberid"+memberid);
-		List<SaleItemVO> list = service.showRecent(memberid);
-		
-		return list;
-	}
-
 	// 장바구니 삭제
 	@RequestMapping(value = "/deleteBasket", method = RequestMethod.GET)
 	public String deletedBasket(HttpServletRequest req, @RequestParam int idx, @RequestParam String memberid)
@@ -258,6 +246,19 @@ public class SaleController {
 		session.setAttribute("agentA", agentA);
 		return "sale"; // 주문 완료View
 	}
+	
+	/******************************************최근 구매 목록 처리(조회, 주문)******************************************/
+	// 장바구니 - 최근 구매 목록 조회
+	@RequestMapping(value="/showRecent")
+	public @ResponseBody List<SaleItemVO> showRecent(@RequestParam String memberid) throws Exception{
+		System.out.println("/items/showRecent");
+		System.out.println("show recent memberid"+memberid);
+		List<SaleItemVO> list = service.showRecent(memberid);
+		
+		return list;
+	}
+
+	
 	// 최근 주문한 상품 동일하게 주문
 	@RequestMapping(value = "/saleRecent", method = RequestMethod.POST)
 	public String postRecentSale(HttpServletRequest req, String[] agent, String agentF, String agentA, String memberid,
@@ -309,6 +310,4 @@ public class SaleController {
 		session.setAttribute("agentA", agentA);
 		return "sale"; // 주문 완료View
 	}
-
-	
 }

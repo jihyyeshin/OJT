@@ -16,7 +16,7 @@
 		<div onclick="location.href='./'" class="left"></div>
 		<h3 class="logo">나의 주문정보</h3>
 	</header>
-	<div class="sale-list" id="saleList">
+	<div class="deliv-list" id="saleList">
 		
 	</div>
 	<script type="text/javascript">

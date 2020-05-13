@@ -40,6 +40,15 @@ td {
 	overflow: scroll;
 }
 
+.deliv-list{
+	position: absolute;
+	top: 55px;
+	left: 0;
+	width: 100%;
+	overflow: scroll;
+}
+
+
 #delivDate{
     width: 100%;
     height:20px;

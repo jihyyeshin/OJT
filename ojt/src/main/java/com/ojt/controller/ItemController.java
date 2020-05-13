@@ -32,7 +32,7 @@ public class ItemController {
 	ItemService service;
 	
 	private static final Logger Logger=LoggerFactory.getLogger(LocController.class);
-	
+	/******************************************아이템 View 처리******************************************/
 	// 아이템 View 출력 (get, post 둘 다)
 	@RequestMapping(value = "/items", method = RequestMethod.GET)
 	public String getItem() throws Exception {
