@@ -14,10 +14,11 @@
 		<h3 class="logo">${param.memberid}님의장바구니</h3>
 	</header>
 	<div class="basket-group">
-		<form method="post" action="./saleRecent">
+		<form method="post" action="./saleCheck">
 			<input type="hidden" name="memberid" value="${param.memberid}" /> 
 			<input type="hidden" name="agentF" value="${param.agentF}" /> 
 			<input type="hidden" name="agentA" value="${param.agentA}" />
+			<input type="hidden" name="saleDiv" value="saleRecent" />
 			<div class="recent-order ">
 				<div style="height: 10px; width: 100%; background-color: white;"></div>
 				<h4 style="text-align: center;" id="recentdate"></h4>
@@ -42,11 +43,11 @@
 		<form method="post" onsubmit="_submit();">
 			<div id="itemList" class="basket-list"></div>
 			<button id="footer" type="submit"
-				onclick="javascipt: form.action='./saleBasket'">주문하기</button>
+				onclick="javascipt: form.action='./saleCheck'">주문하기</button>
 			<input type="hidden" name="memberid" value="${param.memberid}" /> 
 			<input type="hidden" name="agentF" value="${param.agentF}" /> 
 			<input type="hidden" name="agentA" value="${param.agentA}" />
-
+			<input type="hidden" name="saleDiv" value="saleBasket" />
 		</form>
 	</div>
 
@@ -102,7 +103,7 @@
 					str += '<input type="hidden" name="agent" value="'+item.agent+'">';
 					str += '<input type="hidden" name="qty" value="'+item.qty+'">';
 					str += '<input type="hidden" name="amount" value="'+item.price+'">';
-
+					str += '<input type="hidden" name="name" value="'+item.name+'">';
 					$('#itemList').append(str);
 				});
 			}
@@ -166,8 +167,9 @@
 					str += '<td style="width: 50%;">'+numberWithCommas(item.price)+'(원) * '+item.qty+'(개)</td>';
 					str += '<input type="hidden" name="qty" value="'+item.qty+'">';
 					str += '<input type="hidden" name="amount" value="'+item.price+'">';
-					str += '<input type="hidden" name="item" value="'+item.item+'">';
+					str += '<input type="hidden" name="itemchk" value="'+item.item+'">';
 					str += '<input type="hidden" name="agent" value="'+item.agent+'">';
+					str += '<input type="hidden" name="name" value="'+item.name+'">';
 					str += '</tr>';
 						
 					$('#recentList').append(str);

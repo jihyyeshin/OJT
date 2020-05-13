@@ -21,7 +21,7 @@
 		<p style="text-align:center;"> ${item.remark}</p>
 		
 		<form method="post" name="form">
-			<input type="hidden" name="item" id="item" value="${item.item}"/>
+			<input type="hidden" name="itemDiv" id="itemDiv" value="${item.item}"/>
 			<p style="text-align:center;">수량: <input type="text" name="qty" id="qty"/>개</p>
 			
 			<input type="hidden" name="memberid" value="${memberid}"/>

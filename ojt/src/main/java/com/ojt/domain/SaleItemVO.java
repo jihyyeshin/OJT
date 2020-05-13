@@ -3,6 +3,7 @@ package com.ojt.domain;
 public class SaleItemVO {
 	private String noSaleslip;
 	private String dt_sale;
+	private char gbn_agent;
 	private int amount;
 	private int price;
 	private String agent; 
@@ -11,10 +12,13 @@ public class SaleItemVO {
 	private int seq;
 	private String memberid;
 	private String name;
+	private String delivDate;
+	private int idx;
 	
 	public SaleItemVO(){};
 	
-	public SaleItemVO(String noSaleslip, String dt_sale, int amount, int price, String agent, String item, int qty, int seq, String memberid, String name) {
+	public SaleItemVO(String noSaleslip, String dt_sale, int amount, int price, String agent, 
+			String item, int qty, int seq, String memberid, String name, String delivDate) {
 		this.noSaleslip=noSaleslip;
 		this.dt_sale=dt_sale;
 		this.amount=amount;
@@ -25,6 +29,31 @@ public class SaleItemVO {
 		this.seq=seq;
 		this.memberid=memberid;
 		this.name=name;
+		this.delivDate=delivDate;
+	}
+
+	public int getIdx() {
+		return idx;
+	}
+
+	public void setIdx(int idx) {
+		this.idx = idx;
+	}
+
+	public String getDelivDate() {
+		return delivDate;
+	}
+
+	public void setDelivDate(String delivDate) {
+		this.delivDate = delivDate;
+	}
+
+	public char getGbn_agent() {
+		return gbn_agent;
+	}
+
+	public void setGbn_agent(char gbn_agent) {
+		this.gbn_agent = gbn_agent;
 	}
 
 	public String getName() {

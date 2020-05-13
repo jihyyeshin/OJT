@@ -43,7 +43,7 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 	public String index() {
 		Logger.info("login");
 		
-		return "uitest";//"login";//"uitest";//
+		return "login";//"login";//"uitest";//
 	}
 	
 	// 회원가입View
@@ -146,33 +146,33 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 	 }
 	 // 랜덤 비밀번호 발급
 	 public static String getRandPw(int size, char[] pwCollection){
-	        String ranPw = "";
-	        for (int i = 0; i < size; i++) {
-	            int selectRandomPw = (int) (Math.random() * (pwCollection.length));
-	            ranPw += pwCollection[selectRandomPw];
-	        }
-	        return ranPw;
-		}
-
-		// 주문 내역
-		@RequestMapping(value = "/saleList", method = RequestMethod.GET)
-		public String getSaleList() {
-			System.out.println("/items/saleList (get)");
-			return "notFound";
-		}
-
-		// 주문 내역
-		@RequestMapping(value = "/saleList", method = RequestMethod.POST)
-		public String postSaleList() {
-			System.out.println("/items/saleList (post)");
-			return "saleList";
-		}
-
-		@RequestMapping(value = "/showSaleList")
-		public @ResponseBody List<SaleListVO> showSaleList(@RequestParam String memberid) throws Exception {
-			System.out.println("showSaleList");
-			System.out.println(memberid);
-			List<SaleListVO> list = service2.showSaleList(memberid);
-			return list;
-		}
+	    String ranPw = "";
+	    for (int i = 0; i < size; i++) {
+	       int selectRandomPw = (int) (Math.random() * (pwCollection.length));
+	       ranPw += pwCollection[selectRandomPw];
+	    }
+	    return ranPw;
 	}
+
+	// 주문 내역
+	@RequestMapping(value = "/saleList", method = RequestMethod.GET)
+	public String getSaleList() {
+		System.out.println("/items/saleList (get)");
+		return "notFound";
+	}
+
+	// 주문 내역
+	@RequestMapping(value = "/saleList", method = RequestMethod.POST)
+	public String postSaleList() {
+		System.out.println("/items/saleList (post)");
+		return "saleList";
+	}
+
+	@RequestMapping(value = "/showSaleList")
+	public @ResponseBody List<SaleListVO> showSaleList(@RequestParam String memberid) throws Exception {
+		System.out.println("showSaleList");
+		System.out.println(memberid);
+		List<SaleListVO> list = service2.showSaleList(memberid);
+		return list;
+	}
+}

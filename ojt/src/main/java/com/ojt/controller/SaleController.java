@@ -1,7 +1,7 @@
 package com.ojt.controller;
 
 import java.text.SimpleDateFormat;
-
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.ojt.domain.BasketVO;
 import com.ojt.domain.SaleItemVO;
 import com.ojt.domain.SaleVO;
@@ -39,23 +40,30 @@ public class SaleController {
 
 	@RequestMapping(value = "/sale", method = RequestMethod.POST)
 	public String postSale(HttpServletRequest req, String[] agent, String agentF, String agentA, String memberid, String[] name, String[] itemchk,
-			int[] amount, int[] qty) throws Exception {
+			int[] amount, int[] qty, String delivDateF, String delivDateA) throws Exception {
 		Logger.info("post sale");
 		System.out.println("/items/sale (post)");
 		HttpSession session = req.getSession();
 		Date time = new Date();
-
+		String delivDate="";
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String dtime = format.format(time);
 
+		// 금액 전체
 		int totA = 0;
 		int totF = 0;
 		for (int i = 0; i < itemchk.length; i++) {
-			if(agent[i].equals(agentF)) totF += amount[i] * qty[i];
-			else if(agent[i].equals(agentA)) totA += amount[i] * qty[i];
+			if(agent[i].equals(agentF)) {
+				totF += amount[i] * qty[i];
+				delivDate=delivDateF;
+			}
+			else if(agent[i].equals(agentA)) {
+				totA += amount[i] * qty[i];
+				delivDate=delivDateA;
+			}
 			
 			SaleItemVO sivo = new SaleItemVO(dtime, "",amount[i] * qty[i], amount[i], agent[i], itemchk[i], qty[i], i + 1,
-					memberid, "");
+					memberid, "", delivDate);
 			service.saleItem(sivo); // 주문 아이템 insert
 
 			// 주문 아이템 넣을 때, sold=1 시켜줘야 함
@@ -63,11 +71,12 @@ public class SaleController {
 		}
 		SaleVO svo = new SaleVO();
 		
+		// 신선
 		if(totF!=0) {
 			svo = new SaleVO(dtime, totF, agentF, memberid);
 			service.sale(svo); // 주문 정보 insert
 		}
-		
+		// 상온
 		if(totA!=0) {
 			svo = new SaleVO(dtime, totA, agentA, memberid);
 			service.sale(svo); // 주문 정보 insert
@@ -75,6 +84,46 @@ public class SaleController {
 		
 		session.setAttribute("memberid", memberid);
 		return "sale"; // 주문 완료View
+	}
+
+	// 주문 Final Check (배송 날짜 선택, 주문할 내역 확인)
+	@RequestMapping(value = "/saleCheck", method = RequestMethod.POST)
+	public String postSaleCheck(HttpServletRequest req, String[] agent, String agentF, String agentA, String memberid, 
+			String[] name, String[] itemchk, int[] amount, int[] qty, String saleDiv, int[] idx) {
+		System.out.println("/items/saleCheck (post)");
+		HttpSession session = req.getSession();
+		
+		int totVal=0;
+		List<SaleItemVO> slist = new ArrayList<SaleItemVO>();
+		for (int i = 0; i < itemchk.length; i++) {
+			SaleItemVO sivo = new SaleItemVO("", "",amount[i] * qty[i], amount[i], agent[i], itemchk[i], qty[i], i + 1,
+					memberid, name[i], "");
+			
+			if(agent[i].equals(agentF))
+				sivo.setGbn_agent('F');
+			else sivo.setGbn_agent('A');
+			
+			if(saleDiv.equals("saleBasket")) {
+				sivo.setIdx(idx[i]);
+			}
+			
+			slist.add(sivo);
+			System.out.println("this is sivo"+sivo.getItem());
+			System.out.println("amount"+amount[i]);
+			System.out.println("amount"+qty[i]);
+			System.out.println(sivo.getAmount());
+			totVal+=(amount[i] * qty[i]);
+		}
+		System.out.println("totV"+totVal);
+		Gson gson=new Gson();
+		String jlist=gson.toJson(slist);
+		session.setAttribute("slist", jlist);
+		session.setAttribute("totVal", totVal);
+		session.setAttribute("agentF", agentF);
+		session.setAttribute("agentA", agentA);
+		session.setAttribute("memberid", memberid);
+		session.setAttribute("saleDiv", saleDiv);
+		return "saleCheck";
 	}
 
 	// 장바구니 조회
@@ -101,18 +150,17 @@ public class SaleController {
 	// 장바구니 넣기
 	@RequestMapping(value = "/insertBasket", method = RequestMethod.POST)
 	public String insertBasket(HttpServletRequest req, String[] agent, String agentF, String agentA, String memberid, String[] name, String[] itemchk,
-			String item, int[] amount, int[] qty) throws Exception {
+			String itemDiv, int[] amount, int[] qty) throws Exception {
 		System.out.println("/items/basket(input)");
 		HttpSession session = req.getSession();
-
-		if (item.equals("")) {// item list 화면
+		if (itemDiv.equals("")) {// item list 화면
 			for (int i = 0; i < itemchk.length; i++) {
 				BasketVO bvo = new BasketVO(memberid, name[i], amount[i] * qty[i], amount[i], agent[i], itemchk[i],
 						qty[i]);
 				service.basket(bvo); // 장바구니 insert
 			}
 		} else {// item detail 화면
-			BasketVO bvo = new BasketVO(memberid, name[0], amount[0] * qty[0], amount[0], agent[0], item, qty[0]);
+			BasketVO bvo = new BasketVO(memberid, name[0], amount[0] * qty[0], amount[0], agent[0], itemDiv, qty[0]);
 			service.basket(bvo); // 장바구니 insert
 		}
 		session.setAttribute("agentF", agentF);
@@ -154,10 +202,18 @@ public class SaleController {
 	// 장바구니에서 주문(주문한 상품은 삭제)
 	@RequestMapping(value = "/saleBasket", method = RequestMethod.POST)
 	public String postBasketSale(HttpServletRequest req, String[] agent, String agentF, String agentA, String memberid, String[] name, String[] itemchk,
-			int[] amount, int[] qty, int[] idx) throws Exception {
+			int[] amount, int[] qty, int[] idx, String delivDateA, String delivDateF) throws Exception {
 		Logger.info("post sale basket");
+		System.out.println(agent[0]);
+		System.out.println(agentF);
+		System.out.println(agentA);
+		System.out.println(memberid);
+		System.out.println(name[0]);
+		System.out.println(itemchk);
+		System.out.println(amount[0]);
+		System.out.println(qty[0]);
 		HttpSession session = req.getSession();
-
+		String delivDate="";
 		Date time = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String dtime = format.format(time);
@@ -166,11 +222,17 @@ public class SaleController {
 		int totA = 0;
 		for (int i = 0; i < itemchk.length; i++) {
 			
-			if(agent[i].equals(agentF)) totF += amount[i] * qty[i];
-			else if(agent[i].equals(agentA)) totA += amount[i] * qty[i];
+			if(agent[i].equals(agentF)) {
+				totF += amount[i] * qty[i];
+				delivDate=delivDateF;
+			}
+			else if(agent[i].equals(agentA)) {
+				totA += amount[i] * qty[i];
+				delivDate=delivDateA;
+			}
 
 			SaleItemVO sivo = new SaleItemVO(dtime, "",amount[i] * qty[i], amount[i], agent[i], itemchk[i], qty[i], i + 1,
-					memberid, "");
+					memberid, "", delivDate);
 			service.saleItem(sivo); // 주문 아이템 insert
 
 			// 주문 아이템 넣을 때, sold=1 시켜줘야 함
@@ -199,33 +261,32 @@ public class SaleController {
 	// 최근 주문한 상품 동일하게 주문
 	@RequestMapping(value = "/saleRecent", method = RequestMethod.POST)
 	public String postRecentSale(HttpServletRequest req, String[] agent, String agentF, String agentA, String memberid,
-			String[] item, int[] amount, int[] qty) throws Exception {
+			String[] itemchk, int[] amount, int[] qty, String delivDateF, String delivDateA) throws Exception {
 		Logger.info("post sale recent");
 		System.out.println("post sale recent");
-		System.out.println(agent[0]);
-		System.out.println(agentF);
-		System.out.println(agentA);
-		System.out.println(memberid);
-		System.out.println(item[0]);
 
 		HttpSession session = req.getSession();
-
+		String delivDate="";
 		Date time = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String dtime = format.format(time);
 
 		int totF = 0;
 		int totA = 0;
-		System.out.println(item.length);
-		for (int i = 0; i < item.length; i++) {
+		System.out.println(itemchk.length);
+		for (int i = 0; i < itemchk.length; i++) {
 
-			if (agent[i].equals(agentF))
+			if(agent[i].equals(agentF)) {
 				totF += amount[i] * qty[i];
-			else if (agent[i].equals(agentA))
+				delivDate=delivDateF;
+			}
+			else if(agent[i].equals(agentA)) {
 				totA += amount[i] * qty[i];
+				delivDate=delivDateA;
+			}
 
-			SaleItemVO sivo = new SaleItemVO(dtime, "", amount[i] * qty[i], amount[i], agent[i], item[i], qty[i],
-					i + 1, memberid, "");
+			SaleItemVO sivo = new SaleItemVO(dtime, "", amount[i] * qty[i], amount[i], agent[i], itemchk[i], qty[i],
+					i + 1, memberid, "", delivDate);
 			service.saleItem(sivo); // 주문 아이템 insert
 
 			// 주문 아이템 넣을 때, sold=1 시켜줘야 함

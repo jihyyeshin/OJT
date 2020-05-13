@@ -29,7 +29,8 @@
 		<input type="hidden" name="memberid" value="${param.memberid}"/>
 		<input type="hidden" name="agentF" value="${param.agentF}"/>
 		<input type="hidden" name="agentA" value="${param.agentA}"/>
-		<input type="hidden" name="item" value=""/>
+		<input type="hidden" name="saleDiv" value="sale" />
+		<input type="hidden" name="itemDiv" value=""/><!-- 아이템 디테일 화면과 구분 -->
 		<div class="item-list">
 			<div class="recommend-list">
 				<h4 style="text-align:center;">${param.memberid}님을 위한 추천 상품</h4>
@@ -54,7 +55,7 @@
 			</div>
 			
 			<div class="lvl-list">
-				<h4 style="text-align:center;color:;">이런 상품은 어떤가요?</h4>
+				<h4 style="text-align:center;color:#FF7272;">이런 상품은 어떤가요?</h4>
 				<div class="con_bb">
 					<div class="leftarrow">
 						<a href="javascript:void(0)" id="prevL"> <img
@@ -79,7 +80,7 @@
 			<button type="button" onclick="pagingItem()" class="btn" style="width:100%;border-radius: 0px;">더보기</button>
 		</div> 
 		
-		<button id="footerL" type="submit" onclick="javascipt: form.action='./items/sale'">주문하기</button>
+		<button id="footerL" type="submit" onclick="javascipt: form.action='./items/saleCheck'">주문하기</button>
 		<button id="footerR" type="submit" onclick="javascipt: form.action='./items/insertBasket'">장바구니 넣기</button>
 	</form>
 	
