@@ -64,7 +64,6 @@ td{
 	width:100%;
 }
 .recent-list{
-	border-top:1px solid #d4d4d4;
 	overflow:scroll;
 }
 .recent-list table{

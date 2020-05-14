@@ -17,25 +17,30 @@
 	<div class="view">
 		<img src="${src} " width="100%"></img>
 		<p></p>
-		<h4 style="text-align:center;font-size:1.2rem;"> ${item.name}</h4>
-		<p style="text-align:center;"> ${item.remark}</p>
+		<div style="margin-left:20px;margin-right:20px;">
+			<h4 style="text-align:center;font-size:1.2rem;"> ${item.name}</h4>
+			<p style="text-align:center;"> ${item.remark}</p>
+		</div>
+		
 		
 		
 		<form method="post" name="form">
-			<input type="hidden" name="itemDiv" id="itemDiv" value="${item.item}"/>
-			<p style="margin-left:20px;">수량: <input type="text" name="qty" id="qty"/>개</p>
-			<h4 style="margin-left:20px;font-family: CJBOLD;color:#FF7272;font-size:1.2rem;" id="amounts"> </h4>
-			<input type="hidden" name="memberid" value="${memberid}"/>
-			<input type="hidden" name="agentF" value="${agentF}"/>
-			<input type="hidden" name="agentA" value="${agentA}"/>
-			<input type="hidden" name="agent" value="${item.agent}"/>
-			
-			<input type="hidden" name="name" value="${item.name}"/>
-			<input type="hidden" name="amount" value="${item.amount}"/>
-			
+			<div style="margin-left:20px;margin-right:20px;">
+				<input type="hidden" name="itemDiv" id="itemDiv" value="${item.item}"/>
+				<p>수량: <input type="text" name="qty" id="qty"/>개</p>
+				<h4 style="font-family: CJBOLD;color:#FF7272;font-size:1.2rem;" id="amounts"> </h4>
+				<input type="hidden" name="memberid" value="${memberid}"/>
+				<input type="hidden" name="agentF" value="${agentF}"/>
+				<input type="hidden" name="agentA" value="${agentA}"/>
+				<input type="hidden" name="agent" value="${item.agent}"/>
+				
+				<input type="hidden" name="name" value="${item.name}"/>
+				<input type="hidden" name="amount" value="${item.amount}"/>
+				<a href="${LowestUrl} " style="text-decoration: underline;
+					color:#474747;font-size:1.2rem;">인터넷 최저가 ${LowestCost}원</a>
+			</div>
 			<button id="footer" type="submit" onclick="javascipt: form.action='./insertBasket'">장바구니넣기</button>
 		</form>
-		<a href="${LowestUrl} " style="margin-left:20px;text-decoration: underline;color:#474747;font-size:1.2rem;">인터넷 최저가 ${LowestCost}원</a>
 	</div>
 	<script type="text/javascript">
 	

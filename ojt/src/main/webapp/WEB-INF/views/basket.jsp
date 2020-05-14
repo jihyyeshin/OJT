@@ -22,19 +22,8 @@
 			<div class="recent-order ">
 				<div style="height: 10px; width: 100%; background-color: white;"></div>
 				<h4 style="text-align: center;" id="recentdate"></h4>
-				<table class="recent-list" id="recentList">
-				</table>
-				<table>
-					<tr style="height: 5px;">
-						<td></td>
-					</tr>
-					<tr>
-						<td><button type="submit" class="btn" style="width: 90%;" >그대로 주문하기</button></td>
-					</tr>
-					<tr style="height: 10px;">
-						<td></td>
-					</tr>
-				</table>
+				<table class="recent-list" id="recentList"></table>
+				<table id="saleSame"></table>
 			</div>
 		</form>
 		<div class="blankDel"></div>
@@ -87,28 +76,7 @@
 			});
 		}
 
-		function print(data) {
-			if(data.length==0) {
-				var str='<h4 style="text-align:center;font-style:italic;opacity:0.5;color:#5988ED;">장바구니가 비었습니다.</h4>'
-				$('#itemList').append(str);
-			}
-			else{
-				$.each(data,function(index, item) {
-					var str = '<table style="border-bottom:1px solid #d4d4d4;width:100%;"><tr><td style="text-align: center;"><input type="checkbox" name="itemchk" value="'+item.item+'"></td>';
-					str += '<td id="title">' + item.name + '</td>';
-					str += '<td style="width: 15%;"><input type="button" value="X" onclick="delete_func('+ item.idx + ');"/></td></tr>'
-					str += '<tr><td></td><td style="width:75%;font-family:CJBOLD;color:#FF7272;">'
-						+ numberWithCommas(item.price)+ '(원) * '+ item.qty + '(개)</td><td></td></tr></table>';
-					str += '<input type="hidden" name="idx" value="'+item.idx+'">';
-					str += '<input type="hidden" name="agent" value="'+item.agent+'">';
-					str += '<input type="hidden" name="qty" value="'+item.qty+'">';
-					str += '<input type="hidden" name="amount" value="'+item.price+'">';
-					str += '<input type="hidden" name="name" value="'+item.name+'">';
-					$('#itemList').append(str);
-				});
-			}
-			
-		}
+		
 		// 장바구니 조회
 		function showBasket() {
 			if (memberid != null) {
@@ -157,12 +125,40 @@
 				});
 			}
 		}
-		function printRecent(data) {
-			var rd=data[0].dt_sale;
-			$("#recentdate").append('최근 주문 내역 ('+rd+')');
+		
+		function print(data) {
+			if(data.length==0) {
+				var str='<h4 style="text-align:center;font-style:italic;opacity:0.5;color:#5988ED;">장바구니가 비었습니다.</h4>'
+				$('#itemList').append(str);
+			}
+			else{
+				$.each(data,function(index, item) {
+					var str = '<table style="border-bottom:1px solid #d4d4d4;width:100%;"><tr><td style="text-align: center;"><input type="checkbox" name="itemchk" value="'+item.item+'"></td>';
+					str += '<td id="title">' + item.name + '</td>';
+					str += '<td style="width: 15%;"><input type="button" value="X" onclick="delete_func('+ item.idx + ');"/></td></tr>'
+					str += '<tr><td></td><td style="width:75%;font-family:CJBOLD;color:#FF7272;">'
+						+ numberWithCommas(item.price)+ '(원) * '+ item.qty + '(개)</td><td></td></tr></table>';
+					str += '<input type="hidden" name="idx" value="'+item.idx+'">';
+					str += '<input type="hidden" name="agent" value="'+item.agent+'">';
+					str += '<input type="hidden" name="qty" value="'+item.qty+'">';
+					str += '<input type="hidden" name="amount" value="'+item.price+'">';
+					str += '<input type="hidden" name="name" value="'+item.name+'">';
+					$('#itemList').append(str);
+				});
+			}
 			
-			$.each(data,function(index, item) {
-					var str = '<tr>';
+		}
+		
+		function printRecent(data) {
+			if(data.length==0) {
+				var str='<h4 style="text-align:center;font-style:italic;opacity:0.5;color:#5988ED;">주문 내역이 없습니다.</h4>'
+				$('#recentList').append(str);
+			}else{
+				var rd=data[0].dt_sale;
+				$("#recentdate").append('최근 주문 내역 ('+rd+')');
+				
+				$.each(data,function(index, item) {
+					var str = '<tr style="border-top:1px solid #d4d4d4;">';
 					str += '<td style="width: 50%;">'+item.name+'</td>';
 					str += '<td style="width: 50%;">'+numberWithCommas(item.price)+'(원) * '+item.qty+'(개)</td>';
 					str += '<input type="hidden" name="qtyS" value="'+item.qty+'">';
@@ -173,7 +169,20 @@
 					str += '</tr>';
 						
 					$('#recentList').append(str);
+				
 				});
+				
+				var str = '<tr style="height: 5px;">';
+				str += '<td></td>';
+				str += '</tr>';
+				str += '<tr>';
+				str += '<td><button type="submit" class="btn" style="width: 90%;" >그대로 주문하기</button></td>';
+				str += '</tr>';
+				str += '<tr style="height: 10px;">';
+				str += '<td></td>';
+				str += '</tr>';
+				$('#saleSame').append(str);
+			}
 		}
 
 		// 체크박스에 보내기
