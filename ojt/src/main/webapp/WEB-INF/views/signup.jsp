@@ -102,10 +102,16 @@
 			async:false,
 			data: "agentId="+agentId,
 			success: function(data){
-				// 받아온 결과물 저장
-				resultArray=data.split('|');
-				$("#resultAgent"+gbn).text(gbnVal+" : "+resultArray[1]);
-				$("#agent"+gbn).val(resultArray[0]);
+				// 주소 잘못되었을 때
+				if(data == "false"){
+					alert("잘못된 대리점 코드입니다.");
+					$('#agentId').val('');
+				}else{
+					// 받아온 결과물 저장
+					resultArray=data.split('|');
+					$("#resultAgent"+gbn).text(gbnVal+" : "+resultArray[1]);
+					$("#agent"+gbn).val(resultArray[0]);
+				}
 			},
 			error:function(request,status, error){
 				console.log("status:\n"+request.status+"\nerror:\n"+request.error);
@@ -150,10 +156,17 @@
 					async:false,
 						data: "location="+loc+"&lat="+lat+"&lng="+lng+"&gbn="+gbn,
 						success: function(data){
-							// 받아온 결과물 저장
-							resultArray=data.split('|');
-							$("#resultAgent"+gbn).text(gbnVal+" : "+resultArray[1]);
-							$("#agent"+gbn).val(resultArray[0]);
+							// 주소 잘못되었을 때
+							if(data == "false"){
+								alert("잘못된 거래처 주소입니다.");
+								$('#addr').val('');
+							}
+							else{
+								// 받아온 결과물 저장
+								resultArray=data.split('|');
+								$("#resultAgent"+gbn).text(gbnVal+" : "+resultArray[1]);
+								$("#agent"+gbn).val(resultArray[0]);
+							}
 						},
 						error:function(request,status, error){
 							console.log("status:\n"+request.status+"\nerror:\n"+request.error);

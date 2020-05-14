@@ -30,6 +30,7 @@ public class LocController {
 	        , @RequestParam float lng
 	        , @RequestParam char gbn) throws Exception {
 		Logger.info("post location");
+		System.out.println("post location");
 		LatLngVO vo=new LatLngVO(location, lat, lng, gbn);
 		LocVO result=service.location(vo);
 		// 결과가 없는 경우
@@ -38,7 +39,7 @@ public class LocController {
 			String[] spl=vo.getLocation().split(" ");
 			vo.setLocation(spl[0]);
 			LocVO altResult=service.location(vo);
-			if (altResult==null) return "결과가 없습니다.\n입력 위치를 다시 확인해주세요.";
+			if (altResult==null) return "false";
 			result=altResult;
 		}
 		return result.getAgent()+"|"+result.getAgentName()+"|"+result.getZip()+" "+result.getDetail();
@@ -48,7 +49,9 @@ public class LocController {
 	@ResponseBody
 	public String postAgent(@RequestParam String agentId) throws Exception {
 		Logger.info("post agent");
+		System.out.println("post agent");
 		LocVO result=service.agent(agentId);
+		if (result==null) return "false";
 		return result.getAgent()+"|"+result.getAgentName();
 	}
 }
