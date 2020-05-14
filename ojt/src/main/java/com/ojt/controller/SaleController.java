@@ -96,25 +96,21 @@ public class SaleController {
 		// idx 역할: 장바구니에서 주문한 상품 삭제 시 사용
 		int totVal=0;
 		List<SaleItemVO> slist = new ArrayList<SaleItemVO>();
-		System.out.println("itemchk len"+itemchk.length);
+		
 		for (int i = 0; i < itemchk.length; i++) {
 			SaleItemVO sivo = new SaleItemVO("", "",amount[i] * qty[i], amount[i], agent[i], itemchk[i], qty[i], i + 1,
 					memberid, name[i], "");
-			System.out.println("SIVO"+sivo.getItem());
 			
 			if(agent[i].equals(agentF)) sivo.setGbn_agent('F');
 			else sivo.setGbn_agent('A');
-			System.out.println("SIVO"+sivo.getAmount());
+
 			if(saleDiv.equals("saleBasket")) {
-				System.out.println("idx?"+idx[i]);
 				sivo.setIdx(idx[i]);
 			}
-			System.out.println("SIVO"+sivo.getName());
 			slist.add(sivo);
 			
 			totVal+=(amount[i] * qty[i]);
 		}
-		System.out.println("totV"+totVal);
 		Gson gson=new Gson();
 		String jlist=gson.toJson(slist);
 		session.setAttribute("slist", jlist);
@@ -126,7 +122,7 @@ public class SaleController {
 		return "saleCheck";
 	}
 
-	// 주문 Final Check (배송 날짜 선택, 주문할 내역 확인)
+	// 그대로 주문 Final Check (배송 날짜 선택, 주문할 내역 확인)
 	@RequestMapping(value = "/saleSameCheck", method = RequestMethod.POST)
 	public String postSaleSameCheck(HttpServletRequest req, String[] agentS, String agentF, String agentA, String memberid,
 			String[] nameS, String[] itemchkS, int[] amountS, int[] qtyS, String saleDiv) {

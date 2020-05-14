@@ -30,6 +30,7 @@
 		<input type="hidden" name="agentF" value="${param.agentF}"/>
 		<input type="hidden" name="agentA" value="${param.agentA}"/>
 		<input type="hidden" name="saleDiv" value="sale" />
+		<input type="hidden" name="item" value=""/>
 		<input type="hidden" name="itemDiv" value=""/><!-- 아이템 디테일 화면과 구분 -->
 		<div class="item-list">
 			<div class="recommend-list">
@@ -234,7 +235,7 @@
 			$('#itemList').append(str);
 		});
 	}
-	// 추천 아이템 출력
+	// 추천 아이템 2가지 출력
 	function printRecItem(value, data){
 		$.each(data, function(index, item){
 			var src=item.src;
@@ -251,6 +252,7 @@
 			str += '<h4><a id="title" href="javascript:goDetail('+item.item+', '+item.agent+');">'+item.name+'</a></h4>';
 			str += '<p>' + item.amount + '원</p>';
 			str += '</td>';
+			str += '<input type="hidden" name="itemchk" value="'+item.item+'">';
 			str += '</tr>';
 			str += '</table>';
 			str += '</li>';
@@ -276,10 +278,10 @@
 	
 	// go 디테일 페이지
 	function goDetail(item, agent){
+		// paging form 안에 있는 value에 값을 할당하여 보내야 함.
+		// 이 때, f.item.value가 여러군데 있다면, 하나만 보내지는 것이 아니라, list로 보내짐
 		var f=document.paging;
 		f.item.value=item;
-		console.log("detail click item!"+item);
-		console.log("detail click!"+agent);
 		f.agent.value=agent;
 		f.agentF.value=agentF;
 		f.agentA.value=agentA;
