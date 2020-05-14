@@ -34,7 +34,7 @@
 		<input type="hidden" name="itemDiv" value=""/><!-- 아이템 디테일 화면과 구분 -->
 		<div class="item-list">
 			<div class="recommend-list">
-				<h4 style="text-align:center;color:#5078CE;">${param.memberid}님을 위한 추천 상품</h4>
+				<h4 style="text-align:center;color:black;">${param.memberid}님을 위한 추천 상품</h4>
 				<div class="con_bb">
 					<div class="leftarrow">
 						<a href="javascript:void(0)" id="prevR"> <img
@@ -57,7 +57,7 @@
 			<div class="blankDel"></div>
 			
 			<div class="lvl-list">
-				<h4 style="text-align:center;color:#6B99FC;">이런 상품은 어떤가요?</h4>
+				<h4 style="text-align:center;color:black;">이런 상품은 어떤가요?</h4>
 				<div class="con_bb">
 					<div class="leftarrow">
 						<a href="javascript:void(0)" id="prevL"> <img
@@ -88,6 +88,7 @@
 	</form>
 	
 	<script type="text/javascript">
+
 	var agentF=${param.agentF};
 	var agentA=${param.agentA};
 	var memberId=${param.memberid};
@@ -253,7 +254,7 @@
 			str += '<td style="width: 40%; text-align: left;">';
 			str += '<br/>';
 			str += '<h4><a id="title" href="javascript:goDetail('+item.item+', '+item.agent+');">'+item.name+'</a></h4>';
-			str += '<p>' + item.amount + '원</p>';
+			str += '<p style="color:#6B99FC;font-family:CJBOLD">' + numberWithCommas(item.amount) + '원</p>';
 			str += '</td>';
 			/* str += '<input type="hidden" name="itemchk" value="'+item.item+'">'; */
 			str += '</tr>';

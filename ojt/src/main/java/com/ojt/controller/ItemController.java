@@ -142,34 +142,21 @@ public class ItemController {
 			return "itemDetail";
 		}
 		session.setAttribute("src", src);
-//		String val=URLEncoder.encode(vo.getName(), "UTF-8");// 인코딩
-//		Connection.Response response = Jsoup.connect(
-//				"https://search.shopping.naver.com/search/all.nhn?origQuery="+val+"&pagingIndex=1&pagingSize=40&viewType=list&sort=price_asc&frm=NVSCTAB&query="+val)
-//			    .method(Connection.Method.GET)
-//                .execute();
-//		
-//		Document googleDocument = response.parse();
-//		
-//		Element goodsList = googleDocument.select("ul[class=goods_list]").first();
-//		if(goodsList==null) {
-//			session.setAttribute("src", "/app/resources/img/CJ_logo_black.png");
-//			return "itemDetail";
-//		}
-//		
-//		Elements img=goodsList.select("li").eq(0).select("span[class=num _price_reload]");
-//		System.out.println("img!!!!!!!"+img.text());
-//		if(img==null) {
-//			session.setAttribute("src", "/app/resources/img/CJ_logo_black.png");
-//			return "itemDetail";
-//		} 
-//		
-//		String src = img.attr("src");
-//		if(src==null) {
-//			session.setAttribute("src", "/app/resources/img/CJ_logo_black.png");
-//			return "itemDetail";
-//		}
-//		session.setAttribute("src", src);
-//			
+		
+		val=URLEncoder.encode(vo.getName(), "UTF-8");// 인코딩
+		response = Jsoup.connect(
+				"https://search.shopping.naver.com/search/all.nhn?origQuery="+val+"&pagingIndex=1&pagingSize=40&viewType=list&sort=price_asc&frm=NVSCTAB&query="+val)
+			    .method(Connection.Method.GET)
+                .execute();
+		
+		googleDocument = response.parse();
+		
+		Element goodsList= googleDocument.select("ul[class=goods_list]").first();
+		String LowestCost=goodsList.select("li").eq(0).select("span[class=num _price_reload]").text();
+		String LowestUrl=goodsList.select("li").eq(0).select("a[class=link]").attr("href");
+
+		session.setAttribute("LowestCost", LowestCost);
+		session.setAttribute("LowestUrl", LowestUrl);
 			
 		return "itemDetail";
 	}
