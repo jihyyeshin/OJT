@@ -19,7 +19,6 @@
 	top:5px;
 	bottom:5px;
 	left:0;
-	border-bottom:1px solid #d4d4d4;
 	position:relative;
  }
 .lvl-list{
@@ -28,7 +27,6 @@
 	top:20px;
 	bottom:5px;
 	left:0;
-	border-bottom:1px solid #d4d4d4;
 	position:relative;
 	z-index:9999;
 }

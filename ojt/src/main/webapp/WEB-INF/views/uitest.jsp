@@ -102,11 +102,11 @@
 				</tbody>
 			</table>
 		</div>
-		<div style="width: 100%; height: 10px; background-color: #F5F5F5;"></div>
+		<div class="blankDel"></div>
 		<div style="font-family:CJBOLD;margin-top:10px;margin-bottom:10px;margin-left:20px;">
 		희망 배송 날짜: <input type="date" id="currnetDate">
 		</div>
-		<div style="width: 100%; height: 10px; background-color: #F5F5F5;"></div>
+		<div class="blankDel"></div>
 		<div style="font-family:CJBOLD;margin-top:10px;margin-bottom:10px;margin-left:20px;">
 		<table style="width:100%;">
 			<tr>

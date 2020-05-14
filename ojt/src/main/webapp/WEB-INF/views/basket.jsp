@@ -37,7 +37,7 @@
 				</table>
 			</div>
 		</form>
-		<div style="height: 10px; width: 100%; background-color: #F5F5F5;"></div>
+		<div class="blankDel"></div>
 		<div style="height: 10px; width: 100%; background-color: white;"></div>
 
 		<form method="post" onsubmit="_submit();" id="basketSale">

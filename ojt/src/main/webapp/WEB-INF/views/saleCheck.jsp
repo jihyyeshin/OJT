@@ -29,7 +29,7 @@
 			<div class="sales center" id="salesF"></div>
 			<div class="sales center" id="salesA"></div>
 			
-			<div style="width: 100%; height: 10px; background-color: #F5F5F5;"></div>
+			<div class="blankDel"></div>
 			<div style="font-family:CJBOLD;margin-top:10px;margin-bottom:10px;margin-left:20px;margin-right:20px;">
 			<table style="width:100%;">
 				<tr>
@@ -38,7 +38,7 @@
 				</tr>
 			</table>
 			</div>
-			<div style="width: 100%; height: 10px; background-color: #F5F5F5;"></div>
+			<div class="blankDel"></div>
 			
 		</div>
 		<button id="footer" type="submit">주문하기</button>
@@ -112,17 +112,17 @@
 			 strF+='</table>';
 			 $('#salesF').append(strF);
 			 console.log(strF);
-			 strF='<div style="width: 100%; height: 10px; background-color: #F5F5F5;"></div>';
+			 strF='<div class="blankDel"></div>';
 			 strF+='<div style="font-family:CJBOLD;margin-top:10px;margin-bottom:10px;margin-left:20px;">';
 			 strF+='희망 배송 날짜: <input type="date" name="delivDateF" name=""value='+getNowDate()+'></div>';
 			 $('#salesF').after(strF);
 		}
 		if(A!=0){
 			 strA+='</table>';
-			 $('#salesA').before('<div style="width: 100%; height: 10px; background-color: #F5F5F5;"></div>');
+			 $('#salesA').before('<div class="blankDel"></div>');
 			 $('#salesA').append(strA);
 
-			 strA='<div style="width: 100%; height: 10px; background-color: #F5F5F5;"></div>';
+			 strA='<div class="blankDel"></div>';
 			 strA+='<div style="font-family:CJBOLD;margin-top:10px;margin-bottom:10px;margin-left:20px;">';
 			 strA+='희망 배송 날짜: <input type="date" name="delivDateA" value='+getNowDate()+'></div>';
 			 

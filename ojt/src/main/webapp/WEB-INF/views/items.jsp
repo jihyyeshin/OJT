@@ -25,7 +25,7 @@
 		</form>
 		<input class="search" type="text" id="search" placeholder="상품 검색">
 	</header>
-	<form name="paging" onsubmit="_submit();" method="post">
+	<form name="paging" onsubmit="return _submit();" method="post">
 		<input type="hidden" name="memberid" value="${param.memberid}"/>
 		<input type="hidden" name="agentF" value="${param.agentF}"/>
 		<input type="hidden" name="agentA" value="${param.agentA}"/>
@@ -34,7 +34,7 @@
 		<input type="hidden" name="itemDiv" value=""/><!-- 아이템 디테일 화면과 구분 -->
 		<div class="item-list">
 			<div class="recommend-list">
-				<h4 style="text-align:center;">${param.memberid}님을 위한 추천 상품</h4>
+				<h4 style="text-align:center;color:#5078CE;">${param.memberid}님을 위한 추천 상품</h4>
 				<div class="con_bb">
 					<div class="leftarrow">
 						<a href="javascript:void(0)" id="prevR"> <img
@@ -54,9 +54,10 @@
 					</div>
 				</div>
 			</div>
+			<div class="blankDel"></div>
 			
 			<div class="lvl-list">
-				<h4 style="text-align:center;color:#FF7272;">이런 상품은 어떤가요?</h4>
+				<h4 style="text-align:center;color:#6B99FC;">이런 상품은 어떤가요?</h4>
 				<div class="con_bb">
 					<div class="leftarrow">
 						<a href="javascript:void(0)" id="prevL"> <img
@@ -76,8 +77,9 @@
 					</div>
 				</div>
 			</div>
+			<div class="blankDel"></div>
 			
-			<div id="itemList" style="position:relative;top:20px;bottom:10px;"></div>
+			<div id="itemList" style="position:relative;top:5px;bottom:10px;"></div>
 			<button type="button" onclick="pagingItem()" class="btn" style="width:100%;border-radius: 0px;">더보기</button>
 		</div> 
 		
@@ -201,8 +203,9 @@
 			var src=item.src;
 			if(src == "") src="<c:url value="/resources/img/CJ_logo_black.png" />";
 			var amounts=numberWithCommas(item.amount);
-			
-			var str='<table style="float:left;width:50%;height:300px;">';
+			var str='<table style="float:left;width:50%;height:300px;border-bottom:1px solid #d4d4d4;';
+			if(index %2 == 0) str += 'border-right:1px solid #d4d4d4;">';
+			else str+= '">';
 			str+=	'<tbody>';
 			str+=	'<tr>';
 			str+=	'<td>';
@@ -297,7 +300,12 @@
 /********************************************************** Submit Func **********************************************************/
 	// 체크박스에 보내기
 	function _submit()
-	{
+	{	
+		// 장바구니 추가 시 alert
+		var deli=document.paging.action;
+		var sub=deli.substr(deli.length-12,deli.length);
+		if(sub == "insertBasket") alert("장바구니 추가");
+		
 	    //같이 보낼 값
 	    var itemchk=document.getElementsByName("itemchk");
 	    var amount=document.getElementsByName("amount");
@@ -306,6 +314,7 @@
 	    var name=document.getElementsByName("name");
 	    if (typeof(itemchk.length) == 'undefined') //단일
 	    {
+	    	alert(qty[0].value);
 	        if (itemchk[0].checked==false)
 	        {
 	        	name[0].disabled=true;
@@ -313,19 +322,25 @@
 	            qty[0].disabled=true;
 	            agent[0].disabled=true;
 	        }
-	    } else { 
+	    } else {
 	    	//다중
 	        for (i=0; i<itemchk.length; i++)
 	        {
-	            if (itemchk[i].checked==false)
-	            {
-	            	name[i].disabled=true;
-	            	amount[i].disabled=true;
-		            qty[i].disabled=true;
-		            agent[i].disabled=true;
-	            }
+	        	if(qty[i].value == null || qty[i].value == '' ){
+	        		alert("수량을 입력하세요");
+	        		return false;
+	        	}else{
+	        		if (itemchk[i].checked==false)
+		            {
+		            	name[i].disabled=true;
+		            	amount[i].disabled=true;
+			            qty[i].disabled=true;
+			            agent[i].disabled=true;
+		            }
+	        	}
 	        }
 	    }
+
 	    return true;
 	}
 

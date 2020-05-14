@@ -95,7 +95,7 @@
 			// 전체
 			for(i=0;i<3;i++){
 				if(buF[i].length==0 && buA[i].length==0) str[i]='';
-				else str[i]+='</div><div style="width:100%;height:10px;background-color:#F5F5F5;"></div>';
+				else str[i]+='</div><div class="blankDel"></div>';
 				$('#saleList').append(str[i]);
 				console.log(i+" str len: "+str[i].length);
 			}
