@@ -127,6 +127,7 @@
 		order by selTot desc
 		limit 3 ) T
 	where m.lvl_item=T.lvl_item and m.cd_item != T.cd_item and (m.cd_agent=#{agentF} or m.cd_agent=#{agentA})
+	limit 15;
 </select>
 
 <!-- 아이템 별 디테일 정보 조회-->

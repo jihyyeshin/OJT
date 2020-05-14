@@ -57,7 +57,7 @@
 			<div class="blankDel"></div>
 			
 			<div class="lvl-list">
-				<h4 style="text-align:center;color:black;">이런 상품은 어떤가요?</h4>
+				<h4 style="text-align:center;color:black;">이 상품은 어떤가요?</h4>
 				<div class="con_bb">
 					<div class="leftarrow">
 						<a href="javascript:void(0)" id="prevL"> <img
@@ -305,7 +305,6 @@
 		// 장바구니 추가 시 alert
 		var deli=document.paging.action;
 		var sub=deli.substr(deli.length-12,deli.length);
-		if(sub == "insertBasket") alert("장바구니 추가");
 		
 	    //같이 보낼 값
 	    var itemchk=document.getElementsByName("itemchk");
@@ -326,22 +325,26 @@
 	    } else {
 	    	//다중
 	        for (i=0; i<itemchk.length; i++)
-	        {
-	        	if(qty[i].value == null || qty[i].value == '' ){
-	        		alert("수량을 입력하세요");
-	        		return false;
-	        	}else{
-	        		if (itemchk[i].checked==false)
-		            {
-		            	name[i].disabled=true;
-		            	amount[i].disabled=true;
-			            qty[i].disabled=true;
-			            agent[i].disabled=true;
+	        {	
+	        	
+	        	if (itemchk[i].checked==false)
+		        {
+		           	name[i].disabled=true;
+		            amount[i].disabled=true;
+			        qty[i].disabled=true;
+			        agent[i].disabled=true;
+		        }else{
+		        	console.log(qty[i].value);
+		            if(qty[i].value == null || qty[i].value == '' ){
+			        	alert("수량을 입력하세요");
+			        	location.reload();
+			        	return false;
 		            }
-	        	}
+		        }
 	        }
 	    }
-
+	    if(sub == "insertBasket") alert("장바구니 추가");
+		
 	    return true;
 	}
 

@@ -1,6 +1,7 @@
 package com.ojt.controller;
 
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -98,9 +99,74 @@ public class ItemController {
 		vo.setAgentF(agentF);
 		vo.setAgentA(agentA);
 		vo.setMemberid(memberid);
-
 		List<ItemVO> list=service.itemLvlList(vo);
-		return list;
+		
+		List<ItemVO> result=new ArrayList<ItemVO>();
+		//System.out.println("FIRST");
+		//print(list);
+		int i=0;
+		//result.add(list.get(0));
+		while(i<list.size()) {
+			result.add(list.get(i));
+			//System.out.println("result에 넣은 새로운 값:"+ list.get(i).getName());
+			//System.out.println("===RESULT LIST======================================");
+			//print(result);
+			//System.out.println("===============================================");
+			for(int j=0;j<list.size();j++) {
+				int simil=result.get(i).getName().compareTo(list.get(j).getName());
+				//System.out.println("THIS IS SIMIL:"+simil);
+				if(simil > -10000) { // 비슷한 경우
+					//System.out.println(list.get(j).getName());
+					list.remove(j);
+					//print(list);
+				}
+			}
+			i++;
+		}
+		
+//		//List<ItemVO> list2=list;
+//		List<ItemVO> result=new ArrayList<ItemVO>();
+//		
+//		for(int i=0;i<list.size();i++) {
+//			for(int j=0;j<list.size();j++) {
+//				int simil=list.get(i).getName().compareTo(list.get(j).getName());
+//				System.out.println(simil);
+//				if(simil < -10000) {
+//					result.add(list.get(i));
+//					System.out.println("---------------------------------------insert--------------------");
+//				}
+//			}
+//			list.removeAll(list);
+//			list.addAll(result);
+//			result.removeAll(result);
+//		}
+		// 상품 추천 시 거의 유사한 상품은 제외
+//		List<ItemVO> result=new ArrayList<ItemVO>();
+//		//result.add(list.get(0));// 첫번째 상품 넣음
+//		
+//		int j=0;
+//		//int size=list.size();
+//		while(j<list.size()) {
+//			result.add(list.get(j));
+//			System.out.println("add1"+list.get(j));
+//			for(int i=0;i<list.size();i++) {
+//				System.out.println(result.get(j).getName());
+//				System.out.println(list.get(i).getName());
+//				int simil=result.get(0).getName().compareTo(list.get(i).getName());
+//				System.out.println("simil: "+simil);
+//				if(simil < -10000) {
+//					result.add(list.get(i));
+//					System.out.println("---------------------------------------insert--------------------");
+//				}
+//			}
+//			list.removeAll(result);
+//			list.addAll(result);
+//			result.removeAll(result);
+//			System.out.println("remove"+list.size()+"----------------------------------------------------------------------------");
+//			j++;
+//		}
+//		System.out.println("---------------------------------------size"+list.size()+"--------------------");
+		return result;
 	}
 	/***********************************************************************************************/
 		
@@ -109,6 +175,7 @@ public class ItemController {
 	public String postDetail(HttpServletRequest req, String agentF, String agentA,
 			String memberid, String item) throws Exception {
 		Logger.info("post detail");
+		System.out.println("post detail");
 		HttpSession session = req.getSession();
 		
 		ItemVO vo=service.itemDetail(item);
@@ -117,6 +184,8 @@ public class ItemController {
 		session.setAttribute("memberid", memberid);
 		session.setAttribute("item", vo);
 
+		/* 이미지 크롤링 */
+		
 		String val=URLEncoder.encode(vo.getName(), "UTF-8");// 인코딩
 		Connection.Response response = Jsoup.connect("https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query="+val)
                 .method(Connection.Method.GET)
@@ -143,6 +212,7 @@ public class ItemController {
 		}
 		session.setAttribute("src", src);
 		
+		/* 인터넷 최저가 Func */
 		val=URLEncoder.encode(vo.getName(), "UTF-8");// 인코딩
 		response = Jsoup.connect(
 				"https://search.shopping.naver.com/search/all.nhn?origQuery="+val+"&pagingIndex=1&pagingSize=40&viewType=list&sort=price_asc&frm=NVSCTAB&query="+val)
@@ -159,6 +229,13 @@ public class ItemController {
 		session.setAttribute("LowestUrl", LowestUrl);
 			
 		return "itemDetail";
+	}
+	public void print(List<ItemVO> list) throws Exception{
+		System.out.println("-----------------PRINT---------------");
+		for(int i=0;i<list.size();i++) {
+			System.out.println(list.get(i).getName());
+		}
+		System.out.println("-------------------------------------");
 	}
 //  // 크롤링
 //	public void test() throws Exception {
