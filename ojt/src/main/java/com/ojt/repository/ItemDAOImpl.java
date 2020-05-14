@@ -41,7 +41,10 @@ public class ItemDAOImpl implements ItemDAO {
 	}
 	@Override
 	public List<ItemVO> itemLvlList(RecVO vo) throws Exception{
-		System.out.println("itemLvlListDAO");
 		return sql.selectList(namespace+".itemLvlList", vo);
+	}
+	@Override
+	public List<ItemVO> randRecommendList(RecVO vo)throws Exception{
+		return sql.selectList(namespace+".randRecommendList", vo);
 	}
 }

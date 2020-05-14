@@ -40,5 +40,8 @@ public class ItemServiceImpl implements ItemService{
 	public List<ItemVO> itemLvlList(RecVO vo) throws Exception{
 		return dao.itemLvlList(vo);
 	}
-	
+	@Override
+	public List<ItemVO> randRecommendList(RecVO vo)throws Exception{
+		return dao.randRecommendList(vo);
+	}
 }

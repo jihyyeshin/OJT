@@ -19,4 +19,5 @@ public interface ItemDAO {
 	public int getListCnt(RecVO vo) throws Exception;
 	// 동일 상품군 아이템 리스트
 	public List<ItemVO> itemLvlList(RecVO vo) throws Exception;
+	public List<ItemVO> randRecommendList(RecVO vo)throws Exception;
 }

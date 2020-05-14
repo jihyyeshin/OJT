@@ -13,5 +13,5 @@ public interface ItemService {
 	public List<ItemVO> itemRecommendList(RecVO vo) throws Exception;
 	public int getListCnt(RecVO vo) throws Exception;
 	public List<ItemVO> itemLvlList(RecVO vo) throws Exception;
-
+	public List<ItemVO> randRecommendList(RecVO vo)throws Exception;
 }

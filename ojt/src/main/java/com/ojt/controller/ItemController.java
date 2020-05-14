@@ -87,6 +87,9 @@ public class ItemController {
 		vo.setMemberid(memberid);
 
 		List<ItemVO> list=service.itemRecommendList(vo);
+		if(list.size()==0) {
+			list=service.randRecommendList(vo);
+		}
 		return list;
 	}
 	// 베스트 아이템의 상품군 기반 상품 추천
@@ -100,24 +103,30 @@ public class ItemController {
 		vo.setAgentA(agentA);
 		vo.setMemberid(memberid);
 		List<ItemVO> list=service.itemLvlList(vo);
-		
-		List<ItemVO> result=new ArrayList<ItemVO>();
-		
-		int i=0;
-		while(i<list.size()) {
-			result.add(list.get(i));
+		if(list.size()==0) {
+			list=service.randRecommendList(vo);
 			
-			for(int j=0;j<list.size();j++) {
-				int simil=result.get(i).getName().compareTo(list.get(j).getName());
-				if(simil > -10000) { // 비슷한 경우
-					list.remove(j);
+			return list;
+		}
+		else {
+			List<ItemVO> result=new ArrayList<ItemVO>();
+			
+			int i=0;
+			while(i<list.size()) {
+				result.add(list.get(i));
+				
+				for(int j=0;j<list.size();j++) {
+					int simil=result.get(i).getName().compareTo(list.get(j).getName());
+					if(simil > -10000) { // 비슷한 경우
+						list.remove(j);
+					}
 				}
+				i++;
 			}
-			i++;
+			
+			return result;
 		}
 		
-
-		return result;
 	}
 	/***********************************************************************************************/
 		

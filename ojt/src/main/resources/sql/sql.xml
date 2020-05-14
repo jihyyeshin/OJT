@@ -115,6 +115,14 @@
 	order by result DESC
 	limit 6;
 </select>
+<!-- 상품 구매 이력이 없을 때 추천 -->
+<select id="randRecommendList" resultType="com.ojt.domain.ItemVO" >
+select m1.cd_item,m1.cd_agent, m1.nm_item, m1.remark, m1.amt_amount, m1.src
+from ms_agentitem m1
+where m1.cd_agent=#{agentF} or m1.cd_agent=#{agentA}
+order by random() 
+limit 6;
+</select>
 
 <!-- 상품군 별 아이템 추천 -->
 <select id="itemLvlList" resultType="com.ojt.domain.ItemVO" >
