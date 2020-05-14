@@ -14,11 +14,11 @@
 		<h3 class="logo">${param.memberid}님의장바구니</h3>
 	</header>
 	<div class="basket-group">
-		<form method="post" action="./saleCheck">
+		<form method="post" action="./saleSameCheck">
 			<input type="hidden" name="memberid" value="${param.memberid}" /> 
 			<input type="hidden" name="agentF" value="${param.agentF}" /> 
 			<input type="hidden" name="agentA" value="${param.agentA}" />
-			<input type="hidden" name="saleDiv" value="saleRecent" />
+			<input type="hidden" name="saleDiv" value="saleRecent">
 			<div class="recent-order ">
 				<div style="height: 10px; width: 100%; background-color: white;"></div>
 				<h4 style="text-align: center;" id="recentdate"></h4>
@@ -37,10 +37,10 @@
 				</table>
 			</div>
 		</form>
-		<div style="height: 10px; width: 100%; background-color: #d4d4d4;"></div>
+		<div style="height: 10px; width: 100%; background-color: #F5F5F5;"></div>
 		<div style="height: 10px; width: 100%; background-color: white;"></div>
 
-		<form method="post" onsubmit="_submit();">
+		<form method="post" onsubmit="_submit();" id="basketSale">
 			<div id="itemList" class="basket-list"></div>
 			<button id="footer" type="submit"
 				onclick="javascipt: form.action='./saleCheck'">주문하기</button>
@@ -165,11 +165,11 @@
 					var str = '<tr>';
 					str += '<td style="width: 50%;">'+item.name+'</td>';
 					str += '<td style="width: 50%;">'+numberWithCommas(item.price)+'(원) * '+item.qty+'(개)</td>';
-					str += '<input type="hidden" name="qty" value="'+item.qty+'">';
-					str += '<input type="hidden" name="amount" value="'+item.price+'">';
-					str += '<input type="hidden" name="itemchk" value="'+item.item+'">';
-					str += '<input type="hidden" name="agent" value="'+item.agent+'">';
-					str += '<input type="hidden" name="name" value="'+item.name+'">';
+					str += '<input type="hidden" name="qtyS" value="'+item.qty+'">';
+					str += '<input type="hidden" name="amountS" value="'+item.price+'">';
+					str += '<input type="hidden" name="itemchkS" value="'+item.item+'">';
+					str += '<input type="hidden" name="agentS" value="'+item.agent+'">';
+					str += '<input type="hidden" name="nameS" value="'+item.name+'">';
 					str += '</tr>';
 						
 					$('#recentList').append(str);
@@ -179,28 +179,30 @@
 		// 체크박스에 보내기
 		function _submit() {
 			//같이 보낼 값
-			var itemchk = document.getElementsByName("itemchk");
+			var itemchk =document.getElementsByName("itemchk");
 			var amount = document.getElementsByName("amount");
 			var qty = document.getElementsByName("qty");
 			var idx = document.getElementsByName("idx");
 			var agent = document.getElementsByName("agent");
-
+			var name=document.getElementsByName("name");
 			if (typeof (itemchk.length) == 'undefined') //단일
 			{
-				if (itemchk[0].checked == true) {
+				if (itemchk[0].checked == false) {
 					idx[0].disabled = true;
 					amount[0].disabled = true;
 					qty[0].disabled = true;
 					agent[0].disabled = true;
+					name[0].disabled=true;
 				}
 			} else {
 				//다중
 				for (i = 0; i < itemchk.length; i++) {
 					if (itemchk[i].checked == false) {
-						idx[0].disabled = true;
-						amount[0].disabled = true;
-						qty[0].disabled = true;
+						idx[i].disabled = true;
+						amount[i].disabled = true;
+						qty[i].disabled = true;
 						agent[i].disabled = true;
+						name[i].disabled=true;
 					}
 				}
 			}

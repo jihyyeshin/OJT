@@ -93,21 +93,23 @@ public class SaleController {
 			String[] name, String[] itemchk, int[] amount, int[] qty, String saleDiv, int[] idx) {
 		System.out.println("/items/saleCheck (post)");
 		HttpSession session = req.getSession();
-		
+		// idx 역할: 장바구니에서 주문한 상품 삭제 시 사용
 		int totVal=0;
 		List<SaleItemVO> slist = new ArrayList<SaleItemVO>();
+		System.out.println("itemchk len"+itemchk.length);
 		for (int i = 0; i < itemchk.length; i++) {
 			SaleItemVO sivo = new SaleItemVO("", "",amount[i] * qty[i], amount[i], agent[i], itemchk[i], qty[i], i + 1,
 					memberid, name[i], "");
+			System.out.println("SIVO"+sivo.getItem());
 			
-			if(agent[i].equals(agentF))
-				sivo.setGbn_agent('F');
+			if(agent[i].equals(agentF)) sivo.setGbn_agent('F');
 			else sivo.setGbn_agent('A');
-			
+			System.out.println("SIVO"+sivo.getAmount());
 			if(saleDiv.equals("saleBasket")) {
+				System.out.println("idx?"+idx[i]);
 				sivo.setIdx(idx[i]);
 			}
-			
+			System.out.println("SIVO"+sivo.getName());
 			slist.add(sivo);
 			
 			totVal+=(amount[i] * qty[i]);
@@ -115,6 +117,38 @@ public class SaleController {
 		System.out.println("totV"+totVal);
 		Gson gson=new Gson();
 		String jlist=gson.toJson(slist);
+		session.setAttribute("slist", jlist);
+		session.setAttribute("totVal", totVal);
+		session.setAttribute("agentF", agentF);
+		session.setAttribute("agentA", agentA);
+		session.setAttribute("memberid", memberid);
+		session.setAttribute("saleDiv", saleDiv);
+		return "saleCheck";
+	}
+
+	// 주문 Final Check (배송 날짜 선택, 주문할 내역 확인)
+	@RequestMapping(value = "/saleSameCheck", method = RequestMethod.POST)
+	public String postSaleSameCheck(HttpServletRequest req, String[] agentS, String agentF, String agentA, String memberid,
+			String[] nameS, String[] itemchkS, int[] amountS, int[] qtyS, String saleDiv) {
+		System.out.println("/items/saleSameCheck (post)");
+		HttpSession session = req.getSession();
+		int totVal = 0;
+		List<SaleItemVO> slist = new ArrayList<SaleItemVO>();
+		for (int i = 0; i < itemchkS.length; i++) {
+			SaleItemVO sivo = new SaleItemVO("", "", amountS[i] * qtyS[i], amountS[i], agentS[i], itemchkS[i], qtyS[i], i + 1,
+					memberid, nameS[i], "");
+
+			if (agentS[i].equals(agentF))
+				sivo.setGbn_agent('F');
+			else
+				sivo.setGbn_agent('A');
+			
+			slist.add(sivo);
+
+			totVal += (amountS[i] * qtyS[i]);
+		}
+		Gson gson = new Gson();
+		String jlist = gson.toJson(slist);
 		session.setAttribute("slist", jlist);
 		session.setAttribute("totVal", totVal);
 		session.setAttribute("agentF", agentF);

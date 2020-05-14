@@ -15,7 +15,7 @@
 </head>
 <body>
 	<header id="header">
-		<div onclick="location.href='../'" class="left"></div>
+		<div class="left" id="left"></div>
 		<h3 class="logo">주문 상품 상세</h3>
 	</header>
 	<form name="paging" method="post" id="frm">
@@ -47,6 +47,7 @@
 	<script type="text/javascript">
 	  var totVal=${totVal};
 	  var slist=${slist};
+	  var saleDiv="${saleDiv}";
 	  var A=0, F=0;
 	  var strA='<h4 style="color: #5988ED;">상온</h4><table>';
 	  var strF='<h4 style="color: #5988ED;">신선</h4><table>';
@@ -57,6 +58,13 @@
 		  document.getElementById('footer').onclick=function(){
 			  $("#frm").attr("action", "./${saleDiv}");
 		  }
+		  var left = document.getElementById('left');
+		  if(saleDiv!="sale"){
+			  left.setAttribute('onclick', "location.href=\'../items/basket\'");
+		  }else{
+			  left.setAttribute('onclick', "location.href=\'../items\'");
+		  }
+			  
 	  });
 	  
 	  function numberWithCommas(x) {

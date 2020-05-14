@@ -71,6 +71,7 @@
 				// 오늘, 내일, 모레 배송 건
 				for(i=0;i<3;i++){
 					if(item.dt_deliv == getNowDate(i)){
+						console.log(item.gbn_agent);
 						if(item.gbn_agent=='F'){
 							buF[i]+='<tr><td>'+item.nm_item+'</td>';
 							buF[i]+='<td>'+amounts+'원</td></tr>';
@@ -89,7 +90,7 @@
 			// 상온
 			for(i=0;i<3;i++){
 				if(buA[i].length!=0) str[i]+=('<h4 style="color: #5988ED;">상온</h4><table>'+buA[i]+'</table>');
-				console.log(i+" A len: "+buF[i].length);
+				console.log(i+" A len: "+buA[i].length);
 			}
 			// 전체
 			for(i=0;i<3;i++){

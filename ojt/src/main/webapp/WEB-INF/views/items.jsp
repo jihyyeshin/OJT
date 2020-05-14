@@ -304,7 +304,7 @@
 	    var name=document.getElementsByName("name");
 	    if (typeof(itemchk.length) == 'undefined') //단일
 	    {
-	        if (itemchk[0].checked==true)
+	        if (itemchk[0].checked==false)
 	        {
 	        	name[0].disabled=true;
 	        	amount[0].disabled=true;
