@@ -252,7 +252,7 @@
 			str += '<h4><a id="title" href="javascript:goDetail('+item.item+', '+item.agent+');">'+item.name+'</a></h4>';
 			str += '<p>' + item.amount + '원</p>';
 			str += '</td>';
-			str += '<input type="hidden" name="itemchk" value="'+item.item+'">';
+			/* str += '<input type="hidden" name="itemchk" value="'+item.item+'">'; */
 			str += '</tr>';
 			str += '</table>';
 			str += '</li>';

@@ -177,10 +177,11 @@ public class SaleController {
 	/******************************************장바구니 처리(조회, 입력, 삭제, 주문) Func******************************************/
 	// 장바구니 넣기
 	@RequestMapping(value = "/insertBasket", method = RequestMethod.POST)
-	public String insertBasket(HttpServletRequest req, String[] agent, String agentF, String agentA, String memberid, String[] name, String[] itemchk,
-			String itemDiv, int[] amount, int[] qty) throws Exception {
+	public String insertBasket(HttpServletRequest req, String[] agent, String agentF, String agentA, String memberid, 
+			String[] name, String[] itemchk, String itemDiv, int[] amount, int[] qty) throws Exception {
 		System.out.println("/items/basket(input)");
 		HttpSession session = req.getSession();
+		
 		if (itemDiv.equals("")) {// item list 화면
 			for (int i = 0; i < itemchk.length; i++) {
 				BasketVO bvo = new BasketVO(memberid, name[i], amount[i] * qty[i], amount[i], agent[i], itemchk[i],

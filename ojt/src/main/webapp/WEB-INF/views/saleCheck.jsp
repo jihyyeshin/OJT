@@ -125,7 +125,8 @@
 			 strA='<div style="width: 100%; height: 10px; background-color: #F5F5F5;"></div>';
 			 strA+='<div style="font-family:CJBOLD;margin-top:10px;margin-bottom:10px;margin-left:20px;">';
 			 strA+='희망 배송 날짜: <input type="date" name="delivDateA" value='+getNowDate()+'></div>';
-			 $('#saleA').append(strA);
+			 
+			 $('#salesA').after(strA);
 		}
 		 
 	  }
