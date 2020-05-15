@@ -90,7 +90,7 @@ public class SaleController {
 	// 주문 Final Check (배송 날짜 선택, 주문할 내역 확인)
 	@RequestMapping(value = "/saleCheck", method = RequestMethod.POST)
 	public String postSaleCheck(HttpServletRequest req, String[] agent, String agentF, String agentA, String memberid, 
-			String[] name, String[] itemchk, int[] amount, int[] qty, String saleDiv, int[] idx) {
+			String[] name, String[] itemchk, int[] amount, int[] qty, String saleDiv, int[] idx) throws Exception{
 		System.out.println("/items/saleCheck (post)");
 		HttpSession session = req.getSession();
 		// idx 역할: 장바구니에서 주문한 상품 삭제 시 사용
@@ -111,12 +111,16 @@ public class SaleController {
 			
 			totVal+=(amount[i] * qty[i]);
 		}
+		String agentFName=service.getAgentName(agentF);
+		String agentAName=service.getAgentName(agentA);
 		Gson gson=new Gson();
 		String jlist=gson.toJson(slist);
 		session.setAttribute("slist", jlist);
 		session.setAttribute("totVal", totVal);
 		session.setAttribute("agentF", agentF);
 		session.setAttribute("agentA", agentA);
+		session.setAttribute("agentFName", agentFName);
+		session.setAttribute("agentAName", agentAName);
 		session.setAttribute("memberid", memberid);
 		session.setAttribute("saleDiv", saleDiv);
 		return "saleCheck";
@@ -223,14 +227,14 @@ public class SaleController {
 	public String postBasketSale(HttpServletRequest req, String[] agent, String agentF, String agentA, String memberid, String[] name, String[] itemchk,
 			int[] amount, int[] qty, int[] idx, String delivDateA, String delivDateF) throws Exception {
 		Logger.info("post sale basket");
-		System.out.println(agent[0]);
-		System.out.println(agentF);
-		System.out.println(agentA);
-		System.out.println(memberid);
-		System.out.println(name[0]);
-		System.out.println(itemchk);
-		System.out.println(amount[0]);
-		System.out.println(qty[0]);
+//		System.out.println(agent[0]);
+//		System.out.println(agentF);
+//		System.out.println(agentA);
+//		System.out.println(memberid);
+//		System.out.println(name[0]);
+//		System.out.println(itemchk);
+//		System.out.println(amount[0]);
+//		System.out.println(qty[0]);
 		HttpSession session = req.getSession();
 		String delivDate="";
 		Date time = new Date();

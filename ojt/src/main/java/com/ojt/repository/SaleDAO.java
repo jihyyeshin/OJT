@@ -16,4 +16,5 @@ public interface SaleDAO {
 	public void recAdd(SaleItemVO vo) throws Exception;
 	public List<SaleItemVO> showRecent(String memberid) throws Exception;
 	public List<SaleListVO> showSaleList(SaleItemVO vo) throws Exception;
+	public String getAgentName(String agent) throws Exception;
 }

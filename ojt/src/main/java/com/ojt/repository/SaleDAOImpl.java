@@ -52,4 +52,8 @@ public class SaleDAOImpl implements SaleDAO {
 	public List<SaleListVO> showSaleList(SaleItemVO vo) throws Exception{
 		return sql.selectList(namespace+".showSaleList", vo);
 	}
+	@Override
+	public String getAgentName(String agent) throws Exception{
+		return sql.selectOne(namespace+".getAgentName", agent);
+	}
 }

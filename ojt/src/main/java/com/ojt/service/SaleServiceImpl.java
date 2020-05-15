@@ -54,4 +54,8 @@ public class SaleServiceImpl implements SaleService {
 	public List<SaleListVO> showSaleList(SaleItemVO vo) throws Exception{
 		return dao.showSaleList(vo);
 	}
+	@Override
+	public String getAgentName(String agent) throws Exception{
+		return dao.getAgentName(agent);
+	}
 }

@@ -244,6 +244,14 @@
 	ORDER BY s.no_saleslip desc
 </select>
 
+<!-- 주문 상품 상세: 대리점 이름 -->
+<select id="getAgentName" resultType="String">
+select nm_agentForm
+from ms_agent
+where cd_agent=#{cd_agent}
+limit 1;
+</select>
+
 <!-- ************************************* 장바구니 관련 쿼리 ****************************************** -->
 <!-- 장바구니 -->
 <insert id="basket" parameterType="com.ojt.domain.BasketVO">

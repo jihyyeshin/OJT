@@ -47,10 +47,14 @@
 	<script type="text/javascript">
 	  var totVal=${totVal};
 	  var slist=${slist};
+	  var agentFName="${agentFName}";
+	  var agentAName="${agentAName}";
 	  var saleDiv="${saleDiv}";
 	  var A=0, F=0;
-	  var strA='<h4 style="color: #5988ED;">상온</h4><table>';
-	  var strF='<h4 style="color: #5988ED;">신선</h4><table>';
+	  var strA='<h4 style="color: #5988ED;display : inline-block">상온</h4><h4 style="color:#5988ED;font-family:CJLIGHT;display : inline-block">('+agentFName+')</h4><table>';
+	  var strF='<h4 style="color: #5988ED;display : inline-block">신선</h4><h4 style="color:#5988ED;font-family:CJLIGHT;display : inline-block">('+agentAName+')</h4><table>';
+	  
+	 
 	  $(document).ready(function(){
 		  printSaleList(slist);
 		  
