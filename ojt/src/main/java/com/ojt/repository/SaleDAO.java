@@ -15,5 +15,5 @@ public interface SaleDAO {
 	public void deleteBasket(int idx) throws Exception;
 	public void recAdd(SaleItemVO vo) throws Exception;
 	public List<SaleItemVO> showRecent(String memberid) throws Exception;
-	public List<SaleListVO> showSaleList(String memberid) throws Exception;
+	public List<SaleListVO> showSaleList(SaleItemVO vo) throws Exception;
 }

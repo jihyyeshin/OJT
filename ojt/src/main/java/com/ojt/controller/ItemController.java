@@ -50,12 +50,13 @@ public class ItemController {
 	// 대리점 별 아이템 , 가격 조회
 	@RequestMapping(value="/showItem")
 	public @ResponseBody DataSet showItem(@RequestParam int page, @RequestParam String agentF, 
-			@RequestParam String agentA) throws Exception {
+			@RequestParam String agentA, @RequestParam String memberid) throws Exception {
 		System.out.println("showItem");
 		DataSet set=new DataSet();
 		RecVO vo=new RecVO();
 		vo.setAgentF(agentF);
 		vo.setAgentA(agentA);
+		vo.setMemberid(memberid);
 		
 		int totCnt=service.getListCnt(vo);
 		

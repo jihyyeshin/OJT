@@ -57,7 +57,7 @@
 			<div class="blankDel"></div>
 			
 			<div class="lvl-list">
-				<h4 style="text-align:center;color:black;">이 상품은 어떤가요?</h4>
+				<h4 style="text-align:center;color:black;">이런 상품은 어떤가요?</h4>
 				<div class="con_bb">
 					<div class="leftarrow">
 						<a href="javascript:void(0)" id="prevL"> <img
@@ -122,7 +122,7 @@
 				dataType:"json",
 				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 				async:false,
-				data:"agentF="+agentF+"&agentA="+agentA+"&page="+page,
+				data:"agentF="+agentF+"&agentA="+agentA+"&memberid="+memberId+"&page="+page,
 				success: function(returnData){
 					console.log("success");
 					var data=returnData.list;

@@ -51,7 +51,7 @@ public class SaleServiceImpl implements SaleService {
 		return dao.showRecent(memberid);
 	}
 	@Override
-	public List<SaleListVO> showSaleList(String memberid) throws Exception{
-		return dao.showSaleList(memberid);
+	public List<SaleListVO> showSaleList(SaleItemVO vo) throws Exception{
+		return dao.showSaleList(vo);
 	}
 }

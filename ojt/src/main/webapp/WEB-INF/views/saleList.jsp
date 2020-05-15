@@ -16,16 +16,32 @@
 		<div onclick="location.href='./'" class="left"></div>
 		<h3 class="logo">나의 주문정보</h3>
 	</header>
-	<div class="deliv-list" id="saleList">
+
+	<div class="deliv-list">
+		<form class="center" method="post">
+			<div style="font-family: CJBOLD; margin-top: 10px; margin-bottom: 10px; text-align: center;">
+				날짜: <input type="date" id="delivDate" name="delivDate" style="width:50%;height:100%;">
+				<button type="button" class="btn" onclick="changeDate();">조회</button>
+			</div>
+		</form>
+		<div class="blankDel" id="texxt"></div>
+		<div id="saleList"></div>
 		
+
 	</div>
 	<script type="text/javascript">
 		var memberid=${param.memberid};
 		$(document).ready(function(){
-			showSaleList();
+			var nowDate=getNowDate();
+			$('#delivDate').val(nowDate);
+			showSaleList(nowDate);
 		});
-		
-		function showSaleList(){
+		function changeDate(){
+			var date=$('[name="delivDate"]');
+			//alert(date.val());
+			showSaleList(date.val());
+		}
+		function showSaleList(date){
 			if(memberid!=null){
 				$.ajax({
 					url:"./showSaleList",
@@ -33,10 +49,10 @@
 					dataType:"json",
 					contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 					async:false,
-					data:"memberid="+memberid,
+					data:"memberid="+memberid+"&date="+date,
 					success: function(data){
 						console.log("success");
-						print(data);
+						print(data, date);
 					},
 					error:function(request,status, error){
 						console.log("status:\n"+request.status+"\nerror:\n"+request.error);
@@ -51,55 +67,54 @@
 		function numberWithCommas(x) {
 		    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		}
-		function getNowDate(vary){
-			return new Date(new Date().setDate(new Date().getDate()+vary)).toJSON().slice(0,10);
+		function getNowDate(){
+			return new Date(new Date().setDate(new Date().getDate())).toJSON().slice(0,10);
 		}
 		// 주문 정보 출력
-		function print(data){
-			var str = new Array();
-			var buF = new Array();
-			var buA = new Array();
+		function print(data, date){
+			var str='<div class="sales center"><h4 style="text-align: center;">배송예정날짜: '+date+'</h4>';
+			var buF='';
+			var buA='';
+			var agentF;
+			var agentA;
 			var i=0;
-			for(i=0;i<3;i++){
-				buF[i]='';
-				buA[i]='';
-				str[i]='<div class="sales center"><h4 style="text-align: center;">배송예정날짜: '+getNowDate(i)+'</h4>';
-			}
+			
 			$.each(data, function(index, item){
 				var amounts=numberWithCommas(item.amt_amount);
 				
-				// 오늘, 내일, 모레 배송 건
-				for(i=0;i<3;i++){
-					if(item.dt_deliv == getNowDate(i)){
-						console.log(item.gbn_agent);
-						if(item.gbn_agent=='F'){
-							buF[i]+='<tr><td>'+item.nm_item+'</td>';
-							buF[i]+='<td>'+amounts+'원</td></tr>';
-						}else if(item.gbn_agent=='A'){
-							buA[i]+='<tr><td>'+item.nm_item+'</td>';
-							buA[i]+='<td>'+amounts+'원</td></tr>';
-						}
-					}
+				// 배송 건
+				if(item.gbn_agent=='F'){
+					buF+='<tr><td>'+item.nm_item+'</td>';
+					buF+='<td>'+amounts+'원</td></tr>';
+					agentF=item.nm_agentform;
+				}else if(item.gbn_agent=='A'){
+					buA+='<tr><td>'+item.nm_item+'</td>';
+					buA+='<td>'+amounts+'원</td></tr>';
+					agentA=item.nm_agentform;
 				}
 			});
 			// 신선
-			for(i=0;i<3;i++){
-				if(buF[i].length!=0) str[i]+=('<h4 style="color: #5988ED;">신선</h4><table>'+buF[i]+'</table>');
-				console.log(i+" F len: "+buF[i].length);
+			if(buF.length!=0) {
+				str+=('<h4 style="color:#5988ED;display : inline-block">신선 </h4>');
+				str+=('<h4 style="color:#5988ED;font-family:CJLIGHT;display : inline-block">('+agentF+')</h4>');
+				str+=('<table>'+buF+'</table>');
 			}
-			// 상온
-			for(i=0;i<3;i++){
-				if(buA[i].length!=0) str[i]+=('<h4 style="color: #5988ED;">상온</h4><table>'+buA[i]+'</table>');
-				console.log(i+" A len: "+buA[i].length);
-			}
-			// 전체
-			for(i=0;i<3;i++){
-				if(buF[i].length==0 && buA[i].length==0) str[i]='';
-				else str[i]+='</div><div class="blankDel"></div>';
-				$('#saleList').append(str[i]);
-				console.log(i+" str len: "+str[i].length);
-			}
+			//console.log(buF.length);
 			
+			// 상온
+			if(buA.length!=0) {
+				str+=('<h4 style="color:#5988ED;display : inline-block">상온  </h4>');
+				str+=('<h4 style="color:#5988ED;font-family:CJLIGHT;display : inline-block">('+agentA+')</h4>');
+				str+=('<table>'+buA+'</table>');
+			}
+			//console.log(buA.length);
+
+			// 전체
+			$('#saleList').html('');//초기화
+			if(buF.length==0 && buA.length==0) str='<div style="text-align:center;">해당 날짜에 주문 정보가 없습니다.</div>';
+			else str+='</div><div class="blankDel"></div>';
+			$('#saleList').append(str);
+			console.log(i+" str len: "+str.length);
 		}
 	</script>
 	

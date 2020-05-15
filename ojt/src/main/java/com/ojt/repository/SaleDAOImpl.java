@@ -49,7 +49,7 @@ public class SaleDAOImpl implements SaleDAO {
 		return sql.selectList(namespace+".showRecent", memberid);
 	}
 	@Override
-	public List<SaleListVO> showSaleList(String memberid) throws Exception{
-		return sql.selectList(namespace+".showSaleList", memberid);
+	public List<SaleListVO> showSaleList(SaleItemVO vo) throws Exception{
+		return sql.selectList(namespace+".showSaleList", vo);
 	}
 }

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ojt.domain.MemberVO;
+import com.ojt.domain.SaleItemVO;
 import com.ojt.domain.SaleListVO;
 import com.ojt.service.MemberService;
 import com.ojt.service.SaleService;
@@ -177,10 +178,13 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 	}
 
 	@RequestMapping(value = "/showSaleList")
-	public @ResponseBody List<SaleListVO> showSaleList(@RequestParam String memberid) throws Exception {
+	public @ResponseBody List<SaleListVO> showSaleList(@RequestParam String memberid, @RequestParam String date) throws Exception {
 		System.out.println("showSaleList");
 		System.out.println(memberid);
-		List<SaleListVO> list = service2.showSaleList(memberid);
+		SaleItemVO vo=new SaleItemVO();
+		vo.setMemberid(memberid);
+		vo.setDelivDate(date);
+		List<SaleListVO> list = service2.showSaleList(vo);
 		return list;
 	}
 }

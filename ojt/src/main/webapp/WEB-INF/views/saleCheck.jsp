@@ -72,7 +72,7 @@
 	  }
 	  function getNowDate(){
 			return new Date(new Date().setDate(new Date().getDate()+1)).toJSON().slice(0,10);
-		}
+	  }
 	  
 	  function printSaleList(slist){
 		  $.each(slist, function(index, item){

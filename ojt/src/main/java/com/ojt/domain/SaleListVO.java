@@ -6,7 +6,14 @@ public class SaleListVO {
 	private String cd_agent;
 	private String nm_item;
 	private int amt_amount;
+	private String nm_agentform;
 	
+	public String getNm_agentform() {
+		return nm_agentform;
+	}
+	public void setNm_agentform(String nm_agentform) {
+		this.nm_agentform = nm_agentform;
+	}
 	public String getDt_deliv() {
 		return dt_deliv;
 	}
