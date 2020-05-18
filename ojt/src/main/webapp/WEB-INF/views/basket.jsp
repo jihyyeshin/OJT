@@ -176,7 +176,7 @@
 				str += '<td></td>';
 				str += '</tr>';
 				str += '<tr>';
-				str += '<td><button type="submit" class="btn" style="width: 90%;" >그대로 주문하기</button></td>';
+				str += '<td><button type="submit" style="width: 90%;height:35px;border-radius: 3px;background-color:#d4d4d4;border:none;">그대로 주문하기</button></td>';
 				str += '</tr>';
 				str += '<tr style="height: 10px;">';
 				str += '<td></td>';

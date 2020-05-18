@@ -21,7 +21,7 @@
 		<form class="center" method="post">
 			<div style="font-family: CJBOLD; margin-top: 10px; margin-bottom: 10px; text-align: center;">
 				날짜: <input type="date" id="delivDate" name="delivDate" style="width:50%;height:100%;">
-				<button type="button" class="btn" onclick="changeDate();">조회</button>
+				<button type="button" onclick="changeDate();" style="height:100%;border-radius: 3px;background-color:#d4d4d4;border:none;">조회</button>
 			</div>
 		</form>
 		<div class="blankDel" id="texxt"></div>

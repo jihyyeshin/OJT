@@ -80,7 +80,7 @@
 			<div class="blankDel"></div>
 			
 			<div id="itemList" style="position:relative;top:5px;bottom:10px;"></div>
-			<button type="button" onclick="pagingItem()" class="btn" style="width:100%;border-radius: 0px;">더보기</button>
+			<button type="button" onclick="pagingItem()" style="height:40px;width:100%;background-color:#d4d4d4;border:none;">더보기</button>
 		</div> 
 		
 		<button id="footerL" type="submit" onclick="javascipt: form.action='./items/saleCheck'">주문하기</button>
