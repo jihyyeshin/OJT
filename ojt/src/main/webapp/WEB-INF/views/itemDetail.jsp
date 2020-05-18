@@ -4,7 +4,7 @@
 <html>
 <head>
 <%@ include file="./header.jsp" %>
- <link href="<c:url value="/resources/css/item.css" />" rel="stylesheet">  
+ <link href="<c:url value="/resources/css/item.css" />" rel="stylesheet">    
 <title>item detail</title>
 </head>
 <body>
