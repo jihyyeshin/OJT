@@ -137,10 +137,9 @@
 					str += '<td id="title">' + item.name + '</td>';
 					str += '<td style="width: 15%;"><input type="button" value="X" onclick="delete_func('+ item.idx + ');"/></td></tr>'
 					str += '<tr><td></td><td style="width:75%;font-family:CJBOLD;color:#FF7272;">'
-						+ numberWithCommas(item.price)+ '(원) * '+ item.qty + '(개)</td><td></td></tr></table>';
+						+ numberWithCommas(item.price)+ '(원) * <input type="text" name="qty" value="'+item.qty+'" style="width:50px;"> (개)</td><td></td></tr></table>';
 					str += '<input type="hidden" name="idx" value="'+item.idx+'">';
 					str += '<input type="hidden" name="agent" value="'+item.agent+'">';
-					str += '<input type="hidden" name="qty" value="'+item.qty+'">';
 					str += '<input type="hidden" name="amount" value="'+item.price+'">';
 					str += '<input type="hidden" name="name" value="'+item.name+'">';
 					$('#itemList').append(str);
@@ -160,8 +159,8 @@
 				$.each(data,function(index, item) {
 					var str = '<tr style="border-top:1px solid #d4d4d4;">';
 					str += '<td style="width: 50%;">'+item.name+'</td>';
-					str += '<td style="width: 50%;">'+numberWithCommas(item.price)+'(원) * '+item.qty+'(개)</td>';
-					str += '<input type="hidden" name="qtyS" value="'+item.qty+'">';
+					str += '<td style="width: 50%;">'+numberWithCommas(item.price)+'원';
+					str += '<br/>* <input type="text" name="qtyS" value="'+item.qty+'" style="width:50px;">개</td>';
 					str += '<input type="hidden" name="amountS" value="'+item.price+'">';
 					str += '<input type="hidden" name="itemchkS" value="'+item.item+'">';
 					str += '<input type="hidden" name="agentS" value="'+item.agent+'">';

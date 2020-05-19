@@ -84,11 +84,10 @@
 			  if(item.gbn_agent=='F'){
 				  str=   '<tr>'
 				  str += '<td>'+item.name+'</td>';
-				  str += '<td>'+numberWithCommas(item.amount)+'원</td>'
+				  str += '<td>'+numberWithCommas(item.price)+' * '+item.qty+' 원</td>'
 				  str += '<td><input type="hidden" name="qty" value="'+item.qty+'"></td>';
 				  str += '<td><input type="hidden" name="amount" value="'+item.price+'"></td>';
 				  str += '<td><input type="hidden" name="itemchk" value="'+item.item+'"></td>';
-				  str += '<td><input type="hidden" name="amount" value="'+item.amount+'"></td>';
 				  str += '<td><input type="hidden" name="agent" value="'+item.agent+'"></td>';
 				  str += '<td><input type="hidden" name="name" value="'+item.name+'"></td>';
 				  str += '<td><input type="hidden" name="idx" value="'+item.idx+'"></td>';
@@ -98,11 +97,10 @@
 			  }else{ // 상온인 경우
 				  str=   '<tr>'
 				  str += '<td>'+item.name+'</td>';
-				  str += '<td>'+numberWithCommas(item.amount)+'원</td>'
+				  str += '<td>'+numberWithCommas(item.price)+' * '+item.qty+' 원</td>'
 				  str += '<td><input type="hidden" name="qty" value="'+item.qty+'"></td>';
 				  str += '<td><input type="hidden" name="amount" value="'+item.price+'"></td>';
 				  str += '<td><input type="hidden" name="itemchk" value="'+item.item+'"></td>';
-				  str += '<td><input type="hidden" name="amount" value="'+item.amount+'"></td>';
 				  str += '<td><input type="hidden" name="agent" value="'+item.agent+'"></td>';
 				  str += '<td><input type="hidden" name="name" value="'+item.name+'"></td>';
 				  str += '<td><input type="hidden" name="idx" value="'+item.idx+'"></td>';
