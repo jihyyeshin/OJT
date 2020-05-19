@@ -204,9 +204,9 @@
 			var src=item.src;
 			if(src == "") src="<c:url value="/resources/img/CJ_logo_black.png" />";
 			var amounts=numberWithCommas(item.amount);
-			var str='<table style="float:left;width:50%;height:300px;border-bottom:1px solid #d4d4d4;';
-			if(index %2 == 0) str += 'border-right:1px solid #d4d4d4;">';
-			else str+= '">';
+			var str='<table style="float:left;width:50%;height:300px;border-bottom:1px solid #d4d4d4;border-right:1px solid #d4d4d4;">';
+			//if(index %2 == 0) str += 'border-right:1px solid #d4d4d4;">';
+			//else str+= '">';
 			str+=	'<tbody>';
 			str+=	'<tr>';
 			str+=	'<td>';
@@ -313,54 +313,54 @@
 	    var name=document.getElementsByName("name");
 	    
 	    var checkFalse=0;
+	    var False=0;
 	    if (typeof(itemchk.length) == 'undefined') //단일
 	    {
-	    	alert(qty[0].value);
-	        if (itemchk[0].checked==false)
-	        {
-	        	name[0].disabled=true;
-	        	amount[0].disabled=true;
-	            qty[0].disabled=true;
-	            agent[0].disabled=true;
-	        }else{ // 예외처리: 체크만 하고, 수량을 입력하지 않았을 때
-	        	checkFalse++;
-	            if(qty[0].value == null || qty[0].value == '' ){
-		        	alert("수량을 입력하세요");
-		        	location.reload();
-		        	return false;
-	            }
+	        if (itemchk[0].checked==true){
+		        checkFalse++;
+		        if(qty[0].value == null || qty[0].value == '' ){
+			        alert("수량을 입력하세요");
+			        return false;
+		        }
 	        }
 	        if(checkFalse==0){// 예외처리: check된 것이 없을 때
 	    		alert("상품을 선택해주세요.");
-	        	location.reload();
 	        	return false;
 	    	}
+	        if (itemchk[0].checked==false)
+		    {
+		       name[0].disabled=true;
+		       amount[0].disabled=true;
+			   qty[0].disabled=true;
+			   agent[0].disabled=true;
+		    }
 	    } else {
 	    	//다중
 	        for (i=0; i<itemchk.length; i++)
 	        {	
-	        	if (itemchk[i].checked==false)
-		        {
-	        		
-		           	name[i].disabled=true;
-		            amount[i].disabled=true;
-			        qty[i].disabled=true;
-			        agent[i].disabled=true;
-		        }else{ // 예외처리: 체크만 하고, 수량을 입력하지 않았을 때
+	        	if (itemchk[i].checked==true){
 		        	checkFalse++;
 		            if(qty[i].value == null || qty[i].value == '' ){
 			        	alert("수량을 입력하세요");
-			        	location.reload();
 			        	return false;
 		            }
 		        }
 	        }
-	    	if(checkFalse==0){// 예외처리: check된 것이 없을 때
+	        if(checkFalse==0){// 예외처리: check된 것이 없을 때
 	    		alert("상품을 선택해주세요.");
-	        	location.reload();
 	        	return false;
 	    	}
+	        for (i=0; i<itemchk.length; i++){
+	        	if (itemchk[i].checked==false)
+		        {
+		           	name[i].disabled=true;
+		            amount[i].disabled=true;
+			        qty[i].disabled=true;
+			        agent[i].disabled=true;
+		        }
+	        }
 	    }
+	    
 	    if(sub == "insertBasket") alert("장바구니 추가");
 		
 	    return true;
