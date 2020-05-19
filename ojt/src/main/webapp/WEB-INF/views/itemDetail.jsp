@@ -19,10 +19,7 @@
 		<p></p>
 		<div style="margin-left:20px;margin-right:20px;">
 			<h4 style="text-align:center;font-size:1.2rem;"> ${item.name}</h4>
-			<p style="text-align:center;"> ${item.remark}</p>
 		</div>
-		
-		
 		
 		<form method="post" name="form">
 			<div style="margin-left:20px;margin-right:20px;">
