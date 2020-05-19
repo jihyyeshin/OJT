@@ -124,7 +124,7 @@
 	function calcResult(){
 		loc=$("#addr").val();
 		if(loc=="" || loc==null || loc==undefined)
-			alert("주소를 입력하세요.")
+			alert("주소를 입력하세요.");
 		else {
 			locCalc('A');
 			locCalc('F');
@@ -135,7 +135,6 @@
 		var gbnVal;
 		if(gbn=='A') gbnVal="신선";
 		else if(gbn=='F') gbnVal="상온";
-		//$("#result").html("위치를 입력하세요.");
 		var locArray=loc.split(' ');
 		if(locArray[1]==undefined || locArray[1]=="" || locArray[1]==null)
 			loc=locArray[0];
@@ -173,6 +172,7 @@
 						},
 						complete:function(data){
 							console.log("complete");
+							if (gbn=='F') alert('대리점이 할당되었습니다.');
 						}
 				});
 			} 

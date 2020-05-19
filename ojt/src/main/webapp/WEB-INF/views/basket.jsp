@@ -41,7 +41,7 @@
 	</div>
 
 	<script type="text/javascript">
-		var memberid = ${param.memberid};
+		var memberid = "${param.memberid}";
 
 		// 로드되자마자
 		document.addEventListener("DOMContentLoaded", function() {
@@ -136,8 +136,8 @@
 					var str = '<table style="border-bottom:1px solid #d4d4d4;width:100%;"><tr><td style="text-align: center;"><input type="checkbox" name="itemchk" value="'+item.item+'"></td>';
 					str += '<td id="title">' + item.name + '</td>';
 					str += '<td style="width: 15%;"><input type="button" value="X" onclick="delete_func('+ item.idx + ');"/></td></tr>'
-					str += '<tr><td></td><td style="width:75%;font-family:CJBOLD;color:#FF7272;">'
-						+ numberWithCommas(item.price)+ '(원) * <input type="text" name="qty" value="'+item.qty+'" style="width:50px;"> (개)</td><td></td></tr></table>';
+					str += '<tr><td></td><td style="text-align:right;width:75%;font-family:CJBOLD;color:#FF7272;">'
+						+ numberWithCommas(item.price)+ '(원) * <input type="text" name="qty" value="'+item.qty+'" style="width:50px;"> (개)&nbsp&nbsp&nbsp</td><td></td></tr></table>';
 					str += '<input type="hidden" name="idx" value="'+item.idx+'">';
 					str += '<input type="hidden" name="agent" value="'+item.agent+'">';
 					str += '<input type="hidden" name="amount" value="'+item.price+'">';
@@ -166,7 +166,6 @@
 					str += '<input type="hidden" name="agentS" value="'+item.agent+'">';
 					str += '<input type="hidden" name="nameS" value="'+item.name+'">';
 					str += '</tr>';
-						
 					$('#recentList').append(str);
 				
 				});

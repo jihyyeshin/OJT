@@ -89,9 +89,9 @@
 	
 	<script type="text/javascript">
 
-	var agentF=${param.agentF};
-	var agentA=${param.agentA};
-	var memberId=${param.memberid};
+	var agentF="${param.agentF}";
+	var agentA="${param.agentA}";
+	var memberId="${param.memberid}";
 	
 	var page=1;
 /********************************************************** ready Func **********************************************************/
@@ -215,7 +215,7 @@
 			str+=	'<input type="checkbox" name="itemchk" value="'+item.item+'">';
 			str+=	'</div>';
 			str+=	'<div style="width: 100%;">';
-			str+=	'<img src="'+src+'" class="center" style="height:100px;">';
+			str+=	'<img src="'+src+'" class="center" width="100" height="100">';
 			str+=	'</div>';
 			str+=	'</td>';
 			str+=	'</tr>';
@@ -256,7 +256,6 @@
 			str += '<h4><a id="title" href="javascript:goDetail('+item.item+', '+item.agent+');">'+item.name+'</a></h4>';
 			str += '<p style="color:#6B99FC;font-family:CJBOLD">' + numberWithCommas(item.amount) + '원</p>';
 			str += '</td>';
-			/* str += '<input type="hidden" name="itemchk" value="'+item.item+'">'; */
 			str += '</tr>';
 			str += '</table>';
 			str += '</li>';

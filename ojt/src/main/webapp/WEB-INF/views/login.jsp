@@ -28,7 +28,9 @@
 	</c:if>
 	<c:if test="${member != null }">
 	<h1> ${member.name}님 환영합니다.</h1>
-	<p>하단 버튼을 눌러 상품을 주문해보세요!</p>
+	<p>하단 버튼을 눌러 상품을 주문해보세요!
+	<br/>(신선: ${member.agentF } , 상온: ${member.agentA})</p>
+	
 	<form action="./items" method="post">
 		<input type="hidden" name="agentF" value="${member.agentF}"/>
 		<input type="hidden" name="agentA" value="${member.agentA}"/>

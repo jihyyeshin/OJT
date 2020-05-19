@@ -30,7 +30,7 @@
 
 	</div>
 	<script type="text/javascript">
-		var memberid=${param.memberid};
+		var memberid="${param.memberid}";
 		$(document).ready(function(){
 			var nowDate=getNowDate();
 			$('#delivDate').val(nowDate);
@@ -99,7 +99,6 @@
 				str+=('<h4 style="color:#5988ED;font-family:CJLIGHT;display : inline-block">('+agentF+')</h4>');
 				str+=('<table>'+buF+'</table>');
 			}
-			//console.log(buF.length);
 			
 			// 상온
 			if(buA.length!=0) {

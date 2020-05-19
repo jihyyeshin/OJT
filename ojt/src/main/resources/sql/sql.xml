@@ -152,7 +152,7 @@
 
 <!-- 추천 엔진: 대리점 아이템 추천 -->
 <select id="itemRecommendList" parameterType="com.ojt.domain.RecVO" resultType="com.ojt.domain.ItemVO" >
-	select distinct(m1.cd_item),m1.cd_agent, m1.nm_item, m1.remark, m1.amt_amount, m1.src,  
+	<!-- select distinct(m1.cd_item),m1.cd_agent, m1.nm_item, m1.remark, m1.amt_amount, m1.src,  
 		(case when sqrt(SUM(r1.isSold))*sqrt(SUM(r2.isSold))=0 then 0 else SUM(r1.isSold * r2.isSold)/(sqrt(SUM(r1.isSold))*sqrt(SUM(r2.isSold))) end) as result
 	from ms_agentitem m1, (select cd_item, sum(qty_delivtot) selTot
 							from sl_saleitem
@@ -164,6 +164,21 @@
 	where m1.cd_item=r1.cd_item and m2.cd_item=r2.cd_item and m1.cd_item != m2.cd_item and (m1.cd_agent=#{agentF} or m1.cd_agent=#{agentA})
 	group by m1.cd_item, m1.nm_item, m1.remark, m1.amt_amount, m1.src, m1.cd_agent
 	order by result DESC
+	limit 6; -->
+	select distinct(m1.cd_item),m1.cd_agent, m1.nm_item, m1.remark, m1.amt_amount, m1.src, cc.cnt,
+		(case when sqrt(SUM(r1.isSold))*sqrt(SUM(r2.isSold))=0 then 0 else SUM(r1.isSold * r2.isSold)/(sqrt(SUM(r1.isSold))*sqrt(SUM(r2.isSold))) end) as result
+	from rec r1 inner join rec r2 on r1.member=r2.member
+				inner join ms_agentitem m1 on m1.cd_item=r1.cd_item
+				inner join (select cd_item, sum(qty_delivtot) selTot
+							from sl_saleitem
+							where cd_customer=#{memberid}
+							group by cd_item
+							order by selTot desc
+							limit 3) m2 on m2.cd_item=r2.cd_item
+				inner join (SELECT cd_item, count(*) cnt from sl_saleitem group by cd_item) cc on cc.cd_item=m1.cd_item
+	where m1.cd_item != m2.cd_item and (m1.cd_agent=#{agentF} or m1.cd_agent=#{agentA})
+	group by m1.cd_item, m1.nm_item, m1.remark, m1.amt_amount, m1.src, m1.cd_agent, cc.cnt
+	order by result desc, cnt desc
 	limit 6;
 </select>
 
@@ -270,9 +285,15 @@ limit 1;
 
 <!-- 장바구니 - 최근 주문 아이템 조회 -->
 <select id="showRecent" resultType="com.ojt.domain.SaleItemVO">
-	select s.dt_sale,s.cd_agent agent,s.cd_item item,s.qty_delivTot qty, s.amt_price price, (select nm_item from ms_agentitem where cd_item=s.cd_item) as name
+	<!-- select s.dt_sale,s.cd_agent agent,s.cd_item item,s.qty_delivTot qty, s.amt_price price, (select nm_item from ms_agentitem where cd_item=s.cd_item) as name
 	from sl_saleitem s
 	where s.no_saleslip=(select no_saleslip from sl_sale where cd_customer=#{memberid} order by no_saleslip desc limit 1) and s.cd_customer=#{memberid}
+	order by s.seq asc; -->
+	select s.dt_sale,s.cd_agent agent,s.cd_item item,s.qty_delivTot qty, s.amt_price price, m.nm_item as name
+	from sl_saleitem s inner join (select no_saleslip from sl_sale where cd_customer=#{memberid}
+						order by no_saleslip desc limit 1) as ss on s.no_saleslip=ss.no_saleslip
+					   inner join ms_agentitem m on s.cd_item=m.cd_item
+	where s.cd_customer=#{memberid}
 	order by s.seq asc;
 </select>
 
