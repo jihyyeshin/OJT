@@ -26,17 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.DomElement;
-import com.gargoylesoftware.htmlunit.html.DomNodeList;
-import com.gargoylesoftware.htmlunit.html.HtmlButton;
-import com.gargoylesoftware.htmlunit.html.HtmlButtonInput;
-import com.gargoylesoftware.htmlunit.html.HtmlDivision;
-import com.gargoylesoftware.htmlunit.html.HtmlForm;
-import com.gargoylesoftware.htmlunit.html.HtmlImage;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.html.HtmlTable;
-import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
+//import com.gargoylesoftware.htmlunit.*;
 import com.ojt.domain.DataSet;
 import com.ojt.domain.ItemVO;
 import com.ojt.domain.RecVO;
@@ -176,15 +166,28 @@ public class ItemController {
 			
 		Document googleDocument = response.parse();
 		
-		String text=googleDocument.select("script").html();
+		String text=googleDocument.html();
 		
-		System.out.println("!!!!!!!d!!!!!!"+googleDocument.html().contains("key: 'ds:1'"));
-		System.out.println("!!!!!!!!!!!!!!!!"+googleDocument.select("body:contains(key: 'ds:1')"));
+		System.out.println("!!!!!!!1!!!!!!"+googleDocument.html().contains("https://encrypted"));
+		
+		System.out.println("!!!!!!!!"+googleDocument.html().indexOf("http://chinalife.co.kr/files/goods/01_14966.png"));
+		int idx=googleDocument.html().indexOf("https://encrypted");
+		String src="";
+		for(int i=idx;i<idx+1000;i++) {
+			char a=googleDocument.html().charAt(i);
+			if(a != '\"') {
+				src+=a;
+				System.out.print(a);
+			}
+			else break;
+		}
+		
+		
 		try {
 			String fileNm ="C:\\Users\\User\\Downloads\\Text\\t4.txt";
 			File file = new File(fileNm);
 
-			FileWriter fileWrite = new FileWriter(file, true);
+			FileWriter fileWrite = new FileWriter(file, false);
 			fileWrite.write(text);
 	
 			fileWrite.flush(); 
@@ -202,13 +205,13 @@ public class ItemController {
 		
 		
 		
-		Element id=googleDocument.select("div[class=isv-r PNCib MSM1fd BUooTd]").first();
+		//Element id=googleDocument.select("div[class=isv-r PNCib MSM1fd BUooTd]").first();
 		//String attr=id.attr("data-tbnid");
 		
 		//url+=("#imgrc="+attr);
-		System.out.println("url:+"+url);
+		//System.out.println("url:+"+url);
 
-		String src="";
+		
 		//System.out.println(googleDocument.select("img[class=rg_i Q4LuWd]"));
 		//src=googleDocument.select("img[class=rg_i Q4LuWd tx8vtf]").first().attr("src");
 		//googleDocument.getElementsByAttributeValueContaining(key, match)
