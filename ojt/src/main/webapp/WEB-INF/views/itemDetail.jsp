@@ -15,7 +15,9 @@
 	</header>
 	
 	<div class="view">
-		<img src="${src} " width="100%"></img>
+	
+		<img src="${src}" width="100%" style="max-height:60%;"></img>
+		
 		<p></p>
 		<div style="margin-left:20px;margin-right:20px;">
 			<h4 style="text-align:center;font-size:1.2rem;"> ${item.name}</h4>
@@ -33,8 +35,8 @@
 				
 				<input type="hidden" name="name" value="${item.name}"/>
 				<input type="hidden" name="amount" value="${item.amount}"/>
-				<a href="${LowestUrl} " style="text-decoration: underline;
-					color:#474747;font-size:1.2rem;">인터넷 최저가 ${LowestCost}원</a>
+				<a href="${LowestUrl} " target="_blank" style="text-decoration: underline;
+					color:#474747;font-size:1.2rem;">인터넷 최저가 ${LowestCost}</a>
 			</div>
 			<button id="footer" type="submit" onclick="javascipt: form.action='./insertBasket'">장바구니넣기</button>
 		</form>

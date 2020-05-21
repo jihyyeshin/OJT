@@ -12,6 +12,7 @@
 <title>주문</title>
 </head>
 <body>
+<%-- <div id="loading"><img id="loading-image" src="<c:url value="/resources/img/ajax-loader.gif" />" alt="Loading..." /></div> --%>
 	<header id="header" style="height:85px;">
 		<div onclick="location.href='./'" class="left"></div>
 		<h3 class="logo">상품 주문</h3>
@@ -204,9 +205,7 @@
 			var src=item.src;
 			if(src == "") src="<c:url value="/resources/img/CJ_logo_black.png" />";
 			var amounts=numberWithCommas(item.amount);
-			var str='<table style="float:left;width:50%;height:300px;border-bottom:1px solid #d4d4d4;border-right:1px solid #d4d4d4;">';
-			//if(index %2 == 0) str += 'border-right:1px solid #d4d4d4;">';
-			//else str+= '">';
+			var str='<table style="float:left;width:50%;height:350px;border-bottom:1px solid #d4d4d4;border-right:1px solid #d4d4d4;">';
 			str+=	'<tbody>';
 			str+=	'<tr>';
 			str+=	'<td>';
@@ -215,7 +214,7 @@
 			str+=	'<input type="checkbox" name="itemchk" value="'+item.item+'">';
 			str+=	'</div>';
 			str+=	'<div style="width: 100%;">';
-			str+=	'<img src="'+src+'" class="center" width="100" height="100">';
+			str+=	'<a id="title" href="javascript:goDetail('+item.item+', '+item.agent+');"><img src="'+src+'" class="center">'+'</a>';
 			str+=	'</div>';
 			str+=	'</td>';
 			str+=	'</tr>';
@@ -228,9 +227,9 @@
 			str+=	'<tr>';
 			str+=	'<td><input type="text" name="qty" style="width: 50%;">개</td>';
 			str+=	'</tr>';
-			str+=	'<tr>';
+			/* str+=	'<tr>';
 			str+=	'<td>&nbsp;&nbsp;</td>';
-			str+=	'</tr>';
+			str+=	'</tr>'; */
 			str+=	'</tbody>';
 			str+=	'</table>';
 			str += '<input type="hidden" name="amount" value="'+item.amount+'">';

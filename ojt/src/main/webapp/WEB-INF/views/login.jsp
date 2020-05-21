@@ -9,9 +9,8 @@
  <link href="<c:url value="/resources/css/login.css" />" rel="stylesheet">
 </head>
 <body class="text-center">
-
 <div class="form-login">
-	<img class="mb-4" src="<c:url value="/resources/img/CJ_logo.png" />" alt="" width="100" height="88">
+	<img class="mb-4" src="<c:url value="/resources/img/CJ_Corporation.png" />" alt="" width="200">
 	<c:if test="${member == null }">
 
 	<form role="form" method="post" autocomplete="off" action="./login">
@@ -45,6 +44,7 @@
 	<p><a href="./logout" class="link">로그아웃</a></p>
 	</c:if>
 	<p style="color:blue;font-family: CJLIGHT;">${msg}</p>
+	<img class="mb-4" src="<c:url value="/resources/img/CJ_CheilJedang.jpg" />" alt="" width="100">
 </div>
 </body>
 </html>
