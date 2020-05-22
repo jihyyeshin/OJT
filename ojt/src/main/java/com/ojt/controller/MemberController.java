@@ -1,5 +1,6 @@
 package com.ojt.controller;
 
+import java.security.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -12,10 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ojt.domain.MemberVO;
@@ -56,11 +54,14 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 	@RequestMapping(value="/signup", method=RequestMethod.POST)
 	public String postSignup(MemberVO vo, RedirectAttributes rttr) throws Exception{
 		System.out.println("post signup");
-		
+		// 암호화 하여 저장
+		String buf=encryptSHA256(vo.getPassword());
+		vo.setPassword(buf);
+		//System.out.println("this is pw:"+buf);
 		try {
 			service.signup(vo);
 		} catch (Exception e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 			rttr.addFlashAttribute("msg", "이미 존재하는 아이디입니다.\n다시 회원가입 해주세요.");
 			return "redirect:/"; // 처음 화면으로 
 		}
@@ -78,6 +79,9 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 		Logger.info("post login");
 		 
 		HttpSession session = req.getSession();
+		// 동일하게 암호화해서 확인
+		String buf=encryptSHA256(vo.getPassword());
+		vo.setPassword(buf);
 		// 로그인 정보 가져오기
 		MemberVO login = service.login(vo);
 		// 아이디, 비밀번호를 잘못 입력한 경우
@@ -187,4 +191,30 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 		List<SaleListVO> list = service2.showSaleList(vo);
 		return list;
 	}
+	
+	
+	public String encryptSHA256(String str){
+	
+	    String sha = "";
+	
+	    try{
+	       MessageDigest sh = MessageDigest.getInstance("SHA-256");
+	       sh.update(str.getBytes());
+	       byte byteData[] = sh.digest();
+	       StringBuffer sb = new StringBuffer();
+	       for(int i = 0 ; i < byteData.length ; i++){
+	           sb.append(Integer.toString((byteData[i]&0xff) + 0x100, 16).substring(1));
+	       }
+	
+	       sha = sb.toString();
+	
+	   }catch(NoSuchAlgorithmException e){
+	       //e.printStackTrace();
+	       System.out.println("Encrypt Error - NoSuchAlgorithmException");
+	       sha = null;
+	   }
+	
+	   return sha;
+	 } 
 }
+
