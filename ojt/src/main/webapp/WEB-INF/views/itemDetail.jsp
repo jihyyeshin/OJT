@@ -25,7 +25,7 @@
 			<h4 style="text-align:center;font-size:1.2rem;"> ${item.name}</h4>
 		</div>
 		
-		<form method="post" name="form">
+		<form method="post" onsubmit="return _submit();" name="form">
 			<div style="margin-left:20px;margin-right:20px;">
 				<input type="hidden" name="itemDiv" id="itemDiv" value="${item.item}"/>
 				<p>수량: <input type="text" name="qty" id="qty"/>개</p>
@@ -55,6 +55,12 @@
 	
 	function numberWithCommas(x) {
 	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+	
+	function _submit()
+	{	alert("장바구니 추가");
+			
+		    return true;
 	}
 	
 	</script>

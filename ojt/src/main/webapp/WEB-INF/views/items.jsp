@@ -340,6 +340,7 @@
 	        {	
 	        	if (itemchk[i].checked==true){
 		        	checkFalse++;
+		        	// 예외처리: 수량이 없을 때
 		            if(qty[i].value == null || qty[i].value == '' ){
 			        	alert("수량을 입력하세요");
 			        	return false;

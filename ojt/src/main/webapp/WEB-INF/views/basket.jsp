@@ -29,7 +29,7 @@
 		<div class="blankDel"></div>
 		<div style="height: 10px; width: 100%; background-color: white;"></div>
 
-		<form method="post" onsubmit="_submit();" id="basketSale">
+		<form method="post" onsubmit="return _submit();" id="basketSale">
 			<div id="itemList" class="basket-list"></div>
 			<button id="footer" type="submit"
 				onclick="javascipt: form.action='./saleCheck'">주문하기</button>
@@ -192,24 +192,54 @@
 			var idx = document.getElementsByName("idx");
 			var agent = document.getElementsByName("agent");
 			var name=document.getElementsByName("name");
+			
+			var checkFalse=0;
+	
 			if (typeof (itemchk.length) == 'undefined') //단일
 			{
+				if (itemchk[0].checked == true) {
+					checkFalse++;
+					// 예외처리: 수량이 없을 때
+					if (qty[0].value == null || qty[0].value == '') {
+						alert("수량을 입력하세요");
+						return false;
+					}
+				}
+				if(checkFalse==0){// 예외처리: check된 것이 없을 때
+		    		alert("상품을 선택해주세요.");
+		        	return false;
+		    	}
 				if (itemchk[0].checked == false) {
 					idx[0].disabled = true;
 					amount[0].disabled = true;
 					qty[0].disabled = true;
 					agent[0].disabled = true;
-					name[0].disabled=true;
+					name[0].disabled = true;
 				}
 			} else {
 				//다중
+		        for (i=0; i<itemchk.length; i++)
+		        {	
+		        	if (itemchk[i].checked==true){
+			        	checkFalse++;
+			        	// 예외처리: 수량이 없을 때
+			            if(qty[i].value == null || qty[i].value == '' ){
+				        	alert("수량을 입력하세요");
+				        	return false;
+			            }
+			        }
+		        }
+		        if(checkFalse==0){// 예외처리: check된 것이 없을 때
+		    		alert("상품을 선택해주세요.");
+		        	return false;
+		    	}
 				for (i = 0; i < itemchk.length; i++) {
 					if (itemchk[i].checked == false) {
 						idx[i].disabled = true;
 						amount[i].disabled = true;
 						qty[i].disabled = true;
 						agent[i].disabled = true;
-						name[i].disabled=true;
+						name[i].disabled = true;
 					}
 				}
 			}
