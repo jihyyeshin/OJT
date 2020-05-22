@@ -44,6 +44,7 @@
 	<p><a href="./logout" class="link">로그아웃</a></p>
 	</c:if>
 	<p style="color:blue;font-family: CJLIGHT;">${msg}</p>
+	<br/><br/><br/>
 	<img class="mb-4" src="<c:url value="/resources/img/CJ_CheilJedang.jpg" />" alt="" width="100">
 </div>
 </body>

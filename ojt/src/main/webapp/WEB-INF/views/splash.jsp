@@ -8,7 +8,12 @@
 <title>splash</title>
 </head>
 
-<body>
-	<img class="mb-4" src="<c:url value="/resources/img/CJ_logo.png" />"alt="" width="100" height="88">
+<body class="text-center">
+<div class="form-login">
+	<img class="mb-4" src="<c:url value="/resources/img/CJ_logo.png" />" alt="" width="300">
+	<br/><br/><br/><br/><br/><br/><br/><br/><br/>
+	
+	<img class="mb-4" src="<c:url value="/resources/img/CJ_CheilJedang.jpg" />" alt="" width="100">
+</div>
 </body>
 </html>

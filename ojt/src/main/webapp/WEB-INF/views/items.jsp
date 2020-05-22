@@ -228,9 +228,9 @@
 			str+=	'<tr>';
 			str+=	'<td><input type="text" name="qty" style="width: 50%;">개</td>';
 			str+=	'</tr>';
-			/* str+=	'<tr>';
+			str+=	'<tr>';
 			str+=	'<td>&nbsp;&nbsp;</td>';
-			str+=	'</tr>'; */
+			str+=	'</tr>';
 			str+=	'</tbody>';
 			str+=	'</table>';
 			str += '<input type="hidden" name="amount" value="'+item.amount+'">';
