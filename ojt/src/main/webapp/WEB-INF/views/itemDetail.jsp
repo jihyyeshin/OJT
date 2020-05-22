@@ -15,9 +15,9 @@
 	</header>
 	
 	<div class="view">		
-		<div style="position:relative;height: 320px;overflow:hidden;">		
-			<img src="<c:url value="${src}" />" width="100%" 
-			style="position:absolute;width:320px;max-height:100%;margin:auto;top:0;bottom:0;left:0;right:0;"></img>	
+		<div id="imgDiv" style="position:relative;overflow:hidden;">		
+			<img id="imm" src="<c:url value="${src}" />" 
+			style="position:absolute;max-height:100%;margin:auto;top:0;bottom:0;left:0;right:0;"></img>	
 		</div>
 		
 		<p></p>
@@ -44,8 +44,11 @@
 		</form>
 	</div>
 	<script type="text/javascript">
-	
 	$(document).ready(function(){
+		var width=$(document).width();
+		$('#imgDiv').css("height", width);
+		$('#imm').css("width", width);
+		
 		var amounts=${item.amount};
 		$('#amounts').html(numberWithCommas(amounts)+"원");
 	});
