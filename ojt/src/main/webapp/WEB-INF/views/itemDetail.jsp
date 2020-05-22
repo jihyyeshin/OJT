@@ -14,11 +14,11 @@
 		
 	</header>
 	
-	<div class="view">
-	
-		<%-- <img src="${src}" width="100%" style="max-height:60%;"></img> --%>
-		
-		<img src="<c:url value="${src}" />" width="100%" style="max-height:60%;"></img>
+	<div class="view">		
+		<div style="position:relative;height: 320px;overflow:hidden;">		
+			<img src="<c:url value="${src}" />" width="100%" 
+			style="position:absolute;width:320px;max-height:100%;margin:auto;top:0;bottom:0;left:0;right:0;"></img>	
+		</div>
 		
 		<p></p>
 		<div style="margin-left:20px;margin-right:20px;">
