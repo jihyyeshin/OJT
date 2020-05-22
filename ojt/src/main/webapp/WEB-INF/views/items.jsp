@@ -206,7 +206,7 @@
 			var width=$(document).width() / 2;
 			if(src == "") src="<c:url value="/resources/img/CJ_logo_black.png" />";
 			var amounts=numberWithCommas(item.amount);
-			var str='<table style="float:left;width:50%;height:350px;border-bottom:1px solid #d4d4d4;border-right:1px solid #d4d4d4;">';
+			var str='<table style="float:left;width:50%;height:360px;border-bottom:1px solid #d4d4d4;border-right:1px solid #d4d4d4;">';
 			str+=	'<tbody>';
 			str+=	'<tr>';
 			str+=	'<td>';
@@ -220,17 +220,17 @@
 			str+=	'</td>';
 			str+=	'</tr>';
 			str+=	'<tr>';
-			str+=	'<td><a id="title" href="javascript:goDetail('+item.item+', '+item.agent+');">'+item.name+'</a></td>';
+			str+=	'<td style="height:65px;"><a id="title" href="javascript:goDetail('+item.item+', '+item.agent+');">'+item.name+'</a></td>';
 			str+=	'</tr>';
 			str+=	'<tr>';
-			str+=	'<td style="font-family: CJBOLD;color:#FF7272;">' + amounts + '원</td>';
+			str+=	'<td style="font-family: CJBOLD;color:#FF7272;height:40px;">' + amounts + '원</td>';
 			str+=	'</tr>';
 			str+=	'<tr>';
-			str+=	'<td><input type="text" name="qty" style="width: 50%;">개</td>';
+			str+=	'<td style="height:45px;"><input type="text" name="qty" style="width: 50%;">개</td>';
 			str+=	'</tr>';
-			str+=	'<tr>';
+			/* str+=	'<tr>';
 			str+=	'<td>&nbsp;&nbsp;</td>';
-			str+=	'</tr>';
+			str+=	'</tr>'; */
 			str+=	'</tbody>';
 			str+=	'</table>';
 			str += '<input type="hidden" name="amount" value="'+item.amount+'">';
