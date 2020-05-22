@@ -10,7 +10,7 @@
 </head>
 <body class="text-center">
 <div class="form-login">
-	<img class="mb-4" src="<c:url value="/resources/img/CJ_Corporation.png" />" alt="" width="200">
+	<img class="mb-4" src="<c:url value="/resources/img/CJ_logo.png" />" alt="" width="300">
 	<c:if test="${member == null }">
 
 	<form role="form" method="post" autocomplete="off" action="./login">
