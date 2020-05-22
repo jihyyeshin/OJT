@@ -213,8 +213,8 @@
 			str+=	'&nbsp;&nbsp;';
 			str+=	'<input type="checkbox" name="itemchk" value="'+item.item+'">';
 			str+=	'</div>';
-			str+=	'<div style="width: 100%;">';
-			str+=	'<a id="title" href="javascript:goDetail('+item.item+', '+item.agent+');"><img src="'+src+'" class="center">'+'</a>';
+			str+=	'<div style="position:relative;height: 157.2px;overflow:hidden;">';
+			str+=	'<a id="title" href="javascript:goDetail('+item.item+', '+item.agent+');"><img src="'+src+'" class="center" style="position:absolute;width:157.2px;max-height:100%;margin:auto;top:0;bottom:0;left:0;right:0;">'+'</a>';
 			str+=	'</div>';
 			str+=	'</td>';
 			str+=	'</tr>';

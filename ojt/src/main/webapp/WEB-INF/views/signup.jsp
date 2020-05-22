@@ -30,7 +30,7 @@
 			</tr>
 			<tr>
 				<td>
-				<input type="password" id="password" name="password" onchange="check_psw();" class="form-control" placeholder="비밀번호(영문,숫자,특수문자 8자이상)" required autofocus>
+				<input type="password" id="password" name="password" onchange="check_psw();" class="form-control" placeholder="비밀번호(영문,숫자,특수문자 8자이상)" required autofocus>				
 				</td>
 				<td>
 				<p id = "psw_check_result"></p>

@@ -143,6 +143,9 @@ public class ItemController {
 			String memberid, String item) throws Exception {
 		Logger.info("post detail");
 		System.out.println("post detail");
+		
+		//crawl();
+		
 		HttpSession session = req.getSession();
 		
 		String returnVal="itemDetail";
@@ -156,7 +159,7 @@ public class ItemController {
 		/* 이미지 크롤링 */
 		String val=URLEncoder.encode(vo.getName(), "UTF-8");// 인코딩
 		String url="https://search.naver.com/search.naver?where=image&sm=tab_jum&query="+val;
-		
+		String src="/resources/img/CJ_logo_black.png";
 		
 		Connection.Response response = Jsoup.connect(url)
                 .method(Connection.Method.GET)
@@ -167,17 +170,23 @@ public class ItemController {
 		Element img = googleDocument.select("img[class=_img]").first();
 		//System.out.println("IMG:"+img);
 		if(img== null) {
-			session.setAttribute("src", "/resources/img/CJ_logo_black.png");
-		}
-		else {
-			String src= img.attr("data-source");
-			//System.out.println("data-source"+src);
+			// 한번 더 찾아보기
+			val=URLEncoder.encode(vo.getName().substring(0, 6), "UTF-8");// 인코딩
+			response = Jsoup.connect(url)
+	                .method(Connection.Method.GET)
+	                .execute();
+			googleDocument = response.parse();
+			img = googleDocument.select("img[class=_img]").first();
 			
-			if(src == null) {
-				session.setAttribute("src", "/resources/img/CJ_logo_black.png");
-			} else session.setAttribute("src", src);
+			if(img != null) {
+				src= img.attr("data-source");
+				//System.out.println("!?!?!?!?!");
+			}
 		}
-		
+		else src= img.attr("data-source");
+			
+		if(src == null )  src="/resources/img/CJ_logo_black.png";
+		session.setAttribute("src", src);
 		// 구글 포기
 		
 //		String url="https://www.google.com/search?q="+val
@@ -340,11 +349,6 @@ public class ItemController {
 //        		break;
 //        	}
 //        }
-        
-        
-		
-		
-		/***********************************************************/
 //		Connection.Response response = Jsoup.connect(url)
 //                .method(Connection.Method.GET)
 //                .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36")
@@ -377,9 +381,6 @@ public class ItemController {
 //
 //		session.setAttribute("src", "/resources/img/CJ_logo_black.png");
 //		
-		/***********************************************************/
-		
-		
 		//System.out.println("googleDocument"+googleDocument);
 		//Element img=googleDocument.select("img[class=n3VNCb]").first();
 		//System.out.println("IMG:"+img);
@@ -390,14 +391,6 @@ public class ItemController {
 //		String src=img.attr("src");
 //		System.out.println("SRC:"+src);
 //		session.setAttribute("src", src);
-		
-		
-		/***********************************************************/
-		/***********************************************************/
-
-		
-		
-		
 //		Element img=googleDocument.select("img[class=rg_i Q4LuWd tx8vtf]").first();
 //		
 //		String src=img.attr("src");
@@ -471,16 +464,53 @@ public class ItemController {
 		return returnVal;
 	}
 
-//  // 크롤링
-//	public void test() throws Exception {
-//		String agent="153441";
-//		List<ItemVO> list=service.itemList(agents);
-//		String src="";
-//		for(int i=0;i<list.size();i++) {
-//			if(list.get(i).getSrc()!= null) continue;
+    // 크롤링
+	public void crawl() throws Exception {
+		RecVO vo=new RecVO();
+		vo.setAgentA("153441");
+		vo.setAgentF("386445");
+		vo.setStartNum(0);
+		vo.setEndNum(1980);
+		vo.setMemberid("123");
+		List<ItemVO> list=service.itemList(vo);
+		String src="/resources/img/CJ_logo_black.png";
+		
+		for(int i=0;i<list.size();i++) {
+			
+			if(list.get(i).getSrc().startsWith("https://search.pstatic.net")) continue;
+			src="/resources/img/CJ_logo_black.png";
+			
+			String input=list.get(i).getName();
+			System.out.print("THIS IS ["+i+"] NAME:"+input);
+			String val=URLEncoder.encode(input, "UTF-8");// 인코딩
+			
+			String url="https://search.naver.com/search.naver?where=image&sm=tab_jum&query="+val;
+			
+			Connection.Response response = Jsoup.connect(url)
+	                .method(Connection.Method.GET)
+	                .execute();
+			Document googleDocument = response.parse();
+
+			Element img = googleDocument.select("img[class=_img]").first();
+			if(img== null) {
+				val=URLEncoder.encode(input.substring(0, 6), "UTF-8");// 인코딩
+				response = Jsoup.connect(url)
+		                .method(Connection.Method.GET)
+		                .execute();
+				googleDocument = response.parse();
+				img = googleDocument.select("img[class=_img]").first();
+				if(img != null) {
+					src= img.attr("data-source");
+				}
+			}
+			else {
+				src= img.attr("data-source");
+			}
+			
+			if(src == null )  src="/resources/img/CJ_logo_black.png";
+			System.out.println(" SRC:"+src);
+			
 //			
-//			String input=list.get(i).getName();
-//			String val=URLEncoder.encode(input, "UTF-8");// 인코딩
 //			Connection.Response response = Jsoup.connect("https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query="+val)
 //	                .method(Connection.Method.GET)
 //	                .execute();
@@ -502,11 +532,11 @@ public class ItemController {
 //					}
 //				}
 //			}
-//			ItemVO voinsert = new ItemVO();
-//			voinsert.setSrc(src);
-//			voinsert.setName(list.get(i).getName());
-//			service.itemCrawl(voinsert);
-//		}
-//		System.out.println("FIN");
-//	}
+			ItemVO voinsert = new ItemVO();
+			voinsert.setSrc(src);
+			voinsert.setName(list.get(i).getName());
+			service.itemCrawl(voinsert);
+		}
+		System.out.println("FIN");
+	}
 }
