@@ -155,48 +155,86 @@ public class ItemController {
 
 		/* 이미지 크롤링 */
 		String val=URLEncoder.encode(vo.getName(), "UTF-8");// 인코딩
-		String url="https://www.google.com/search?q="+val
-				+"&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiSpOf5vL_pAhWCF4gKHf-yC_wQ_AUoAXoECAwQAw&biw=1536&bih=775&dpr=1.25";
+		String url="https://search.naver.com/search.naver?where=image&sm=tab_jum&query="+val;
+		
 		
 		Connection.Response response = Jsoup.connect(url)
-	              .method(Connection.Method.GET)
-	              .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36")
-	              .execute();
-			
-			
+                .method(Connection.Method.GET)
+                .execute();
 		Document googleDocument = response.parse();
-		
-		String text=googleDocument.html();
-		
-		System.out.println("!!!!!!!1!!!!!!"+googleDocument.html().contains("https://encrypted"));
-		
-		System.out.println("!!!!!!!!"+googleDocument.html().indexOf("http://chinalife.co.kr/files/goods/01_14966.png"));
-		int idx=googleDocument.html().indexOf("https://encrypted");
-		String src="";
-		for(int i=idx;i<idx+1000;i++) {
-			char a=googleDocument.html().charAt(i);
-			if(a != '\"') {
-				src+=a;
-				System.out.print(a);
-			}
-			else break;
+		//System.out.println(googleDocument.html());
+
+		Element img = googleDocument.select("img[class=_img]").first();
+		//System.out.println("IMG:"+img);
+		if(img== null) {
+			session.setAttribute("src", "/resources/img/CJ_logo_black.png");
+		}
+		else {
+			String src= img.attr("data-source");
+			//System.out.println("data-source"+src);
+			
+			if(src == null) {
+				session.setAttribute("src", "/resources/img/CJ_logo_black.png");
+			} else session.setAttribute("src", src);
 		}
 		
+		// 구글 포기
 		
-		try {
-			String fileNm ="C:\\Users\\User\\Downloads\\Text\\t4.txt";
-			File file = new File(fileNm);
-
-			FileWriter fileWrite = new FileWriter(file, false);
-			fileWrite.write(text);
-	
-			fileWrite.flush(); 
-	
-			fileWrite.close();
-		}catch (Exception e){
-			e.printStackTrace(); 
-		}
-
+//		String url="https://www.google.com/search?q="+val
+//				+"&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiSpOf5vL_pAhWCF4gKHf-yC_wQ_AUoAXoECAwQAw&biw=1536&bih=775&dpr=1.25";
+//		
+//		Connection.Response response = Jsoup.connect(url)
+//	              .method(Connection.Method.GET)
+//	              .userAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36")
+//	              .execute();
+//			
+//			
+//		Document googleDocument = response.parse();
+//		
+//		String text=googleDocument.html();
+//		
+//		System.out.println("!!!!!!!1!!!!!!"+googleDocument.html().contains("https://encrypted"));
+//		int cntSeven=0;
+//		int fromIndex=0;
+//		Document buf=
+//		if(googleDocument.html().indexOf(".png", fromIndex)) {
+//			cntSeven++;
+//			if(cntSeven==7) {
+//				
+//			}
+//		}
+//		System.out.println("!!!!!!!!"+googleDocument.html().indexOf("key: 'ds:1'"));
+//		if(googleDocument.html().indexOf("key: 'ds:1'") != -1) {//있으면
+//			
+//		}
+//		int idx=googleDocument.html().indexOf("https://encrypted");
+//		String src="";
+//		for(int i=idx;i<idx+1000;i++) {
+//			char a=googleDocument.html().charAt(i);
+//			if(a != '\"') {
+//				src+=a;
+//				System.out.print(a);
+//			}
+//			else break;
+//		}
+//		
+//		if(src.equals("")) session.setAttribute("src", "/resources/img/CJ_logo_black.png");
+//		else session.setAttribute("src", src);
+//		
+//		try {
+//			String fileNm ="C:\\Users\\User\\Downloads\\Text\\t5.txt";
+//			File file = new File(fileNm);
+//
+//			FileWriter fileWrite = new FileWriter(file, false);
+//			fileWrite.write(text);
+//	
+//			fileWrite.flush(); 
+//	
+//			fileWrite.close();
+//		}catch (Exception e){
+//			e.printStackTrace(); 
+//		}
+//
 
 		
 //		Connection.Response response = Jsoup.connect("https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query="+val)
@@ -304,7 +342,7 @@ public class ItemController {
 //        }
         
         
-		session.setAttribute("src", src);
+		
 		
 		/***********************************************************/
 //		Connection.Response response = Jsoup.connect(url)

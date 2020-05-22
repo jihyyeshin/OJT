@@ -16,7 +16,9 @@
 	
 	<div class="view">
 	
-		<img src="${src}" width="100%" style="max-height:60%;"></img>
+		<%-- <img src="${src}" width="100%" style="max-height:60%;"></img> --%>
+		
+		<img src="<c:url value="${src}" />" width="100%" style="max-height:60%;"></img>
 		
 		<p></p>
 		<div style="margin-left:20px;margin-right:20px;">
