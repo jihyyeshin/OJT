@@ -80,7 +80,6 @@
 <script type="text/javascript">
 	var resultArray;
 	var loc;
-
 	function agentCalc(){
 		var agentId=$("#agentId").val();
 		var radios = document.getElementsByName('chk_info');
@@ -127,6 +126,10 @@
 			alert("주소를 입력하세요.");
 		else {
 			locCalc('A');
+				/* alert("잘못된 거래처 주소입니다.");
+			
+				alert('대리점이 할당되었습니다.');
+			 */
 			locCalc('F');
 		}
 	}
@@ -146,6 +149,10 @@
 			if (status === kakao.maps.services.Status.OK) {
 				lat=result[0].y;
 				lng=result[0].x;
+				//console.log("this is loc"+loc);
+				//console.log("this is lat"+lat);
+				//console.log("this is lng"+lng);
+				
 				// 통신
 				$.ajax({
 					url:"./locationTest",
@@ -157,14 +164,19 @@
 						success: function(data){
 							// 주소 잘못되었을 때
 							if(data == "false"){
-								alert("잘못된 거래처 주소입니다.");
+								if (gbn=='A') alert("잘못된 거래처 주소입니다.");
 								$('#addr').val('');
+								//console.log("FALSE");
+								//return false;
 							}
 							else{
 								// 받아온 결과물 저장
 								resultArray=data.split('|');
 								$("#resultAgent"+gbn).text(gbnVal+" : "+resultArray[1]);
 								$("#agent"+gbn).val(resultArray[0]);
+								if (gbn=='F') alert('대리점이 할당되었습니다.');
+								//console.log("TRUE");
+								//return true;
 							}
 						},
 						error:function(request,status, error){
@@ -172,7 +184,6 @@
 						},
 						complete:function(data){
 							console.log("complete");
-							if (gbn=='F') alert('대리점이 할당되었습니다.');
 						}
 				});
 			} 

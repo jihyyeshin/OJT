@@ -217,4 +217,3 @@ private static final Logger Logger=LoggerFactory.getLogger(MemberController.clas
 	   return sha;
 	 } 
 }
-

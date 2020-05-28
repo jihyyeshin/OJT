@@ -31,6 +31,7 @@ public class LocController {
 	        , @RequestParam char gbn) throws Exception {
 		Logger.info("post location");
 		System.out.println("post location");
+		System.out.println("THIS IS LOCATION"+location);
 		LatLngVO vo=new LatLngVO(location, lat, lng, gbn);
 		LocVO result=service.location(vo);
 		// 결과가 없는 경우

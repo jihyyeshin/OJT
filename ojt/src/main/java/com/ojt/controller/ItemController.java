@@ -155,38 +155,69 @@ public class ItemController {
 		session.setAttribute("agentA", agentA);
 		session.setAttribute("memberid", memberid);
 		session.setAttribute("item", vo);
-
-		/* 이미지 크롤링 */
-		String val=URLEncoder.encode(vo.getName(), "UTF-8");// 인코딩
-		String url="https://search.naver.com/search.naver?where=image&sm=tab_jum&query="+val;
-		String src="/resources/img/CJ_logo_black.png";
 		
-		Connection.Response response = Jsoup.connect(url)
-                .method(Connection.Method.GET)
+		/* 이미지 크롤링 */
+//		String val=URLEncoder.encode(vo.getName(), "UTF-8");// 인코딩
+//		String url="https://search.naver.com/search.naver?where=image&sm=tab_jum&query="+val;
+//		String src="/resources/img/CJ_logo_black.png";
+//		
+//		Connection.Response response = Jsoup.connect(url)
+//                .method(Connection.Method.GET)
+//                .execute();
+//		Document googleDocument = response.parse();
+//		//System.out.println(googleDocument.html());
+//
+//		Element img = googleDocument.select("img[class=_img]").first();
+//		
+//		if(img != null) src= img.attr("data-source");
+//		
+//		if(src == null ) src="/resources/img/CJ_logo_black.png";
+//		
+//		session.setAttribute("src", src);
+		
+		/* 인터넷 최저가 Func */
+		String val=URLEncoder.encode(vo.getName(), "UTF-8");// 인코딩
+		Connection.Response response = Jsoup.connect(
+				"https://search.shopping.naver.com/search/all.nhn?origQuery="+val+"&pagingIndex=1&pagingSize=40&viewType=list&sort=price_asc&frm=NVSCTAB&query="+val)
+			    .method(Connection.Method.GET)
                 .execute();
 		Document googleDocument = response.parse();
-		//System.out.println(googleDocument.html());
-
-		Element img = googleDocument.select("img[class=_img]").first();
-		//System.out.println("IMG:"+img);
-		if(img== null) {
-			// 한번 더 찾아보기
-			val=URLEncoder.encode(vo.getName().substring(0, 6), "UTF-8");// 인코딩
-			response = Jsoup.connect(url)
-	                .method(Connection.Method.GET)
-	                .execute();
-			googleDocument = response.parse();
-			img = googleDocument.select("img[class=_img]").first();
-			
-			if(img != null) {
-				src= img.attr("data-source");
-				//System.out.println("!?!?!?!?!");
-			}
+		
+		Element goodsList= googleDocument.select("ul[class=goods_list]").first();
+		String LowestCost="";
+		String LowestUrl="";
+		if(goodsList==null) LowestCost="";
+		else LowestCost=goodsList.select("li").eq(0).select("span[class=num _price_reload]").text();
+		
+		if(LowestCost=="") {
+			LowestCost="(없음)";
+			LowestUrl="#";
+		}else{
+			LowestCost+="원";
+			LowestUrl=goodsList.select("li").eq(0).select("a[class=link]").attr("href");
 		}
-		else src= img.attr("data-source");
+
+		session.setAttribute("LowestCost", LowestCost);
+		session.setAttribute("LowestUrl", LowestUrl);
 			
-		if(src == null )  src="/resources/img/CJ_logo_black.png";
-		session.setAttribute("src", src);
+		return returnVal;
+		
+		//System.out.println("IMG:"+img);
+//		if(img== null) {
+//			// 한번 더 찾아보기
+//			val=URLEncoder.encode(vo.getName().substring(0, 6), "UTF-8");// 인코딩
+//			response = Jsoup.connect(url)
+//	                .method(Connection.Method.GET)
+//	                .execute();
+//			googleDocument = response.parse();
+//			img = googleDocument.select("img[class=_img]").first();
+//			
+//			if(img != null) {
+//				src= img.attr("data-source");
+//				//System.out.println("!?!?!?!?!");
+//			}
+//		}
+		
 		// 구글 포기
 		
 //		String url="https://www.google.com/search?q="+val
@@ -436,48 +467,23 @@ public class ItemController {
 //				else session.setAttribute("src", src);
 //			}
 //		}
-		/* 인터넷 최저가 Func */
-		val=URLEncoder.encode(vo.getName(), "UTF-8");// 인코딩
-		response = Jsoup.connect(
-				"https://search.shopping.naver.com/search/all.nhn?origQuery="+val+"&pagingIndex=1&pagingSize=40&viewType=list&sort=price_asc&frm=NVSCTAB&query="+val)
-			    .method(Connection.Method.GET)
-                .execute();
-		googleDocument = response.parse();
 		
-		Element goodsList= googleDocument.select("ul[class=goods_list]").first();
-		String LowestCost="";
-		String LowestUrl="";
-		if(goodsList==null) LowestCost="";
-		else LowestCost=goodsList.select("li").eq(0).select("span[class=num _price_reload]").text();
-		
-		if(LowestCost=="") {
-			LowestCost="(없음)";
-			LowestUrl="#";
-		}else{
-			LowestCost+="원";
-			LowestUrl=goodsList.select("li").eq(0).select("a[class=link]").attr("href");
-		}
-
-		session.setAttribute("LowestCost", LowestCost);
-		session.setAttribute("LowestUrl", LowestUrl);
-			
-		return returnVal;
 	}
 
     // 크롤링
 	public void crawl() throws Exception {
 		RecVO vo=new RecVO();
-		vo.setAgentA("153441");
-		vo.setAgentF("386445");
-		vo.setStartNum(0);
-		vo.setEndNum(1980);
-		vo.setMemberid("123");
+		//vo.setAgentA("153441");
+		//vo.setAgentF("386445");
+		//vo.setStartNum(0);
+		//vo.setEndNum(1980);
+		//vo.setMemberid("123");
 		List<ItemVO> list=service.itemList(vo);
 		String src="/resources/img/CJ_logo_black.png";
 		
 		for(int i=0;i<list.size();i++) {
 			
-			if(list.get(i).getSrc().startsWith("https://search.pstatic.net")) continue;
+			//if(list.get(i).getSrc().startsWith("https://search.pstatic.net")) continue;
 			src="/resources/img/CJ_logo_black.png";
 			
 			String input=list.get(i).getName();

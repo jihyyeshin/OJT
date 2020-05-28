@@ -14,9 +14,9 @@
 		
 	</header>
 	
-	<div class="view">		
+	<div class="view">
 		<div id="imgDiv" style="position:relative;overflow:hidden;">		
-			<img id="imm" src="<c:url value="${src}" />" 
+			<img id="imm" src="<c:url value="${item.src}" />" 
 			style="position:absolute;max-height:100%;margin:auto;top:0;bottom:0;left:0;right:0;"></img>	
 		</div>
 		

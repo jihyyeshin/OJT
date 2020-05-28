@@ -204,7 +204,7 @@
 		$.each(data, function(index, item){
 			var src=item.src;
 			var width=$(document).width() / 2;
-			if(src == "") src="<c:url value="/resources/img/CJ_logo_black.png" />";
+			if(src == "/resources/img/CJ_logo_black.png" || src == "") src="<c:url value="/resources/img/CJ_logo_black.png" />";
 			var amounts=numberWithCommas(item.amount);
 			var str='<table style="float:left;width:50%;height:360px;border-bottom:1px solid #d4d4d4;border-right:1px solid #d4d4d4;">';
 			str+=	'<tbody>';
@@ -250,7 +250,7 @@
 			str += '<tr>';
 			str += '<td style="width: 60%;">';
 			str += '<img src="<c:url value="'+src+'" />"';
-			str += 'style="text-align: center;" width="100" height="88"></td>';
+			str += 'style="text-align: center;" width="120" height="100"></td>';
 			str += '<td style="width: 40%; text-align: left;">';
 			str += '<br/>';
 			str += '<h4><a id="title" href="javascript:goDetail('+item.item+', '+item.agent+');">'+item.name+'</a></h4>';

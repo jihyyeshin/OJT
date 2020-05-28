@@ -45,7 +45,7 @@
 	</c:if>
 	<p style="color:blue;font-family: CJLIGHT;">${msg}</p>
 	<br/><br/><br/>
-	<img class="mb-4" src="<c:url value="/resources/img/CJ_CheilJedang.jpg" />" alt="" width="100">
+	<img class="mb-4" src="<c:url value="/resources/img/CJ_CheilJedang_Horizontal.png" />" alt="" width="100">
 </div>
 </body>
 </html>

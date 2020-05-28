@@ -56,14 +56,16 @@
 
 <!-- 가장 가까운 위치 -->
 <select id="location" parameterType="com.ojt.domain.LatLngVO" resultType="com.ojt.domain.LocVO">
+	<!-- [select 가장 가까운 위치] -->
 	select cd_agent,nm_agentform, addr_zip, addr_detail, 
 				earth_distance(ll_to_earth(#{lat}, #{lng}), ll_to_earth(lat, lng)
 				) as distance
 	from ms_agent
-	where addr_zip like '${location}%' and gbn_agent=#{gbn}
+	where addr_zip like '${location}%' and gbn_agentdeal=(case when #{gbn}='A' then 'FRESH' else 'FOOD' end)
 	order by distance ASC
 	limit 1;
 </select>
+
 
 <!-- ************************************* 대리점 아이템 관련 쿼리 ****************************************** -->
 <!-- 대리점 조회 -->
@@ -76,54 +78,7 @@
 
 <!-- 대리점 별 아이템, 가격 조회 -->
 <!-- 겹치는 아이템은 하나만 출력 (규칙: max cd_agent로  가져옴) -->
-<!-- <select id="itemList" resultType="com.ojt.domain.ItemVO" >
-	select S.*
-	from (
-	SELECT ROW_NUMBER() over(order by cnt desc) rnum,T.*
-	FROM (select  max(m.cd_agent) cd_agent,m.cd_item,  m.nm_item, m.amt_amount, m.src, 
-			(select count(cd_item) from sl_saleitem where cd_item=m.cd_item) cnt
-		from ms_agentitem m
-		where m.cd_agent=#{agentF} or m.cd_agent=#{agentA}
-		group by m.cd_item,  m.nm_item, m.amt_amount, m.src) T
-	) S
-	WHERE S.rnum BETWEEN #{startNum} and #{endNum}
-	SELECT S.*
-	FROM (select ROW_NUMBER() over(order by T.summ desc nulls last) rnum,T.*
-		from (select max(m.cd_agent) cd_agent, m.cd_item, m.nm_item, m.amt_amount, m.src, s.summ
-			  from ms_agentitem m left outer join (select SUM(qty_delivtot) summ,cd_item, cd_customer 
-														from sl_saleitem 
-														group by cd_item, cd_customer) s 
-									on m.cd_item=s.cd_item
-				where m.cd_agent=#{agentF} or m.cd_agent=#{agentA}
-				group by m.cd_item,  m.nm_item, m.amt_amount, m.src, s.summ) T ) S
-	WHERE S.rnum BETWEEN #{startNum} and #{endNum}
-</select>
-
-대리점 아이템 수
-<select id="getListCnt" resultType="int">
-	select Count(T.*)
-	from (select max(m.cd_agent) cd_agent, m.cd_item, m.nm_item, m.amt_amount, m.src, s.summ
-		  from ms_agentitem m left outer join (select SUM(qty_delivtot) summ,cd_item, cd_customer 
-												from sl_saleitem 
-												group by cd_item, cd_customer) s 
-								on m.cd_item=s.cd_item
-		  where m.cd_agent=#{agentF} or m.cd_agent=#{agentA}
-		  group by m.cd_item,  m.nm_item, m.amt_amount, m.src, s.summ) T 
-</select> -->
-
-<!-- 대리점 별 아이템, 가격 조회 -->
-<!-- 겹치는 아이템은 하나만 출력 (규칙: max cd_agent로  가져옴) -->
 <select id="itemList" resultType="com.ojt.domain.ItemVO" >
-<!-- SELECT S.*
-	FROM (select ROW_NUMBER() over(order by cnt desc) rnum,T.*
-		from (select max(m.cd_agent) cd_agent, m.cd_item, m.nm_item, m.amt_amount, m.src, s.cnt
-				from ms_agentitem m inner join (select count(cd_item)  cnt, cd_item, cd_customer 
-												from sl_saleitem 
-												group by cd_item, cd_customer) s on m.cd_item=s.cd_item
-				where (m.cd_agent=#{agentF} or m.cd_agent=#{agentA}) and s.cd_customer=#{memberid}
-				group by m.cd_item,  m.nm_item, m.amt_amount, m.src, s.cnt) T ) S
-	WHERE S.rnum BETWEEN #{startNum} and #{endNum}
-	 -->
 	SELECT S.*
 	FROM (select ROW_NUMBER() over(order by T.summ desc nulls last) rnum,T.*
 		from (select max(m.cd_agent) cd_agent, m.cd_item, m.nm_item, m.amt_amount, m.src, s.summ
@@ -135,6 +90,8 @@
 				where m.cd_agent=#{agentF} or m.cd_agent=#{agentA}
 				group by m.cd_item,  m.nm_item, m.amt_amount, m.src, s.summ) T ) S
 	WHERE S.rnum BETWEEN #{startNum} and #{endNum}
+	<!-- select *
+	from ms_agentitem -->
 </select>
 
 <!-- 대리점 아이템 수 -->
@@ -152,19 +109,6 @@
 
 <!-- 추천 엔진: 대리점 아이템 추천 -->
 <select id="itemRecommendList" parameterType="com.ojt.domain.RecVO" resultType="com.ojt.domain.ItemVO" >
-	<!-- select distinct(m1.cd_item),m1.cd_agent, m1.nm_item, m1.remark, m1.amt_amount, m1.src,  
-		(case when sqrt(SUM(r1.isSold))*sqrt(SUM(r2.isSold))=0 then 0 else SUM(r1.isSold * r2.isSold)/(sqrt(SUM(r1.isSold))*sqrt(SUM(r2.isSold))) end) as result
-	from ms_agentitem m1, (select cd_item, sum(qty_delivtot) selTot
-							from sl_saleitem
-							where cd_customer=#{memberid}
-							group by cd_item
-							order by selTot desc
-							limit 3) m2
-		, rec r1 inner join rec r2 on r1.member=r2.member
-	where m1.cd_item=r1.cd_item and m2.cd_item=r2.cd_item and m1.cd_item != m2.cd_item and (m1.cd_agent=#{agentF} or m1.cd_agent=#{agentA})
-	group by m1.cd_item, m1.nm_item, m1.remark, m1.amt_amount, m1.src, m1.cd_agent
-	order by result DESC
-	limit 6; -->
 	select distinct(m1.cd_item),m1.cd_agent, m1.nm_item, m1.remark, m1.amt_amount, m1.src, cc.cnt,
 		(case when sqrt(SUM(r1.isSold))*sqrt(SUM(r2.isSold))=0 then 0 else SUM(r1.isSold * r2.isSold)/(sqrt(SUM(r1.isSold))*sqrt(SUM(r2.isSold))) end) as result
 	from rec r1 inner join rec r2 on r1.member=r2.member
@@ -193,12 +137,13 @@
 
 <!-- 상품군 별 아이템 추천 -->
 <select id="itemLvlList" resultType="com.ojt.domain.ItemVO" >
+	<!-- [select itemLvlList] -->
 	select distinct(m.cd_item),m.cd_agent, m.nm_item, m.remark, m.amt_amount, m.src 
 	from ms_agentitem m, (
-		select s.cd_item, (select lvl_item from ms_agentitem where cd_item=s.cd_item), sum(s.qty_delivtot) selTot
+		select s.cd_item, (select lvl_item from ms_agentitem where cd_item=s.cd_item and cd_agent=s.cd_agent), sum(s.qty_delivtot) selTot
 		from sl_saleitem s
 		where s.cd_customer=#{memberid}
-		group by s.cd_item
+		group by s.cd_item, s.cd_agent
 		order by selTot desc
 		limit 3 ) T
 	where m.lvl_item=T.lvl_item and m.cd_item != T.cd_item and (m.cd_agent=#{agentF} or m.cd_agent=#{agentA})
@@ -207,10 +152,10 @@
 
 <!-- 아이템 별 디테일 정보 조회-->
 <select id="itemDetail" parameterType="String" resultType="com.ojt.domain.ItemVO">
-	select max(cd_agent) cd_agent, cd_item, nm_item, amt_amount, remark
+	select max(cd_agent) cd_agent, cd_item, nm_item, amt_amount, remark, src
 	from ms_agentitem
 	where cd_item=#{item}
-	group by cd_item, nm_item, amt_amount, remark
+	group by cd_item, nm_item, amt_amount, remark, src
 </select>
 
 <!-- 아이템 이미지 크롤링 -->

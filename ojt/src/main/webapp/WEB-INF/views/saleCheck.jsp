@@ -81,7 +81,7 @@
 	  function printSaleList(slist){
 		  $.each(slist, function(index, item){
 			  // 신선인 경우
-			  if(item.gbn_agent=='F'){
+			  if(item.gbn_agent=='A'){
 				  str=   '<tr>'
 				  str += '<td>'+item.name+'</td>';
 				  str += '<td>'+numberWithCommas(item.price)+' * '+item.qty+' 원</td>'
